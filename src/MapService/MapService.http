@@ -1,0 +1,6 @@
+@MapService_HostAddress = http://localhost:5001
+
+GET {{MapService_HostAddress}}/ping/
+Accept: application/json
+
+###
