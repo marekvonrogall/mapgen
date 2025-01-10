@@ -1,0 +1,14 @@
+services:
+  # Map generation service
+  mapgen:
+    build:
+      context: ./src/MapService
+
+  # NGINX API Gateway
+  nginx:
+    build:
+      context: ./src/nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - mapgen
