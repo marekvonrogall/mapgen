@@ -1,8 +1,17 @@
 services:
-  # Map generation service
+  # Map handler service
   mapgen:
     build:
       context: ./src/MapService
+
+  # Image generation service
+  imggen:
+    build:
+      context: ./src/ImageService
+    ports:
+      - "5000:5000"
+    volumes:
+      - imggen-public:/app/public
 
   # NGINX API Gateway
   nginx:
@@ -12,3 +21,9 @@ services:
       - "8080:80"
     depends_on:
       - mapgen
+      - imggen
+    volumes:
+      - imggen-public:/app/public
+
+volumes:
+  imggen-public:
