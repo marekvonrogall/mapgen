@@ -15,6 +15,7 @@ def generate_image():
         data = request.get_json()
 
         grid_size = data.get("grid_size", 5)  # use 5 by default
+        gamemode = data.get("gamemode", "solo")
         items = data.get("items", [])
 
         # Image dimensions and colors
@@ -25,6 +26,13 @@ def generate_image():
         outline_color = (153, 135, 108)  # Dark Beige
         outline_width = 3
         padding = 3 # Team color padding between line and texture
+
+        # Team colors
+        team_color1 = (100, 255, 100) # Light Green
+        team_color2 = (255, 255, 153) # Light Yellow
+        team_color3 = (204, 255, 255) # Light Blue
+        team_color4 = (255, 204, 204) # Light Red
+
 
         # Create the base image
         image = Image.new("RGBA", (img_size, img_size), bg_color)
@@ -52,6 +60,8 @@ def generate_image():
             column = item['column']
             texture_type = item['type']
             texture_name = item['name']
+            completed = item['completed']
+            # completed = bool(item.get('completed', False))
             
             # Path to texture
             texture_folder = os.path.join(TEXTURES_DIR, texture_type)
@@ -72,8 +82,12 @@ def generate_image():
             # texture_image = texture_image.resize((int(cell_size - 2*padding), int(cell_size - 2*padding)))
 
             # Calculate texture position on grid
-            x0 = int(column * cell_size + outline_width + (line_width * column) + padding)
-            y0 = int(row * cell_size + outline_width + (line_width * row) + padding)
+
+            cell_x = int(column * cell_size + outline_width + (line_width * column))
+            cell_y= int(row * cell_size + outline_width + (line_width * row))
+
+            x0 = cell_x + padding
+            y0 = cell_y + padding
             #x1 = x0 + texture_image.width
             #y1 = y0 + texture_image.height
 
@@ -84,6 +98,12 @@ def generate_image():
             
             # Paste texture on map image
             image.paste(texture_image, (x0, y0), texture_image)
+
+            # Item / Block completion
+            if gamemode == "solo" and completed:
+                draw.rectangle([cell_x, cell_y, cell_x + cell_size -1, cell_y + cell_size -1], outline=team_color1, width=padding)
+            else:
+                continue
 
         # Save image
         filename = f"{uuid.uuid4()}.png"
