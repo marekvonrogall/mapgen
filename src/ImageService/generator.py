@@ -17,10 +17,22 @@ def generate_image():
     try:
         data = request.get_json()
 
-        grid_size = data.get("grid_size", 5)
-        gamemode = data.get("gamemode", "1P") 
+        settings = data.get("settings", [])[0]
+        placements = settings.get("placements", [])[0]
         items = data.get("items", [])
 
+        gamemode = "1P"
+        grid_size = 5
+        
+        if exists(settings):
+            gamemode = settings['gamemode']
+            grid_size = settings['grid_size']
+
+        placement_team1 = placements.get("team1", None)
+        placement_team2 = placements.get("team2", None)
+        placement_team3 = placements.get("team3", None)
+        placement_team4 = placements.get("team4", None)
+        
         # Image dimensions and colors
         img_size = 128
         bg_color = (214, 190, 150)  # Light Beige
@@ -82,7 +94,6 @@ def generate_image():
             texture_type = item['type']
             texture_name = item['name']
 
-            completionData = item.get("completed", [])
             completed_teams = []
 
             if "completed" in item:
@@ -128,21 +139,30 @@ def generate_image():
             # Item / Block completion
             if (exists(completed_teams)):
                 for completed_team in completed_teams:
-                    print(completed_team)
+                    rectColor = None
+                    placement = None
+
+                    match completed_team:
+                        case "team1":
+                            rectColor = team_color1
+                            placement = placement_team1
+                        case "team2":
+                            rectColor = team_color2
+                            placement = placement_team2
+                        case "team3":
+                            rectColor = team_color3
+                            placement = placement_team3
+                        case "team4":
+                            rectColor = team_color4
+                            placement = placement_team4
+                        case _:
+                            return jsonify({"error": f"Invalid team key entered ({completed_team} in 'completed' section of {texture_type}/{texture_name} [row {row}, column {column}])."}), 404
+
                     match gamemode:
-                        case "1P":
-                            rectColor = None
-                            match completed_team:
-                                case "team1":
-                                    rectColor = team_color1
-                                case "team2":
-                                    rectColor = team_color2
-                                case "team3":
-                                    rectColor = team_color3
-                                case "team4":
-                                    rectColor = team_color4
+                        case "1P": # Ignore Placement for 1P mode
                             draw.rectangle([cell_x, cell_y, cell_x + cell_size -1, cell_y + cell_size -1], outline=rectColor, width=padding)
-            
+                        case _:
+                            return jsonify({"error": f"Invalid gamemode key entered."}), 404
 
         # Save image
         filename = f"{uuid.uuid4()}.png"
@@ -150,7 +170,7 @@ def generate_image():
         image.save(filepath)
 
         # Return URL
-        return jsonify({"url": f"/public/{filename}", "cell_size": cell_size}), 201
+        return jsonify({"url": f"/public/{filename}"}), 201
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
