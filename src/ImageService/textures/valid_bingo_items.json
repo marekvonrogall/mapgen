@@ -1,0 +1,5802 @@
+{
+    "block":  [
+                  {
+                      "name":  "acacia_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "acacia_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "acacia_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "acacia_sapling",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "acacia_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "activator_rail",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "activator_rail_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "allium",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "amethyst_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "amethyst_cluster",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "ancient_debris_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "andesite",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "anvil",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "attached_melon_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "attached_pumpkin_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "azalea_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "azalea_plant",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "azalea_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "azure_bluet",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_large_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_mosaic",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_singleleaf",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_small_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_stalk",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bamboo_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "barrel_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "basalt_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beacon",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bedrock",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beehive_end",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beehive_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beehive_front_honey",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beehive_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beetroots_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beetroots_stage1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beetroots_stage2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "beetroots_stage3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bee_nest_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bee_nest_front_honey",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bee_nest_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bell_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "big_dripleaf_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "big_dripleaf_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "big_dripleaf_tip",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "birch_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "birch_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "birch_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "birch_sapling",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "birch_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blackstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "black_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blast_furnace_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blast_furnace_front_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blast_furnace_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_ice",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_orchid",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "blue_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bone_block_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bookshelf",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brain_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brain_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brain_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brewing_stand",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brewing_stand_base",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_mushroom",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_mushroom_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "brown_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bubble_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bubble_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "bubble_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "budding_amethyst",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cactus_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cake_inner",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cake_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "calcite",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "calibrated_sculk_sensor_amethyst",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "calibrated_sculk_sensor_input_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "campfire_fire",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "campfire_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "campfire_log_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "carrots_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "carrots_stage1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "carrots_stage2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "carrots_stage3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cartography_table_side1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cartography_table_side2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cartography_table_side3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "carved_pumpkin",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cauldron_inner",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cauldron_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cave_vines",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cave_vines_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cave_vines_plant",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cave_vines_plant_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chain",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chain_command_block_back",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chain_command_block_conditional",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chain_command_block_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chain_command_block_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cherry_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cherry_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cherry_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cherry_sapling",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cherry_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_bookshelf_empty",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_bookshelf_occupied",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_bookshelf_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_deepslate",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_nether_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_polished_blackstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_quartz_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_red_sandstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_resin_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_sandstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_stone_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_tuff",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chiseled_tuff_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chorus_flower",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chorus_flower_dead",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "chorus_plant",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "clay",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "closed_eyeblossom",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "coal_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "coal_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "coarse_dirt",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cobbled_deepslate",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cobblestone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cobweb",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cocoa_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cocoa_stage1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cocoa_stage2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "command_block_back",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "command_block_conditional",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "command_block_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "command_block_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "comparator",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "comparator_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "composter_compost",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "composter_ready",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "composter_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "conduit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "copper_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "copper_bulb",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "copper_bulb_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "copper_bulb_lit_powered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "copper_bulb_powered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "copper_grate",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "copper_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "copper_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cornflower",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cracked_deepslate_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cracked_deepslate_tiles",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cracked_nether_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cracked_polished_blackstone_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cracked_stone_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_east",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_east_crafting",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_east_triggered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_north",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_north_crafting",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_south",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_south_triggered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_west",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_west_crafting",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafter_west_triggered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafting_table_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crafting_table_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "creaking_heart",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "creaking_heart_active",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crimson_fungus",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crimson_nylium",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crimson_nylium_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crimson_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crimson_roots",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crimson_roots_pot",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crimson_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crimson_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "crying_obsidian",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cut_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cut_red_sandstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cut_sandstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "cyan_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dandelion",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dark_oak_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dark_oak_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dark_oak_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dark_oak_sapling",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dark_oak_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dark_prismarine",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "daylight_detector_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_brain_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_brain_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_brain_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_bubble_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_bubble_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_bubble_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_bush",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_fire_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_fire_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_fire_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_horn_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_horn_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_horn_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_tube_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_tube_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dead_tube_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "debug",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "debug2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_coal_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_copper_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_diamond_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_emerald_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_gold_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_iron_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_lapis_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_redstone_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "deepslate_tiles",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_4",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_5",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_6",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_7",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_8",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "destroy_stage_9",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "detector_rail",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "detector_rail_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "diamond_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "diamond_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "diorite",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dirt",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dirt_path_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dispenser_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dispenser_front_vertical",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dragon_egg",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dried_kelp_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dripstone_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dropper_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "dropper_front_vertical",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "emerald_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "emerald_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "enchanting_table_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "end_portal_frame_eye",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "end_portal_frame_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "end_rod",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "end_stone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "end_stone_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_chiseled_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_copper_bulb",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_copper_bulb_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_copper_bulb_lit_powered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_copper_bulb_powered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_copper_grate",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_copper_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "exposed_cut_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "farmland",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "farmland_moist",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "fern",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "fire_0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "fire_1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "fire_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "fire_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "fire_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "fletching_table_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "fletching_table_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "flowering_azalea_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "flowering_azalea_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "flower_pot",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "frogspawn",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "frosted_ice_0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "frosted_ice_1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "frosted_ice_2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "frosted_ice_3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "furnace_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "furnace_front_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "furnace_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gilded_blackstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "glowstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "glow_item_frame",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "glow_lichen",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gold_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gold_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "granite",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "grass_block_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "grass_block_side_overlay",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "grass_block_snow",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gravel",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "gray_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "green_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "grindstone_pivot",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "grindstone_round",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "grindstone_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "hanging_roots",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "hay_block_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "heavy_core",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "honeycomb_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "honey_block_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "hopper_inside",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "hopper_outside",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "horn_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "horn_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "horn_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "ice",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "iron_bars",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "iron_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "iron_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "iron_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "item_frame",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jack_o_lantern",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jigsaw_lock",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jigsaw_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jukebox_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jungle_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jungle_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jungle_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jungle_sapling",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "jungle_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "kelp",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "kelp_plant",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "ladder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lantern",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lapis_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lapis_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "large_amethyst_bud",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lava_flow",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lava_still",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lectern_base",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lectern_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lectern_sides",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lever",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lightning_rod",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lightning_rod_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_blue_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "light_gray_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lily_of_the_valley",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lily_pad",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lime_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "lodestone_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "loom_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "loom_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magenta_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "magma",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mangrove_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mangrove_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mangrove_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mangrove_propagule",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mangrove_propagule_hanging",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mangrove_roots_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mangrove_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "medium_amethyst_bud",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "melon_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "melon_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mossy_cobblestone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mossy_stone_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "moss_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mud",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "muddy_mangrove_roots_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mud_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mushroom_block_inside",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mushroom_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "mycelium_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "netherite_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "netherrack",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_gold_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_portal",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_quartz_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_sprouts",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_wart_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_wart_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_wart_stage1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "nether_wart_stage2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "note_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oak_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oak_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oak_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oak_sapling",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oak_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "observer_back",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "observer_back_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "observer_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "observer_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "obsidian",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "ochre_froglight_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "open_eyeblossom",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "open_eyeblossom_emissive",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_tulip",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "orange_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxeye_daisy",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_chiseled_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_copper_bulb",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_copper_bulb_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_copper_bulb_lit_powered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_copper_bulb_powered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_copper_grate",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_copper_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "oxidized_cut_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "packed_ice",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "packed_mud",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_hanging_moss",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_hanging_moss_tip",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_moss_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_moss_carpet",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_moss_carpet_side_small",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_moss_carpet_side_tall",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_oak_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_oak_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_oak_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_oak_sapling",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pale_oak_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pearlescent_froglight_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_petals",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_petals_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_tulip",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pink_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "piston_inner",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "piston_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pitcher_crop_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "podzol_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_down_base",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_down_frustum",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_down_middle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_down_tip",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_down_tip_merge",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_up_base",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_up_frustum",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_up_middle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_up_tip",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pointed_dripstone_up_tip_merge",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "polished_andesite",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "polished_basalt_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "polished_blackstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "polished_blackstone_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "polished_deepslate",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "polished_diorite",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "polished_granite",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "polished_tuff",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "poppy",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "potatoes_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "potatoes_stage1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "potatoes_stage2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "potatoes_stage3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "potted_azalea_bush_plant",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "potted_azalea_bush_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "potted_flowering_azalea_bush_plant",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "potted_flowering_azalea_bush_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "powder_snow",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "powered_rail",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "powered_rail_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "prismarine",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "prismarine_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pumpkin_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "pumpkin_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purple_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purpur_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "purpur_pillar",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "quartz_block_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "quartz_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "quartz_pillar",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "rail",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "rail_corner",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "raw_copper_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "raw_gold_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "raw_iron_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_dust_dot",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_dust_line0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_dust_line1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_dust_overlay",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_lamp",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_lamp_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_ore",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_torch",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "redstone_torch_off",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_mushroom",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_mushroom_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_nether_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_sand",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_sandstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_tulip",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "red_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "reinforced_deepslate_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "repeater",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "repeater_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "repeating_command_block_back",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "repeating_command_block_conditional",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "repeating_command_block_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "repeating_command_block_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "resin_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "resin_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "resin_clump",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "respawn_anchor_side0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "respawn_anchor_side1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "respawn_anchor_side2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "respawn_anchor_side3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "respawn_anchor_side4",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "rooted_dirt",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sand",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sandstone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "scaffolding_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sculk",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sculk_catalyst_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sculk_catalyst_side_bloom",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sculk_sensor_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sculk_sensor_tendril_active",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sculk_sensor_tendril_inactive",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sculk_shrieker_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sculk_vein",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "seagrass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sea_lantern",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sea_pickle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "short_grass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "shroomlight",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "slime_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "small_amethyst_bud",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "small_dripleaf_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "smithing_table_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "smithing_table_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "smoker_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "smoker_front_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "smoker_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "smooth_basalt",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "smooth_stone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "smooth_stone_slab_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_not_cracked_east",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_not_cracked_north",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_not_cracked_south",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_not_cracked_west",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_slightly_cracked_east",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_slightly_cracked_north",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_slightly_cracked_south",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_slightly_cracked_west",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_very_cracked_east",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_very_cracked_north",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_very_cracked_south",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sniffer_egg_very_cracked_west",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "snow",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "soul_campfire_fire",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "soul_campfire_log_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "soul_fire_0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "soul_fire_1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "soul_lantern",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "soul_sand",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "soul_soil",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "soul_torch",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "spawner",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sponge",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "spore_blossom",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "spore_blossom_base",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "spruce_leaves",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "spruce_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "spruce_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "spruce_sapling",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "spruce_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stone",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stonecutter_saw",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stonecutter_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stone_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_acacia_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_bamboo_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_birch_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_cherry_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_crimson_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_dark_oak_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_jungle_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_mangrove_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_oak_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_pale_oak_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_spruce_log",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "stripped_warped_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "structure_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "structure_block_corner",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "structure_block_data",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "structure_block_load",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "structure_block_save",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sugar_cane",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sunflower_back",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sunflower_front",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "suspicious_gravel_0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "suspicious_gravel_1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "suspicious_gravel_2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "suspicious_gravel_3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "suspicious_sand_0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "suspicious_sand_1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "suspicious_sand_2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "suspicious_sand_3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sweet_berry_bush_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sweet_berry_bush_stage1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sweet_berry_bush_stage2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "sweet_berry_bush_stage3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "target_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tinted_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tnt_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "torch",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "torchflower",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "torchflower_crop_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "torchflower_crop_stage1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "trial_spawner_side_active",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "trial_spawner_side_active_ominous",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "trial_spawner_side_inactive",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "trial_spawner_side_inactive_ominous",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tripwire",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tripwire_hook",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tube_coral",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tube_coral_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tube_coral_fan",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tuff",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "tuff_bricks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "turtle_egg",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "turtle_egg_slightly_cracked",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "turtle_egg_very_cracked",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "twisting_vines",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "twisting_vines_plant",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_front_ejecting",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_front_ejecting_ominous",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_front_off",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_front_off_ominous",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_front_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_front_on_ominous",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_side_off",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_side_off_ominous",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_side_on",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vault_side_on_ominous",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "verdant_froglight_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "vine",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_fungus",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_nylium",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_nylium_side",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_planks",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_roots",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_roots_pot",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_stem",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "warped_wart_block",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "water_flow",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "water_overlay",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "water_still",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_chiseled_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_copper_bulb",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_copper_bulb_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_copper_bulb_lit_powered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_copper_bulb_powered",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_copper_grate",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_copper_trapdoor",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weathered_cut_copper",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weeping_vines",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "weeping_vines_plant",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wet_sponge",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wheat_stage0",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wheat_stage1",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wheat_stage2",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wheat_stage3",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wheat_stage4",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wheat_stage5",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wheat_stage6",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wheat_stage7",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_tulip",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "white_wool",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "wither_rose",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_candle",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_candle_lit",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_concrete",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_concrete_powder",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_glazed_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_shulker_box",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_stained_glass",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_terracotta",
+                      "difficulty":  "easy"
+                  },
+                  {
+                      "name":  "yellow_wool",
+                      "difficulty":  "easy"
+                  }
+              ],
+    "item":  [
+                 {
+                     "name":  "acacia_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "acacia_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "acacia_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "acacia_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "acacia_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "amethyst_shard",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "angler_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "apple",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "archer_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "armadillo_scute",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "armor_stand",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "arms_up_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "arrow",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "axolotl_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "baked_potato",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bamboo",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bamboo_chest_raft",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bamboo_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bamboo_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bamboo_raft",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bamboo_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "barrier",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "beef",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "beetroot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "beetroot_seeds",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "beetroot_soup",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bell",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "birch_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "birch_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "birch_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "birch_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "birch_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "black_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "black_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "black_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "black_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "black_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "blade_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "blaze_powder",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "blaze_rod",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "blue_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "blue_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "blue_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "blue_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "blue_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bolt_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bone",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bone_meal",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "book",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bordure_indented_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bow",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bowl",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bow_pulling_0",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bow_pulling_1",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bow_pulling_2",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bread",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "breeze_rod",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brewer_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brewing_stand",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brick",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brown_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brown_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brown_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brown_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brown_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "brush",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "burn_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cake",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "campfire",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "carrot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "carrot_on_a_stick",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cauldron",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "chain",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "chainmail_boots",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "chainmail_chestplate",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "chainmail_helmet",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "chainmail_leggings",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "charcoal",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cherry_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cherry_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cherry_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cherry_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cherry_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "chest_minecart",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "chicken",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "chorus_fruit",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clay_ball",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_00",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_01",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_02",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_03",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_04",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_05",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_06",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_07",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_08",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_09",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_10",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_11",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_12",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_13",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_14",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_15",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_16",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_17",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_18",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_19",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_20",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_21",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_22",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_23",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_24",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_25",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_26",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_27",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_28",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_29",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_30",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_31",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_32",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_33",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_34",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_35",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_36",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_37",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_38",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_39",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_40",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_41",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_42",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_43",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_44",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_45",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_46",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_47",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_48",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_49",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_50",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_51",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_52",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_53",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_54",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_55",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_56",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_57",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_58",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_59",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_60",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_61",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_62",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "clock_63",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "coal",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "coast_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cocoa_beans",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cod",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cod_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "command_block_minecart",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "comparator",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_00",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_01",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_02",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_03",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_04",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_05",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_06",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_07",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_08",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_09",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_10",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_11",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_12",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_13",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_14",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_15",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_16",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_17",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_18",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_19",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_20",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_21",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_22",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_23",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_24",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_25",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_26",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_27",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_28",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_29",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_30",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "compass_31",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cooked_beef",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cooked_chicken",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cooked_cod",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cooked_mutton",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cooked_porkchop",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cooked_rabbit",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cooked_salmon",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cookie",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "copper_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "copper_ingot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "creeper_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crimson_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crimson_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crimson_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crossbow_arrow",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crossbow_firework",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crossbow_pulling_0",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crossbow_pulling_1",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crossbow_pulling_2",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "crossbow_standby",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cyan_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cyan_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cyan_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cyan_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "cyan_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "danger_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "dark_oak_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "dark_oak_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "dark_oak_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "dark_oak_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "dark_oak_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_axe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_boots",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_chestplate",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_helmet",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_hoe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_horse_armor",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_leggings",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_pickaxe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_shovel",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "diamond_sword",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "disc_fragment_5",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "dragon_breath",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "dried_kelp",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "dune_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "echo_shard",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "egg",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "elytra",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "elytra_broken",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "emerald",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "enchanted_book",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "ender_eye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "ender_pearl",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "end_crystal",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "experience_bottle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "explorer_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "exposed_copper_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "eye_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "feather",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "fermented_spider_eye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "field_masoned_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "filled_map",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "filled_map_markings",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "firework_rocket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "firework_star",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "firework_star_overlay",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "fire_charge",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "fishing_rod",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "fishing_rod_cast",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "flint",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "flint_and_steel",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "flower_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "flower_pot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "flow_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "flow_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "flow_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "friend_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "furnace_minecart",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "ghast_tear",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "glass_bottle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "glistering_melon_slice",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "globe_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "glowstone_dust",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "glow_berries",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "glow_ink_sac",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "glow_item_frame",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "goat_horn",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_apple",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_axe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_boots",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_carrot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_chestplate",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_helmet",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_hoe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_horse_armor",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_leggings",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_pickaxe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_shovel",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "golden_sword",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "gold_ingot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "gold_nugget",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "gray_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "gray_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "gray_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "gray_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "gray_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "green_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "green_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "green_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "green_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "green_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "gunpowder",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "guster_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "guster_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "heartbreak_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "heart_of_the_sea",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "heart_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "honeycomb",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "honey_bottle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "hopper",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "hopper_minecart",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "host_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "howl_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "ink_sac",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_axe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_boots",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_chestplate",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_helmet",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_hoe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_horse_armor",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_ingot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_leggings",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_nugget",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_pickaxe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_shovel",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "iron_sword",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "item_frame",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "jungle_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "jungle_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "jungle_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "jungle_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "jungle_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "kelp",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "knowledge_book",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lantern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lapis_lazuli",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lava_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lead",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_boots",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_boots_overlay",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_chestplate",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_chestplate_overlay",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_helmet",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_helmet_overlay",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_horse_armor",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_leggings",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "leather_leggings_overlay",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_00",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_01",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_02",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_03",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_04",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_05",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_06",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_07",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_08",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_09",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_10",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_11",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_12",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_13",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_14",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_15",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_blue_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_blue_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_blue_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_blue_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_blue_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_gray_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_gray_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_gray_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_gray_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "light_gray_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lime_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lime_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lime_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lime_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lime_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "lingering_potion",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mace",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "magenta_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "magenta_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "magenta_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "magenta_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "magenta_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "magma_cream",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mangrove_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mangrove_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mangrove_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mangrove_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mangrove_propagule",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mangrove_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "map",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "melon_seeds",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "melon_slice",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "milk_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "minecart",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "miner_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mojang_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mourner_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mushroom_stew",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_11",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_13",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_5",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_blocks",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_cat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_chirp",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_creator",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_creator_music_box",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_far",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_mall",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_mellohi",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_otherside",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_pigstep",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_precipice",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_relic",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_stal",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_strad",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_wait",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "music_disc_ward",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "mutton",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "name_tag",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "nautilus_shell",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_axe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_boots",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_chestplate",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_helmet",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_hoe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_ingot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_leggings",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_pickaxe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_scrap",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_shovel",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_sword",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "netherite_upgrade_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "nether_brick",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "nether_sprouts",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "nether_star",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "nether_wart",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "oak_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "oak_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "oak_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "oak_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "oak_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "ominous_bottle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "ominous_trial_key",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "orange_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "orange_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "orange_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "orange_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "orange_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "oxidized_copper_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "painting",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pale_oak_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pale_oak_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pale_oak_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pale_oak_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pale_oak_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "paper",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "phantom_membrane",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "piglin_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pink_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pink_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pink_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pink_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pink_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pink_petals",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pitcher_plant",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pitcher_pod",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "plenty_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pointed_dripstone",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "poisonous_potato",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "popped_chorus_fruit",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "porkchop",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "potato",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "potion",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "potion_overlay",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "powder_snow_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "prismarine_crystals",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "prismarine_shard",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "prize_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pufferfish",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pufferfish_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pumpkin_pie",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "pumpkin_seeds",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "purple_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "purple_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "purple_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "purple_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "purple_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "quartz",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "rabbit",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "rabbit_foot",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "rabbit_hide",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "rabbit_stew",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "raiser_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "raw_copper",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "raw_gold",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "raw_iron",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_00",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_01",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_02",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_03",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_04",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_05",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_06",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_07",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_08",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_09",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_10",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_11",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_12",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_13",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_14",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_15",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_16",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_17",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_18",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_19",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_20",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_21",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_22",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_23",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_24",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_25",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_26",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_27",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_28",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_29",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_30",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "recovery_compass_31",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "redstone",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "red_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "red_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "red_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "red_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "red_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "repeater",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "resin_brick",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "resin_clump",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "rib_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "rotten_flesh",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "saddle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "salmon",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "salmon_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "scrape_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "seagrass",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "sea_pickle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "sentry_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "shaper_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "sheaf_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "shears",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "shelter_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "shulker_shell",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "silence_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "skull_banner_pattern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "skull_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "slime_ball",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "sniffer_egg",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "snort_pottery_sherd",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "snout_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "snowball",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "soul_campfire",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "soul_lantern",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spawn_egg",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spawn_egg_overlay",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spectral_arrow",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spider_eye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spire_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "splash_potion",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spruce_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spruce_chest_boat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spruce_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spruce_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spruce_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spyglass",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "spyglass_model",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "stick",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "stone_axe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "stone_hoe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "stone_pickaxe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "stone_shovel",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "stone_sword",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "string",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "structure_void",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "sugar",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "sugar_cane",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "suspicious_stew",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "sweet_berries",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "tadpole_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "tide_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "tipped_arrow_base",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "tipped_arrow_head",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "tnt_minecart",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "torchflower_seeds",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "totem_of_undying",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "trial_key",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "trident",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "tropical_fish",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "tropical_fish_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "turtle_egg",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "turtle_helmet",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "turtle_scute",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "vex_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "ward_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "warped_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "warped_fungus_on_a_stick",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "warped_hanging_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "warped_sign",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "water_bucket",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wayfinder_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "weathered_copper_door",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wheat",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wheat_seeds",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "white_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "white_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "white_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "white_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "white_dye",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wild_armor_trim_smithing_template",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wind_charge",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wolf_armor",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wolf_armor_overlay",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wooden_axe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wooden_hoe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wooden_pickaxe",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wooden_shovel",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "wooden_sword",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "writable_book",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "written_book",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "yellow_bundle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "yellow_bundle_open_back",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "yellow_bundle_open_front",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "yellow_candle",
+                     "difficulty":  "easy"
+                 },
+                 {
+                     "name":  "yellow_dye",
+                     "difficulty":  "easy"
+                 }
+             ]
+}
