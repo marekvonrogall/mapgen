@@ -3482,7 +3482,7 @@
     },
     {
       "name": "stonecutter_top",
-      "difficulty": "easy"
+      "difficulty": "unobtainable"
     },
     {
       "name": "stone_bricks",
@@ -5532,7 +5532,7 @@
     },
     {
       "name": "leather_chestplate",
-      "difficulty": "medium"
+      "difficulty": "unobtainable"
     },
     {
       "name": "leather_chestplate_overlay",

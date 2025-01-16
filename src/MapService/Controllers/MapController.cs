@@ -40,7 +40,8 @@ public class MapController : ControllerBase
         }
 
         string[] teamList = teams.Split(",");
-        if ((gamemode == "2P" && teamList.Length != 2) ||
+        if ((gamemode == "1P" && teamList.Length != 1) ||
+            (gamemode == "2P" && teamList.Length != 2) ||
             (gamemode == "3P" && teamList.Length != 3) ||
             (gamemode == "4P" && teamList.Length != 4))
         {
@@ -58,7 +59,7 @@ public class MapController : ControllerBase
         var payload = new
         {
             settings = new[] { new { grid_size = gridSize, gamemode, placements } },
-            items = GenerateItems(gridSize.Value, bingoItems, teamList)
+            items = GenerateItems(gridSize.Value, bingoItems, teamList, difficulty)
         };
 
         var jsonPayload = JsonSerializer.Serialize(payload);
@@ -94,16 +95,18 @@ public class MapController : ControllerBase
         }
     }
 
-    private List<object> GenerateItems(int gridSize, Dictionary<string, List<BingoItem>> bingoItems, string[] teams)
+    private List<object> GenerateItems(int gridSize, Dictionary<string, List<BingoItem>> bingoItems, string[] teams, string inputDifficulty)
     {
         var random = new Random();
         var items = new List<object>();
         var types = new[] { "block", "item" };
         var selectedItems = new HashSet<string>();
-
+    
+        var difficultyChances = GetDifficultyChances(inputDifficulty);
+    
         int centerStart = (gridSize - 1) / 2;
         int centerEnd = gridSize / 2;
-
+    
         for (int row = 0; row < gridSize; row++)
         {
             for (int column = 0; column < gridSize; column++)
@@ -112,36 +115,75 @@ public class MapController : ControllerBase
 
                 if (row >= centerStart && row <= centerEnd && column >= centerStart && column <= centerEnd)
                 {
-                    // center layer
-                    difficulty = random.NextDouble() < 0.8 ? "hard" : "very hard"; // 80 % hard, 20 % very hard
+                    switch (inputDifficulty.ToLower())
+                    {
+                        case "very easy":
+                        case "easy":
+                            difficulty = random.NextDouble() < difficultyChances["medium"] ? "medium" : "easy";
+                            break;
+                        case "medium":
+                            difficulty = random.NextDouble() < difficultyChances["hard"] ? "hard" : "medium";
+                            break;
+                        case "hard":
+                        case "very hard":
+                            difficulty = random.NextDouble() < difficultyChances["very hard"] ? "very hard" : "hard";
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid difficulty provided.");
+                    }
                 }
-                else if (Math.Abs(row - centerStart) <= 1 && Math.Abs(column - centerStart) <= 1 && Math.Abs(row - centerEnd) <= 1 && Math.Abs(column - centerEnd) <= 1)
+                else if (Math.Abs(row - centerStart) <= 1 && Math.Abs(column - centerStart) <= 1 &&
+                         Math.Abs(row - centerEnd) <= 1 && Math.Abs(column - centerEnd) <= 1)
                 {
-                    // next to center layer
-                    difficulty = random.NextDouble() < 0.2 ? "hard" : "medium"; // 20% hard, 80% medium
+                    switch (inputDifficulty.ToLower())
+                    {
+                        case "very easy":
+                        case "easy":
+                            difficulty = random.NextDouble() < difficultyChances["easy"] ? "easy" : "medium";
+                            break;
+                        case "medium":
+                            difficulty = random.NextDouble() < difficultyChances["medium"] ? "medium" : "hard";
+                            break;
+                        case "hard":
+                        case "very hard":
+                            difficulty = random.NextDouble() < difficultyChances["hard"] ? "hard" : "very hard";
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid difficulty provided.");
+                    }
                 }
                 else
                 {
-                    // outer layers
-                    double outerRoll = random.NextDouble();
-                    if (outerRoll < 0.1) difficulty = "very easy";   // 10% very easy
-                    else if (outerRoll < 0.5) difficulty = "easy";   // 40% easy
-                    else if (outerRoll < 0.9) difficulty = "medium"; // 40% medium
-                    else difficulty = "hard";                        // 10% hard
+                    switch (inputDifficulty.ToLower())
+                    {
+                        case "very easy":
+                        case "easy":
+                            difficulty = random.NextDouble() < difficultyChances["very easy"] ? "very easy" : "easy";
+                            break;
+                        case "medium":
+                            difficulty = random.NextDouble() < difficultyChances["easy"] ? "easy" : "medium";
+                            break;
+                        case "hard":
+                        case "very hard":
+                            difficulty = random.NextDouble() < difficultyChances["medium"] ? "medium" : "hard";
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid difficulty provided.");
+                    }
                 }
-
+    
                 var type = types[random.Next(types.Length)];
                 var itemList = bingoItems[type].Where(item => item.Difficulty == difficulty).ToList();
                 if (itemList.Count == 0) continue;
-
+    
                 BingoItem selectedItem;
                 do
                 {
                     selectedItem = itemList[random.Next(itemList.Count)];
                 } while (selectedItems.Contains(selectedItem.Name));
-
+    
                 selectedItems.Add(selectedItem.Name);
-
+    
                 var completed = new List<Dictionary<string, bool>>
                 {
                     new Dictionary<string, bool>()
@@ -150,7 +192,7 @@ public class MapController : ControllerBase
                 {
                     completed[0][team] = false;
                 }
-
+    
                 items.Add(new
                 {
                     row,
@@ -162,15 +204,70 @@ public class MapController : ControllerBase
                 });
             }
         }
-
+    
         return items;
     }
+    
+    private Dictionary<string, double> GetDifficultyChances(string inputDifficulty)
+    {
+        return inputDifficulty.ToLower() switch
+        {
+            "very easy" => new Dictionary<string, double>
+            {
+                { "very easy", 0.9 },
+                { "easy", 0.1 },
+                { "medium", 0.0 },
+                { "hard", 0.0 },
+                { "very hard", 0.0 }
+            },
+            "easy" => new Dictionary<string, double>
+            {
+                { "very easy", 0.6 },
+                { "easy", 0.3 },
+                { "medium", 0.1 },
+                { "hard", 0.0 },
+                { "very hard", 0.0 }
+            },
+            "medium" => new Dictionary<string, double>
+            {
+                { "very easy", 0.4 },
+                { "easy", 0.3 },
+                { "medium", 0.2 },
+                { "hard", 0.1 },
+                { "very hard", 0.0 }
+            },
+            "hard" => new Dictionary<string, double>
+            {
+                { "very easy", 0.1 },
+                { "easy", 0.2 },
+                { "medium", 0.3 },
+                { "hard", 0.3 },
+                { "very hard", 0.1 }
+            },
+            "very hard" => new Dictionary<string, double>
+            {
+                { "very easy", 0.0 },
+                { "easy", 0.1 },
+                { "medium", 0.2 },
+                { "hard", 0.4 },
+                { "very hard", 0.3 }
+            },
+            _ => throw new ArgumentException("Invalid difficulty provided.")
+        };
+    }
+
 
     private object GetPlacements(string gamemode, string[] teams)
     {
         return gamemode switch
         {
-            "1P" => null,
+            "1P" => new[]
+            {
+                new Dictionary<string, string>
+                {
+                    { teams[0], "full" }
+                }
+            },
             "2P" => new[]
             {
                 new Dictionary<string, string>

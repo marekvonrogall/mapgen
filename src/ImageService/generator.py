@@ -12,7 +12,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def exists(value):
     return value is not None and value != False
 
-def drawLine(draw, type, cell_x, cell_y, cell_size, color, padding):
+def drawLine(draw, type, cell_x, cell_y, cell_size, color, padding): # Apply offset here aswell (gridsize 5 works fine, 3 is off)
     match type:
         case "top-left":
             draw.line([(cell_x, cell_y+1), (cell_x + (cell_size/2) -1, cell_y +1)], fill=color, width=padding)
@@ -174,8 +174,9 @@ def generate_image():
                             return jsonify({"error": f"Invalid team key entered ({completed_team} in 'completed' section of {texture_type}/{texture_name} [row {row}, column {column}])."}), 404
 
                     match gamemode:
-                        case "1P": # Ignore Placement for 1P mode
-                            draw.rectangle([cell_x, cell_y, cell_x + cell_size -1, cell_y + cell_size -1], outline=rectColor, width=padding)
+                        case "1P":
+                            if placement == "full":
+                                draw.rectangle([cell_x, cell_y, cell_x + cell_size -1, cell_y + cell_size -1], outline=rectColor, width=padding)
                         case "2P":
                             match placement:
                                 case "top":
