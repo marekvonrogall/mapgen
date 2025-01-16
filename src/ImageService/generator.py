@@ -12,9 +12,20 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def exists(value):
     return value is not None and value != False
 
-def drawLine(draw, type, cell_x, cell_y, color):
-    print('Drawing line:', type)
-    # DRAW CORNER(S) DEPENDING ON TYPE HERE
+def drawLine(draw, type, cell_x, cell_y, cell_size, color, padding):
+    match type:
+        case "top-left":
+            draw.line([(cell_x, cell_y+1), (cell_x + (cell_size/2) -1, cell_y +1)], fill=color, width=padding)
+            draw.line([(cell_x+1, cell_y), (cell_x +1, cell_y + (cell_size/2) -1)], fill=color, width=padding)
+        case "top-right":
+            draw.line([(cell_x + (cell_size/2), cell_y+1), (cell_x + cell_size -1, cell_y+1)], fill=color, width=padding)
+            draw.line([(cell_x + cell_size -2, cell_y), (cell_x + cell_size -2, cell_y + (cell_size/2) -1)], fill=color, width=padding)
+        case "bottom-left":
+            draw.line([(cell_x, cell_y + cell_size -2), (cell_x + (cell_size/2) -1, cell_y + cell_size -2)], fill=color, width=padding)
+            draw.line([(cell_x+1, cell_y + (cell_size/2)), (cell_x+1, cell_y + cell_size -1)], fill=color, width=padding)
+        case "bottom-right":
+            draw.line([(cell_x + (cell_size/2), cell_y + cell_size -2), (cell_x + cell_size -1, cell_y + cell_size -2)], fill=color, width=padding)
+            draw.line([(cell_x + cell_size -2, cell_y + (cell_size/2)), (cell_x + cell_size -2, cell_y + cell_size -2)], fill=color, width=padding)
 
 @app.route('/generate', methods=['POST'])
 def generate_image():
@@ -168,37 +179,38 @@ def generate_image():
                         case "2P":
                             match placement:
                                 case "top":
-                                    drawLine(draw, "top-left", cell_x, cell_y, rectColor)
-                                    drawLine(draw, "top-right", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    drawLine(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "bottom":
-                                    drawLine(draw, "bottom-left", cell_x, cell_y, rectColor)
-                                    drawLine(draw, "bottom-right", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    drawLine(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "left":
-                                    drawLine(draw, "top-left", cell_x, cell_y, rectColor)
-                                    drawLine(draw, "bottom-left", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    drawLine(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "right":
-                                    drawLine(draw, "top-right", cell_x, cell_y, rectColor)
-                                    drawLine(draw, "bottom-right", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    drawLine(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case _:
-                                    return jsonify({"error": f"Invalid placement key entered ({placement} in 'placements' section of 'settings')."}), 404
+                                    if placement != None:
+                                        return jsonify({"error": f"Invalid placement key entered ({placement} in 'placements' section of 'settings')."}), 404
                         case "3P":
                             match placement:
                                 case "top":
-                                    drawLine(draw, "top-left", cell_x, cell_y, rectColor)
-                                    drawLine(draw, "top-right", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    drawLine(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "bottom":
-                                    drawLine(draw, "bottom-left", cell_x, cell_y, rectColor)
-                                    drawLine(draw, "bottom-right", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    drawLine(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "left":
-                                    drawLine(draw, "top-left", cell_x, cell_y, rectColor)
-                                    drawLine(draw, "bottom-left", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    drawLine(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "right":
-                                    drawLine(draw, "top-right", cell_x, cell_y, rectColor)
-                                    drawLine(draw, "bottom-right", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    drawLine(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case _:
-                                    drawLine(draw, placement, cell_x, cell_y, rectColor)
+                                    drawLine(draw, placement, cell_x, cell_y, cell_size, rectColor, padding)
                         case "4P":
-                            drawLine(draw, placement, cell_x, cell_y, rectColor)
+                            drawLine(draw, placement, cell_x, cell_y, cell_size, rectColor, padding)
                         case _:
                             return jsonify({"error": f"Invalid gamemode key entered ({gamemode} in 'settings' section)."}), 404
 
