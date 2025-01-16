@@ -8,8 +8,6 @@ services:
   imggen:
     build:
       context: ./src/ImageService
-    ports:
-      - "5000:5000"
     volumes:
       - imggen-public:/app/public
 

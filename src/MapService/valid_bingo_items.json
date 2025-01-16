@@ -6,11 +6,11 @@
                   },
                   {
                       "name":  "acacia_log",
-                      "difficulty":  "easy"
+                      "difficulty":  "very easy"
                   },
                   {
                       "name":  "acacia_planks",
-                      "difficulty":  "easy"
+                      "difficulty":  "very easy"
                   },
                   {
                       "name":  "acacia_sapling",
@@ -18,31 +18,27 @@
                   },
                   {
                       "name":  "acacia_trapdoor",
-                      "difficulty":  "easy"
+                      "difficulty":  "very easy"
                   },
                   {
                       "name":  "activator_rail",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "activator_rail_on",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "allium",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "amethyst_block",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "amethyst_cluster",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "ancient_debris_side",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "andesite",
@@ -50,27 +46,19 @@
                   },
                   {
                       "name":  "anvil",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "attached_melon_stem",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "attached_pumpkin_stem",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "azalea_leaves",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "azalea_plant",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "azalea_side",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "azure_bluet",
@@ -78,39 +66,23 @@
                   },
                   {
                       "name":  "bamboo_block",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "bamboo_large_leaves",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "bamboo_mosaic",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "bamboo_planks",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "bamboo_singleleaf",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "bamboo_small_leaves",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "bamboo_stage0",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "bamboo_stalk",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "bamboo_trapdoor",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "barrel_side",
@@ -118,75 +90,27 @@
                   },
                   {
                       "name":  "basalt_side",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "beacon",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "bedrock",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "beehive_end",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "beehive_front",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "beehive_front_honey",
-                      "difficulty":  "easy"
+                      "difficulty":  "impossible"
                   },
                   {
                       "name":  "beehive_side",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "beetroots_stage0",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "beetroots_stage1",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "beetroots_stage2",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "beetroots_stage3",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "bee_nest_front",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "bee_nest_front_honey",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "bee_nest_side",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "bell_side",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "big_dripleaf_side",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "big_dripleaf_stem",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "big_dripleaf_tip",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "birch_leaves",
@@ -194,11 +118,11 @@
                   },
                   {
                       "name":  "birch_log",
-                      "difficulty":  "easy"
+                      "difficulty":  "very easy"
                   },
                   {
                       "name":  "birch_planks",
-                      "difficulty":  "easy"
+                      "difficulty":  "very easy"
                   },
                   {
                       "name":  "birch_sapling",
@@ -206,35 +130,31 @@
                   },
                   {
                       "name":  "birch_trapdoor",
-                      "difficulty":  "easy"
+                      "difficulty":  "very easy"
                   },
                   {
                       "name":  "blackstone",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "black_candle",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "black_candle_lit",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "black_concrete",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "black_concrete_powder",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "black_glazed_terracotta",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "black_shulker_box",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "black_stained_glass",
@@ -242,7 +162,7 @@
                   },
                   {
                       "name":  "black_terracotta",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "black_wool",
@@ -253,36 +173,24 @@
                       "difficulty":  "easy"
                   },
                   {
-                      "name":  "blast_furnace_front_on",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "blast_furnace_side",
-                      "difficulty":  "easy"
-                  },
-                  {
                       "name":  "blue_candle",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "blue_candle_lit",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "blue_concrete",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "blue_concrete_powder",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "blue_glazed_terracotta",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "blue_ice",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "blue_orchid",
@@ -290,7 +198,7 @@
                   },
                   {
                       "name":  "blue_shulker_box",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "blue_stained_glass",
@@ -298,7 +206,7 @@
                   },
                   {
                       "name":  "blue_terracotta",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "blue_wool",
@@ -306,31 +214,27 @@
                   },
                   {
                       "name":  "bone_block_side",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "bookshelf",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "brain_coral",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "brain_coral_block",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "brain_coral_fan",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "brewing_stand",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "brewing_stand_base",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "bricks",
@@ -338,43 +242,39 @@
                   },
                   {
                       "name":  "brown_candle",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "brown_candle_lit",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "brown_concrete",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "brown_concrete_powder",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "brown_glazed_terracotta",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "brown_mushroom",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "brown_mushroom_block",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "brown_shulker_box",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "brown_stained_glass",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "brown_terracotta",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "brown_wool",
@@ -382,99 +282,43 @@
                   },
                   {
                       "name":  "bubble_coral",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "bubble_coral_block",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "bubble_coral_fan",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "budding_amethyst",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "cactus_side",
                       "difficulty":  "easy"
                   },
                   {
-                      "name":  "cake_inner",
-                      "difficulty":  "easy"
-                  },
-                  {
                       "name":  "cake_side",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "calcite",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "calibrated_sculk_sensor_amethyst",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "calibrated_sculk_sensor_input_side",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "campfire_fire",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "campfire_log",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "campfire_log_lit",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "candle",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "candle_lit",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "carrots_stage0",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "carrots_stage1",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "carrots_stage2",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "carrots_stage3",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cartography_table_side1",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "cartography_table_side2",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cartography_table_side3",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "carved_pumpkin",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cauldron_inner",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "cauldron_side",
@@ -482,99 +326,63 @@
                   },
                   {
                       "name":  "cave_vines",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cave_vines_lit",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cave_vines_plant",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cave_vines_plant_lit",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "chain",
                       "difficulty":  "easy"
                   },
                   {
-                      "name":  "chain_command_block_back",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "chain_command_block_conditional",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "chain_command_block_front",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "chain_command_block_side",
-                      "difficulty":  "easy"
-                  },
-                  {
                       "name":  "cherry_leaves",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "cherry_log",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "cherry_planks",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "cherry_sapling",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "cherry_trapdoor",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "chiseled_bookshelf_empty",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "chiseled_bookshelf_occupied",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "chiseled_bookshelf_side",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "chiseled_copper",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "chiseled_deepslate",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "chiseled_nether_bricks",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "chiseled_polished_blackstone",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "chiseled_quartz_block",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "chiseled_red_sandstone",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "chiseled_resin_bricks",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "chiseled_sandstone",
@@ -594,15 +402,11 @@
                   },
                   {
                       "name":  "chorus_flower",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "chorus_flower_dead",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "chorus_plant",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "clay",
@@ -610,7 +414,7 @@
                   },
                   {
                       "name":  "closed_eyeblossom",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "coal_block",
@@ -618,11 +422,11 @@
                   },
                   {
                       "name":  "coal_ore",
-                      "difficulty":  "easy"
+                      "difficulty":  "hard"
                   },
                   {
                       "name":  "coarse_dirt",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "cobbled_deepslate",
@@ -634,51 +438,11 @@
                   },
                   {
                       "name":  "cobweb",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cocoa_stage0",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cocoa_stage1",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "cocoa_stage2",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "command_block_back",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "command_block_conditional",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "command_block_front",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "command_block_side",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "comparator",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "comparator_on",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "composter_compost",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "composter_ready",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "composter_side",
@@ -686,7 +450,7 @@
                   },
                   {
                       "name":  "conduit",
-                      "difficulty":  "easy"
+                      "difficulty":  "very hard"
                   },
                   {
                       "name":  "copper_block",
@@ -694,19 +458,7 @@
                   },
                   {
                       "name":  "copper_bulb",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "copper_bulb_lit",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "copper_bulb_lit_powered",
-                      "difficulty":  "easy"
-                  },
-                  {
-                      "name":  "copper_bulb_powered",
-                      "difficulty":  "easy"
+                      "difficulty":  "medium"
                   },
                   {
                       "name":  "copper_grate",

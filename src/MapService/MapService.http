@@ -3,4 +3,7 @@
 GET {{MapService_HostAddress}}/ping/
 Accept: application/json
 
+POST {{MapService_HostAddress}}/create/
+Accept: application/json
+
 ###
