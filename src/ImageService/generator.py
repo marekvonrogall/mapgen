@@ -12,6 +12,10 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def exists(value):
     return value is not None and value != False
 
+def drawLine(draw, type, cell_x, cell_y, color):
+    print('Drawing line:', type)
+    # DRAW CORNER(S) DEPENDING ON TYPE HERE
+
 @app.route('/generate', methods=['POST'])
 def generate_image():
     try:
@@ -161,8 +165,42 @@ def generate_image():
                     match gamemode:
                         case "1P": # Ignore Placement for 1P mode
                             draw.rectangle([cell_x, cell_y, cell_x + cell_size -1, cell_y + cell_size -1], outline=rectColor, width=padding)
+                        case "2P":
+                            match placement:
+                                case "top":
+                                    drawLine(draw, "top-left", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "top-right", cell_x, cell_y, rectColor)
+                                case "bottom":
+                                    drawLine(draw, "bottom-left", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "bottom-right", cell_x, cell_y, rectColor)
+                                case "left":
+                                    drawLine(draw, "top-left", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "bottom-left", cell_x, cell_y, rectColor)
+                                case "right":
+                                    drawLine(draw, "top-right", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "bottom-right", cell_x, cell_y, rectColor)
+                                case _:
+                                    return jsonify({"error": f"Invalid placement key entered ({placement} in 'placements' section of 'settings')."}), 404
+                        case "3P":
+                            match placement:
+                                case "top":
+                                    drawLine(draw, "top-left", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "top-right", cell_x, cell_y, rectColor)
+                                case "bottom":
+                                    drawLine(draw, "bottom-left", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "bottom-right", cell_x, cell_y, rectColor)
+                                case "left":
+                                    drawLine(draw, "top-left", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "bottom-left", cell_x, cell_y, rectColor)
+                                case "right":
+                                    drawLine(draw, "top-right", cell_x, cell_y, rectColor)
+                                    drawLine(draw, "bottom-right", cell_x, cell_y, rectColor)
+                                case _:
+                                    drawLine(draw, placement, cell_x, cell_y, rectColor)
+                        case "4P":
+                            drawLine(draw, placement, cell_x, cell_y, rectColor)
                         case _:
-                            return jsonify({"error": f"Invalid gamemode key entered."}), 404
+                            return jsonify({"error": f"Invalid gamemode key entered ({gamemode} in 'settings' section)."}), 404
 
         # Save image
         filename = f"{uuid.uuid4()}.png"
