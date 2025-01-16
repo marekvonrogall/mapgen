@@ -10,7 +10,7 @@ foreach ($folder in $folders) {
     $jsonData[$folder] = @()
 
     $files = Get-ChildItem -Path $folder -Filter "*.png" -Recurse | Where-Object {
-        $_.Name -notmatch "bottom|top|fence|particle"
+        $_.Name -notmatch "disableFilterFuntion"
     }
 
     foreach ($file in $files) {

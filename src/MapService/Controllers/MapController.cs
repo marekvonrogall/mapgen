@@ -93,6 +93,7 @@ public class MapController : ControllerBase
         var random = new Random();
         var items = new List<object>();
         var types = new[] { "block", "item" };
+        var selectedItems = new HashSet<string>();
 
         for (int row = 0; row < gridSize; row++)
         {
@@ -100,7 +101,15 @@ public class MapController : ControllerBase
             {
                 var type = types[random.Next(types.Length)];
                 var itemList = bingoItems[type];
-                var selectedItem = itemList[random.Next(itemList.Count)];
+                
+                BingoItem selectedItem;
+
+                do
+                {
+                    selectedItem = itemList[random.Next(itemList.Count)];
+                } while (selectedItems.Contains(selectedItem.Name) || selectedItem.Difficulty == "unobtainable");
+
+                selectedItems.Add(selectedItem.Name);
 
                 var completed = new List<Dictionary<string, bool>>
                 {
