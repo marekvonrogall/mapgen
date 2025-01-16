@@ -125,7 +125,7 @@ def generate_image():
             
             # Check if texture exists
             if not os.path.exists(texture_path):
-                return jsonify({"error": f"Texture {texture_name}.png not found"}), 404
+                return jsonify({"error": f"Texture {texture_name}.png not found (Searching in {texture_path} for texture type {texture_type})."}), 404
             
             # Open texture
             texture_image = Image.open(texture_path)

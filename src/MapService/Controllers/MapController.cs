@@ -66,7 +66,13 @@ public class MapController : ControllerBase
 
         if (!response.IsSuccessStatusCode)
         {
-            return StatusCode((int)response.StatusCode, new { error = "Failed to generate image." });
+            var errorContent = await response.Content.ReadAsStringAsync();
+            return StatusCode((int)response.StatusCode, new 
+            { 
+                error = "Failed to generate image.", 
+                serviceError = errorContent, 
+                mapRAW = payload 
+            });
         }
 
         var imggenResponse = await response.Content.ReadAsStringAsync();
@@ -95,19 +101,44 @@ public class MapController : ControllerBase
         var types = new[] { "block", "item" };
         var selectedItems = new HashSet<string>();
 
+        int centerStart = (gridSize - 1) / 2;
+        int centerEnd = gridSize / 2;
+
         for (int row = 0; row < gridSize; row++)
         {
             for (int column = 0; column < gridSize; column++)
             {
-                var type = types[random.Next(types.Length)];
-                var itemList = bingoItems[type];
-                
-                BingoItem selectedItem;
+                string difficulty;
 
+                if (row >= centerStart && row <= centerEnd && column >= centerStart && column <= centerEnd)
+                {
+                    // center layer
+                    difficulty = random.NextDouble() < 0.8 ? "hard" : "very hard"; // 80 % hard, 20 % very hard
+                }
+                else if (Math.Abs(row - centerStart) <= 1 && Math.Abs(column - centerStart) <= 1 && Math.Abs(row - centerEnd) <= 1 && Math.Abs(column - centerEnd) <= 1)
+                {
+                    // next to center layer
+                    difficulty = random.NextDouble() < 0.2 ? "hard" : "medium"; // 20% hard, 80% medium
+                }
+                else
+                {
+                    // outer layers
+                    double outerRoll = random.NextDouble();
+                    if (outerRoll < 0.1) difficulty = "very easy";   // 10% very easy
+                    else if (outerRoll < 0.5) difficulty = "easy";   // 40% easy
+                    else if (outerRoll < 0.9) difficulty = "medium"; // 40% medium
+                    else difficulty = "hard";                        // 10% hard
+                }
+
+                var type = types[random.Next(types.Length)];
+                var itemList = bingoItems[type].Where(item => item.Difficulty == difficulty).ToList();
+                if (itemList.Count == 0) continue;
+
+                BingoItem selectedItem;
                 do
                 {
                     selectedItem = itemList[random.Next(itemList.Count)];
-                } while (selectedItems.Contains(selectedItem.Name) || selectedItem.Difficulty == "unobtainable");
+                } while (selectedItems.Contains(selectedItem.Name));
 
                 selectedItems.Add(selectedItem.Name);
 
@@ -126,6 +157,7 @@ public class MapController : ControllerBase
                     column,
                     type,
                     name = selectedItem.Name,
+                    difficulty = selectedItem.Difficulty,
                     completed
                 });
             }
