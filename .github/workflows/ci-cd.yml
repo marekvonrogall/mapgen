@@ -56,6 +56,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Create /root/deployment directory
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            mkdir -p /root/deployment
+            
       - name: Upload Deployment Files
         uses: appleboy/scp-action@v0.1.7
         with:
