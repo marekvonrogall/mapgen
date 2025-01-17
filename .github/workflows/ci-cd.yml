@@ -57,7 +57,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Upload Deployment Files
-        uses: appleboy/scp-action:latest
+        uses: appleboy/scp-action@latest
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
@@ -68,7 +68,7 @@ jobs:
             ./src/nginx/nginx.conf
 
       - name: Deploy Application
-        uses: appleboy/ssh-action:latest
+        uses: appleboy/ssh-action@latest
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
