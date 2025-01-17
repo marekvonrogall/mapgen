@@ -41,8 +41,8 @@ jobs:
           
       - name: Build Docker Image
         run: |
-          docker-compose -f docker-compose.yml build
+          docker-compose -f docker-compose-build.yml build
 
       - name: Push Docker Image to GHCR
         run: |
-          docker-compose -f docker-compose.yml push
+          docker-compose -f docker-compose-build.yml push
