@@ -56,37 +56,26 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Check if deployment files exist
+        run: |
+          ls -l ./docker-compose-deploy.yml
+          ls -l ./src/nginx/nginx.conf
+
       - name: Create /root/deployment directory
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.DROPLET_IP }}
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
-          script: |
-            mkdir -p /root/deployment
+        run: |
+          sudo apt-get install sshpass
+          sshpass -p "${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}" ssh -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} "mkdir -p /root/deployment"
 
       - name: Upload Deployment Files
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.DROPLET_IP }}
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
-          target: /root/deployment/
-          source: |
-            ./docker-compose-deploy.yml
-            ./src/nginx/nginx.conf
+        run: |
+          sshpass -p "${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}" scp -o StrictHostKeyChecking=no ./docker-compose-deploy.yml root@${{ secrets.DROPLET_IP }}:/root/deployment/
+          sshpass -p "${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}" scp -o StrictHostKeyChecking=no ./src/nginx/nginx.conf root@${{ secrets.DROPLET_IP }}:/root/deployment/
 
       - name: Deploy Application
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.DROPLET_IP }}
-          username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
-          script: |
+        run: |
+          sshpass -p "${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}" ssh -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} << "EOF"
             cd /root/deployment
             docker-compose pull
             docker-compose down
             docker-compose up -d
+          EOF"
