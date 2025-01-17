@@ -1,27 +1,25 @@
 services:
   # Map handler service
   mapgen:
-    build:
-      context: ./src/MapService
+    image: ghcr.io/marekvonrogall/mapgen/mapgen:latest
 
   # Image generation service
   imggen:
-    build:
-      context: ./src/ImageService
+    image: ghcr.io/marekvonrogall/mapgen/imggen:latest
     volumes:
       - imggen-public:/app/public
 
   # NGINX API Gateway
   nginx:
-    build:
-      context: ./src/nginx
+    image: nginx:alpine-slim
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - mapgen
       - imggen
     volumes:
       - imggen-public:/app/public
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
 
 volumes:
   imggen-public:
