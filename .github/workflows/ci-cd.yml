@@ -62,15 +62,17 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           script: |
             mkdir -p /root/deployment
-            
+
       - name: Upload Deployment Files
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.DROPLET_IP }}
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           target: /root/deployment/
           source: |
             ./docker-compose-deploy.yml
@@ -82,6 +84,7 @@ jobs:
           host: ${{ secrets.DROPLET_IP }}
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           script: |
             cd /root/deployment
             docker-compose pull
