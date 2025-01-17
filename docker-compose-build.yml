@@ -3,10 +3,10 @@ services:
   mapgen:
     build:
       context: ./src/MapService
-      image: ghcr.io/${IMAGE_NAME}/mapgen:latest
+    image: ghcr.io/${IMAGE_NAME}/mapgen:latest
 
   # Image generation service
   imggen:
     build:
       context: ./src/ImageService
-      image: ghcr.io/${IMAGE_NAME}/imggen:latest
+    image: ghcr.io/${IMAGE_NAME}/imggen:latest
