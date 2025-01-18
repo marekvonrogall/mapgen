@@ -12,6 +12,9 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def exists(value):
     return value is not None and value != False
 
+def drawBingoLine(draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_size, color, padding):
+    draw.line([(start_cell_x + (cell_size / 2), start_cell_y + (cell_size / 2)), (end_cell_x + (cell_size / 2), end_cell_y + (cell_size / 2))], fill=color, width=padding)
+
 def drawLine(draw, type, cell_x, cell_y, cell_size, color, padding): # Apply offset here aswell (gridsize 5 works fine, 3 is off)
     match type:
         case "top-left":
@@ -33,6 +36,7 @@ def generate_image():
         data = request.get_json()
 
         settings = data.get("settings", [])[0]
+        bingo = settings.get("bingo", [])[0]
         placements = settings.get("placements", [])[0]
         items = data.get("items", [])
 
@@ -47,6 +51,10 @@ def generate_image():
         placement_team2 = placements.get("team2", None)
         placement_team3 = placements.get("team3", None)
         placement_team4 = placements.get("team4", None)
+
+        bingo_start = bingo.get("start", None)
+        bingo_end = bingo.get("end", None)
+        bingo_winner = bingo.get("team", None)
         
         # Image dimensions and colors
         img_size = 128
@@ -214,6 +222,33 @@ def generate_image():
                             drawLine(draw, placement, cell_x, cell_y, cell_size, rectColor, padding)
                         case _:
                             return jsonify({"error": f"Invalid gamemode key entered ({gamemode} in 'settings' section)."}), 404
+        # DRAW BINGO
+        if exists(bingo_start) and exists(bingo_end) and exists(bingo_winner):
+            start_cell_row, start_cell_column = map(int, bingo_start.split(','))
+            start_cell_x = int(start_cell_column * cell_size + outline_width + (line_width * start_cell_column))
+            start_cell_y = int(start_cell_row * cell_size + outline_width + (line_width * start_cell_row))
+
+            end_cell_row, end_cell_column = map(int, bingo_end.split(','))
+            end_cell_x = int(end_cell_column * cell_size + outline_width + (line_width * end_cell_column))
+            end_cell_y = int(end_cell_row * cell_size + outline_width + (line_width * end_cell_row))
+            
+            if not (end_cell_column - start_cell_column == grid_size - 1 or end_cell_row - start_cell_row == grid_size - 1):
+                return jsonify({"error": f"Trying to draw a line that's not {grid_size} cell(s) long. Make sure that cell_start < cell_end."}), 404
+
+            bingoColor = None
+            match bingo_winner:
+                case "team1":
+                    bingoColor = team_color1
+                case "team2":
+                    bingoColor = team_color2
+                case "team3":
+                    bingoColor = team_color3
+                case "team4":
+                    bingoColor = team_color4
+                case _:
+                    return jsonify({"error": f"Invalid team key entered ({bingo_winner} in 'bingo' section of 'settings')."}), 404
+
+            drawBingoLine(draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_size, bingoColor, padding)
 
         # Save image
         filename = f"{uuid.uuid4()}.png"
