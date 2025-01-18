@@ -45,6 +45,13 @@ The response body will look like this:
             {
                 "grid_size": 5,
                 "gamemode": "3P",
+                "bingo": [
+                    {
+                        "start": "null",
+                        "end": "null",
+                        "team": "null"
+                    }
+                ],
                 "placements": [
                     {
                         "team1": "bottom",
@@ -86,6 +93,7 @@ The response body will look like this:
     Contains the bingo board settings.
       - `gridSize`: Specified grid size.
       - `gamemode`: Specified game mode.
+      - `bingo`: Specify if a team got a bingo by entering the start and end cell (format: row,column) of the bingo, aswell as the team that won the bingo game.
       - `placements`: Specifies team placements for item completion.
 
         You may consider changing these depending on gamemode. Valid inputs are: "top", "bottom", "right", "left", "top-left", "top-right", "bottom-left", "bottom-left".
@@ -117,4 +125,7 @@ Example request:
 ```http://167.99.130.136/update/```
 With Body: raw (JSON) --> Use modified mapRAW data returned from `create` endpoint.
 
-<img src="http://167.99.130.136/public/bfade128-5d9b-4353-a2a3-c59e9ca94e9b.png" width="250" height="250" alt="Bingo map">
+<div style="display: flex;">
+  <img src="http://167.99.130.136/public/bfade128-5d9b-4353-a2a3-c59e9ca94e9b.png" width="250" height="250" alt="Bingo map">
+  <img src="http://167.99.130.136/public/612e0248-e4cf-496b-9b89-79940a3038ee.png" width="250" height="250" alt="Bingo map">
+</div>
