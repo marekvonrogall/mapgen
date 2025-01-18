@@ -56,9 +56,11 @@ public class MapController : ControllerBase
             return StatusCode(500, new { error = "Failed to load valid bingo items." });
         }
 
+        var bingo = new[] { new { start = "null", end = "null", team = "null" } };
+
         var payload = new
         {
-            settings = new[] { new { grid_size = gridSize, gamemode, placements } },
+            settings = new[] { new { grid_size = gridSize, gamemode, bingo, placements } },
             items = GenerateItems(gridSize.Value, bingoItems, teamList, difficulty)
         };
 

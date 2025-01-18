@@ -10,7 +10,7 @@ TEXTURES_DIR = "/app/textures"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def exists(value):
-    return value is not None and value != False
+    return value != None and value != False and value != "null"
 
 def drawBingoLine(draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_size, color, padding):
     draw.line([(start_cell_x + (cell_size / 2), start_cell_y + (cell_size / 2)), (end_cell_x + (cell_size / 2), end_cell_y + (cell_size / 2))], fill=color, width=padding)
