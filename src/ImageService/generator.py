@@ -87,42 +87,29 @@ def generate_image():
     try:
         data = request.get_json()
 
-        settings = data.get("settings", [])[0]
-        placements = settings.get("placements", [])[0]
-        teams = settings.get("teams", [])[0]
+        settings = data.get("settings", {})
+        teams = settings.get("teams", {})
         items = data.get("items", [])
-
-        gamemode = "1P"
-        grid_size = 5
         
-        if exists(settings):
-            gamemode = settings['gamemode']
-            grid_size = settings['grid_size']
+        gamemode = settings.get("gamemode", "1P")
+        grid_size = settings.get("grid_size", 5)
 
-        team_names = {
-            "team1": teams.get("team1", "team1"),
-            "team2": teams.get("team2", "team2"),
-            "team3": teams.get("team3", "team3"),
-            "team4": teams.get("team4", "team4")
-        }
-        
+        default_team_names = ["team1", "team2", "team3", "team4"]
+        team_names = {}
+        team_placements = {}
+
+        for team_key in default_team_names:
+            team = teams.get(team_key, {})
+            custom_name = team.get("name", team_key)
+            team_names[team_key] = custom_name
+            team_placements[custom_name] = team.get("placement", None)
+
         team_colors = {
             team_names["team1"]: (100, 255, 100),
             team_names["team2"]: (100, 255, 255),
             team_names["team3"]: (255, 255, 100),
             team_names["team4"]: (255, 100, 100)
         }
-
-        team_placements = {
-            team_names["team1"]: placements.get(team_names["team1"], None),
-            team_names["team2"]: placements.get(team_names["team2"], None),
-            team_names["team3"]: placements.get(team_names["team3"], None),
-            team_names["team4"]: placements.get(team_names["team4"], None)
-        }
-        
-        for _, team_name in team_names.items():
-            if team_name not in team_colors or team_name not in team_placements:
-                return jsonify({"error": f"Invalid team key entered ({team_name} in 'teams' section of 'settings')."}), 404
 
         # Image dimensions and colors
         img_size = 128
