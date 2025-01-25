@@ -268,41 +268,29 @@ public class MapController : ControllerBase
     {
         return gamemode switch
         {
-            "1P" => new[]
-            {
-                new Dictionary<string, string>
-                {
-                    { teams[0], "full" }
-                }
-            },
-            "2P" => new[]
-            {
-                new Dictionary<string, string>
-                {
-                    { teams[0], "top" },
-                    { teams[1], "bottom" }
-                }
-            },
-            "3P" => new[]
-            {
-                new Dictionary<string, string>
-                {
-                    { teams[0], "bottom" },
-                    { teams[1], "top-right" },
-                    { teams[2], "top-left" }
-                }
-            },
-            "4P" => new[]
-            {
-                new Dictionary<string, string>
-                {
-                    { teams[0], "top-right" },
-                    { teams[1], "top-left" },
-                    { teams[2], "bottom-right" },
-                    { teams[3], "bottom-left" }
-                }
-            },
-            _ => null
+            "1P" => new Dictionary<string, string>
+        {
+            { teams[0], "full" }
+        },
+        "2P" => new Dictionary<string, string>
+        {
+            { teams[0], "top" },
+            { teams[1], "bottom" }
+        },
+        "3P" => new Dictionary<string, string>
+        {
+            { teams[0], "bottom" },
+            { teams[1], "top-right" },
+            { teams[2], "top-left" }
+        },
+        "4P" => new Dictionary<string, string>
+        {
+            { teams[0], "top-right" },
+            { teams[1], "top-left" },
+            { teams[2], "bottom-right" },
+            { teams[3], "bottom-left" }
+        },
+        _ => null
         };
     }
 
