@@ -27,19 +27,19 @@ public class MapController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> Create(int? gridSize = 5, string gamemode = "1P", string teams = "", string difficulty = "easy")
+    public async Task<IActionResult> Create(int? gridSize = 5, string gamemode = "1P", string team_names = "", string difficulty = "easy")
     {
         if (!new[] { "1P", "2P", "3P", "4P" }.Contains(gamemode))
         {
             return BadRequest(new { error = "Invalid gamemode. Accepted values are 1P, 2P, 3P, or 4P." });
         }
 
-        if (string.IsNullOrWhiteSpace(teams))
+        if (string.IsNullOrWhiteSpace(team_names))
         {
             return BadRequest(new { error = "Teams must be provided." });
         }
 
-        string[] teamList = teams.Split(",");
+        string[] teamList = team_names.Split(",");
         if ((gamemode == "1P" && teamList.Length != 1) ||
             (gamemode == "2P" && teamList.Length != 2) ||
             (gamemode == "3P" && teamList.Length != 3) ||
@@ -56,11 +56,16 @@ public class MapController : ControllerBase
             return StatusCode(500, new { error = "Failed to load valid bingo items." });
         }
 
-        var bingo = new[] { new { start = "null", end = "null", team = "null" } };
+        Dictionary<string, string> teams = new Dictionary<string, string>();
+
+        for (int i = 0; i < teamList.Length; i++)
+        {
+            teams.Add($"team{i + 1}", teamList[i]);
+        }
 
         var payload = new
         {
-            settings = new[] { new { grid_size = gridSize, gamemode, bingo, placements } },
+            settings = new[] { new { grid_size = gridSize, gamemode, teams, placements } },
             items = GenerateItems(gridSize.Value, bingoItems, teamList, difficulty)
         };
 
