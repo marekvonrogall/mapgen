@@ -4,6 +4,9 @@ This project creates 128x128 pixel images of bingo boards for use in a Minecraft
 Generation is affected by various inputs, such as grid size and difficulty.
 This project is part of the [Bingo-Gamemode-Plugin](https://github.com/manueljonasgreub/Bingo-Gamemode-Plugin) by [@manueljonasgreub](https://www.github.com/manueljonasgreub) and [@marekvonrogall](https://www.github.com/marekvonrogall)
 
+> [!IMPORTANT]
+> This documentation is outdated due to recent changes!
+
 ## Bingo Map Generation
 
 ### Request
