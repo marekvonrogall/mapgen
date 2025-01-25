@@ -12,6 +12,58 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def exists(value):
     return value != None and value != False and value != "null"
 
+def detectBingo(grid_size, items, draw, cell_size, outline_width, line_width, team_names, team_colors, padding):
+    # Grid for each team
+    grid = {team: [[False] * grid_size for _ in range(grid_size)] for team in team_names.values()}
+
+    # Check for item/block completion
+    for item in items:
+        row = item['row']
+        column = item['column']
+
+        if "completed" in item:
+            for completed_item in item["completed"]:
+                for team, value in completed_item.items():
+                    if value and team in grid:
+                        grid[team][row][column] = True
+
+    def calculate_cell_coordinates(row, column):
+        x = int(column * cell_size + outline_width + (line_width * column))
+        y = int(row * cell_size + outline_width + (line_width * row))
+        return x, y
+
+    # Check for bingo
+    for _, team_name in team_names.items():
+        team_grid = grid[team_name]
+        team_color = team_colors[team_name]
+
+        # Check rows and columns
+        for i in range(grid_size):
+            if all(team_grid[i]):  # Row bingo
+                start_x, start_y = calculate_cell_coordinates(i, 0)
+                end_x, end_y = calculate_cell_coordinates(i, grid_size - 1)
+                drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
+                return team_name, "row", i
+            if all(row[i] for row in team_grid):  # Column bingo
+                start_x, start_y = calculate_cell_coordinates(0, i)
+                end_x, end_y = calculate_cell_coordinates(grid_size - 1, i)
+                drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
+                return team, "column", i
+
+        # Check diagonals
+        if all(team_grid[i][i] for i in range(grid_size)):  # Top-left to bottom-right
+            start_x, start_y = calculate_cell_coordinates(0, 0)
+            end_x, end_y = calculate_cell_coordinates(grid_size - 1, grid_size - 1)
+            drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
+            return team_name, "diagonal", "top-left to bottom-right"
+        if all(team_grid[i][grid_size - i - 1] for i in range(grid_size)):  # Top-right to bottom-left
+            start_x, start_y = calculate_cell_coordinates(0, grid_size - 1)
+            end_x, end_y = calculate_cell_coordinates(grid_size - 1, 0)
+            drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
+            return team_name, "diagonal", "top-right to bottom-left"
+
+    return None  # No bingo detected
+
 def drawBingoLine(draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_size, color, padding):
     draw.line([(start_cell_x + (cell_size / 2), start_cell_y + (cell_size / 2)), (end_cell_x + (cell_size / 2), end_cell_y + (cell_size / 2))], fill=color, width=padding)
 
@@ -36,8 +88,8 @@ def generate_image():
         data = request.get_json()
 
         settings = data.get("settings", [])[0]
-        bingo = settings.get("bingo", [])[0]
         placements = settings.get("placements", [])[0]
+        teams = settings.get("teams", [])[0]
         items = data.get("items", [])
 
         gamemode = "1P"
@@ -47,27 +99,37 @@ def generate_image():
             gamemode = settings['gamemode']
             grid_size = settings['grid_size']
 
-        placement_team1 = placements.get("team1", None)
-        placement_team2 = placements.get("team2", None)
-        placement_team3 = placements.get("team3", None)
-        placement_team4 = placements.get("team4", None)
-
-        bingo_start = bingo.get("start", None)
-        bingo_end = bingo.get("end", None)
-        bingo_winner = bingo.get("team", None)
+        team_names = {
+            "team1": teams.get("team1", "team1"),
+            "team2": teams.get("team2", "team2"),
+            "team3": teams.get("team3", "team3"),
+            "team4": teams.get("team4", "team4")
+        }
         
+        team_colors = {
+            team_names["team1"]: (100, 255, 100),
+            team_names["team2"]: (100, 255, 255),
+            team_names["team3"]: (255, 255, 100),
+            team_names["team4"]: (255, 100, 100)
+        }
+
+        team_placements = {
+            team_names["team1"]: placements.get(team_names["team1"], None),
+            team_names["team2"]: placements.get(team_names["team2"], None),
+            team_names["team3"]: placements.get(team_names["team3"], None),
+            team_names["team4"]: placements.get(team_names["team4"], None)
+        }
+        
+        for _, team_name in team_names.items():
+            if team_name not in team_colors or team_name not in team_placements:
+                return jsonify({"error": f"Invalid team key entered ({team_name} in 'teams' section of 'settings')."}), 404
+
         # Image dimensions and colors
         img_size = 128
         bg_color = (214, 190, 150)  # Light Beige
         line_color = (153, 135, 108)  # Dark Beige
         outline_color = (153, 135, 108)  # Dark Beige
 
-        # Team colors
-        team_color1 = (100, 255, 100) # Green
-        team_color2 = (100, 255, 255) # Blue
-        team_color3 = (255, 255, 100) # Yellow
-        team_color4 = (255, 100, 100) # Red
-        
         offset = 0 # Offset for grid lines, because its not always pixel perfect
         modifier = 3
 
@@ -162,25 +224,12 @@ def generate_image():
             # Item / Block completion
             if (exists(completed_teams)):
                 for completed_team in completed_teams:
-                    rectColor = None
-                    placement = None
+                    rectColor = team_colors.get(completed_team)
+                    placement = team_placements.get(completed_team)
 
-                    match completed_team:
-                        case "team1":
-                            rectColor = team_color1
-                            placement = placement_team1
-                        case "team2":
-                            rectColor = team_color2
-                            placement = placement_team2
-                        case "team3":
-                            rectColor = team_color3
-                            placement = placement_team3
-                        case "team4":
-                            rectColor = team_color4
-                            placement = placement_team4
-                        case _:
-                            return jsonify({"error": f"Invalid team key entered ({completed_team} in 'completed' section of {texture_type}/{texture_name} [row {row}, column {column}])."}), 404
-
+                    if not rectColor or not placement:
+                        return jsonify({"error": f"Invalid team key entered ({completed_team} in 'completed' section of {texture_type}/{texture_name} [row {row}, column {column}])."}), 404
+                    
                     match gamemode:
                         case "1P":
                             if placement == "full":
@@ -222,41 +271,17 @@ def generate_image():
                             drawLine(draw, placement, cell_x, cell_y, cell_size, rectColor, padding)
                         case _:
                             return jsonify({"error": f"Invalid gamemode key entered ({gamemode} in 'settings' section)."}), 404
-        # DRAW BINGO
-        if exists(bingo_start) and exists(bingo_end) and exists(bingo_winner):
-            start_cell_row, start_cell_column = map(int, bingo_start.split(','))
-            start_cell_x = int(start_cell_column * cell_size + outline_width + (line_width * start_cell_column))
-            start_cell_y = int(start_cell_row * cell_size + outline_width + (line_width * start_cell_row))
-
-            end_cell_row, end_cell_column = map(int, bingo_end.split(','))
-            end_cell_x = int(end_cell_column * cell_size + outline_width + (line_width * end_cell_column))
-            end_cell_y = int(end_cell_row * cell_size + outline_width + (line_width * end_cell_row))
-            
-            if not (end_cell_column - start_cell_column == grid_size - 1 or end_cell_row - start_cell_row == grid_size - 1):
-                return jsonify({"error": f"Trying to draw a line that's not {grid_size} cell(s) long. Make sure that cell_start < cell_end."}), 404
-
-            bingoColor = None
-            match bingo_winner:
-                case "team1":
-                    bingoColor = team_color1
-                case "team2":
-                    bingoColor = team_color2
-                case "team3":
-                    bingoColor = team_color3
-                case "team4":
-                    bingoColor = team_color4
-                case _:
-                    return jsonify({"error": f"Invalid team key entered ({bingo_winner} in 'bingo' section of 'settings')."}), 404
-
-            drawBingoLine(draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_size, bingoColor, padding)
-
+        
+        # Detect and draw bingo
+        bingo_result = detectBingo(grid_size, items, draw, cell_size, outline_width, line_width, team_names, team_colors, padding)
+        
         # Save image
         filename = f"{uuid.uuid4()}.png"
         filepath = os.path.join(OUTPUT_DIR, filename)
         image.save(filepath)
 
         # Return URL
-        return jsonify({"url": f"/public/{filename}"}), 201
+        return jsonify({"url": f"/public/{filename}", "bingo": bingo_result}), 201
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
