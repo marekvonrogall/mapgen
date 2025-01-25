@@ -56,16 +56,20 @@ public class MapController : ControllerBase
             return StatusCode(500, new { error = "Failed to load valid bingo items." });
         }
 
-        Dictionary<string, string> teams = new Dictionary<string, string>();
+        Dictionary<string, object> teams = new Dictionary<string, object>();
 
         for (int i = 0; i < teamList.Length; i++)
         {
-            teams.Add($"team{i + 1}", teamList[i]);
+            teams.Add($"team{i + 1}", new
+            {
+                name = teamList[i],
+                placement = placements[teamList[i]]
+            });
         }
 
         var payload = new
         {
-            settings = new[] { new { grid_size = gridSize, gamemode, teams, placements } },
+            settings = new { grid_size = gridSize, gamemode, teams },
             items = GenerateItems(gridSize.Value, bingoItems, teamList, difficulty)
         };
 
@@ -264,7 +268,7 @@ public class MapController : ControllerBase
     }
 
 
-    private object GetPlacements(string gamemode, string[] teams)
+    private Dictionary<string, string> GetPlacements(string gamemode, string[] teams)
     {
         return gamemode switch
         {
