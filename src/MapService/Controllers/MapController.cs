@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.IO;
+using System.Linq;
 
 namespace MapService.Controllers;
 
@@ -46,6 +47,12 @@ public class MapController : ControllerBase
             (gamemode == "4P" && teamList.Length != 4))
         {
             return BadRequest(new { error = $"Invalid number of teams for gamemode {gamemode}." });
+        }
+        
+        var uniqueTeams = teamList.Distinct().ToList();
+        if (uniqueTeams.Count != teamList.Length)
+        {
+            return BadRequest(new { error = "Duplicate team names are not allowed." });
         }
 
         var placements = GetPlacements(gamemode, teamList);
