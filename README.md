@@ -2,10 +2,7 @@
 
 This project creates 128x128 pixel images of bingo boards for use in a Minecraft game mode called "Bingo."
 Generation is affected by various inputs, such as grid size and difficulty.
-This project is part of the [Bingo-Gamemode-Plugin](https://github.com/manueljonasgreub/Bingo-Gamemode-Plugin) by [@manueljonasgreub](https://www.github.com/manueljonasgreub) and [@marekvonrogall](https://www.github.com/marekvonrogall)
-
-> [!IMPORTANT]
-> This documentation is outdated due to recent changes!
+This project is part of the [Bingo-Gamemode-Plugin](https://github.com/manueljonasgreub/Bingo-Gamemode-Plugin) by [@manueljonasgreub](https://www.github.com/manueljonasgreub) and [@marekvonrogall](https://www.github.com/marekvonrogall).
 
 ## Bingo Map Generation
 
@@ -22,7 +19,7 @@ Allowed parameters:
 
   Specify the gamemode of the bingo game. Default is "1P". Valid inputs: "1P", "2P", "3P", "4P".
 
-- `teams`: (required)
+- `team_names`: (required)
 
   Specify which teams are playing the bingo game. It is required to have as many teams as specified by the gamemode.
 
@@ -32,7 +29,7 @@ Allowed parameters:
 
 Example request:
 
-```http://167.99.130.136/create/?gridSize=5&gamemode=3P&teams=team1,team2,team4&difficulty=easy```
+```http://167.99.130.136/create/?gridSize=5&gamemode=3P&team_names=custom_team_name1,custom_team_name2,custom_team_name3&difficulty=easy```
 
 ### Response
 
@@ -44,26 +41,24 @@ The response body will look like this:
 {
     "mapURL": "/public/5613f476-587d-4d59-b30c-803a0f2b96ff.png",
     "mapRAW": {
-        "settings": [
-            {
-                "grid_size": 5,
-                "gamemode": "3P",
-                "bingo": [
-                    {
-                        "start": "null",
-                        "end": "null",
-                        "team": "null"
-                    }
-                ],
-                "placements": [
-                    {
-                        "team1": "bottom",
-                        "team2": "top-right",
-                        "team4": "top-left"
-                    }
-                ]
+        "settings": {
+            "grid_size": 5,
+            "gamemode": "3P",
+            "teams": {
+                "team1": {
+                    "name": "custom_team_name1",
+                    "placement": "bottom"
+                },
+                "team2": {
+                    "name": "custom_team_name2",
+                    "placement": "top-right"
+                },
+                "team3": {
+                    "name": "custom_team_name3",
+                    "placement": "top-left"
+                }
             }
-        ],
+        },
         "items": [
             {
                 "row": 0,
@@ -73,9 +68,9 @@ The response body will look like this:
                 "difficulty": "very easy",
                 "completed": [
                     {
-                        "team1": false,
-                        "team2": false,
-                        "team4": false
+                        "custom_team_name1": false,
+                        "custom_team_name2": false,
+                        "custom_team_name3": false
                     }
                 ]
             },
@@ -96,11 +91,10 @@ The response body will look like this:
     Contains the bingo board settings.
       - `gridSize`: Specified grid size.
       - `gamemode`: Specified game mode.
-      - `bingo`: Specify if a team got a bingo by entering the start and end cell (format: row,column) of the bingo, aswell as the team that won the bingo game.
-      - `placements`: Specifies team placements for item completion.
+      - `teams`: Specifies the name (`name`) and the placement (`placement`) for each team.
 
-        You may consider changing these depending on gamemode. Valid inputs are: "top", "bottom", "right", "left", "top-left", "top-right", "bottom-left", "bottom-left".
-        Changing these placements will change where the team item/block completion is rendered on a completed item/block cell.
+        You may consider changing these placements depending on gamemode. Valid inputs are: "top", "bottom", "right", "left", "top-left", "top-right", "bottom-left", "bottom-left".
+        Modifying these placements will change where the team item/block completion is rendered on a completed item/block cell.
 
   - `items`:
     Contains the item or block for each cell on the bingo board.
@@ -121,6 +115,9 @@ This is useful to mark items/blocks as completed, by drawing a rectangle or a co
 The Minecraft Plugin running the actual bingo game needs to keep track of the completion status of each item.
 
 If a team aquired an item/block a a new map can be generated.
+Should a team aquire all items of a vertical column, horizontal row or diagonal line, the map will draw a line accordingly. In this case, the response body will also state which team won the bingo game.
+
+### Request
 
 HTTP POST: Call the `update` endpoint to genereate a new bingo map.
 
@@ -128,6 +125,29 @@ Example request:
 ```http://167.99.130.136/update/```
 With Body: raw (JSON) --> Use modified mapRAW data returned from `create` endpoint.
 
+### Response
+
+Map update response without bingo:
+```json
+{
+    "bingo": null,
+    "url": "/public/bfade128-5d9b-4353-a2a3-c59e9ca94e9b.png"
+}
+```
+
+Map update response with bingo:
+```json
+{
+    "bingo": [
+        "custom_team_name3",
+        "diagonal",
+        "top-right to bottom-left"
+    ],
+    "url": "/public/612e0248-e4cf-496b-9b89-79940a3038ee.png"
+}
+```
+
+Map update response images (without and with bingo):
 <div style="display: flex;">
   <img src="http://167.99.130.136/public/bfade128-5d9b-4353-a2a3-c59e9ca94e9b.png" width="250" height="250" alt="Bingo map">
   <img src="http://167.99.130.136/public/612e0248-e4cf-496b-9b89-79940a3038ee.png" width="250" height="250" alt="Bingo map">
