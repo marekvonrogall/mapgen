@@ -14,12 +14,14 @@ services:
     image: nginx:alpine-slim
     ports:
       - "80:80"
+      - "8443:443"
     depends_on:
       - mapgen
       - imggen
     volumes:
       - imggen-public:/app/public
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
 
 volumes:
   imggen-public:
