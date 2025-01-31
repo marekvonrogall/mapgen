@@ -1,6 +1,11 @@
+using System.Net;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.WebHost.ConfigureKestrel((context, options) =>
+{
+    options.Listen(IPAddress.Any, 5001);
+});
 
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
