@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.IO;
-using System.Linq;
 
 namespace MapService.Controllers;
 
@@ -28,25 +26,30 @@ public class MapController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> Create(int? gridSize = 5, string gamemode = "1P", string team_names = "", string difficulty = "easy")
+    public async Task<IActionResult> Create([FromBody] CreateRequest request)
     {
-        if (!new[] { "1P", "2P", "3P", "4P" }.Contains(gamemode))
+        int gridSize = request.GridSize ?? 5;
+        string gameMode = request.GameMode ?? "1P";
+        string teamNames = request.TeamNames ?? "";
+        string difficulty = request.Difficulty ?? "easy";
+
+        if (!new[] { "1P", "2P", "3P", "4P" }.Contains(gameMode))
         {
-            return BadRequest(new { error = "Invalid gamemode. Accepted values are 1P, 2P, 3P, or 4P." });
+            return BadRequest(new { error = "Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P." });
         }
 
-        if (string.IsNullOrWhiteSpace(team_names))
+        if (string.IsNullOrWhiteSpace(teamNames))
         {
             return BadRequest(new { error = "Teams must be provided." });
         }
 
-        string[] teamList = team_names.Split(",");
-        if ((gamemode == "1P" && teamList.Length != 1) ||
-            (gamemode == "2P" && teamList.Length != 2) ||
-            (gamemode == "3P" && teamList.Length != 3) ||
-            (gamemode == "4P" && teamList.Length != 4))
+        string[] teamList = teamNames.Split(",");
+        if ((gameMode == "1P" && teamList.Length != 1) ||
+            (gameMode == "2P" && teamList.Length != 2) ||
+            (gameMode == "3P" && teamList.Length != 3) ||
+            (gameMode == "4P" && teamList.Length != 4))
         {
-            return BadRequest(new { error = $"Invalid number of teams for gamemode {gamemode}." });
+            return BadRequest(new { error = $"Invalid number of teams for game mode {gameMode}." });
         }
         
         var uniqueTeams = teamList.Distinct().ToList();
@@ -55,7 +58,7 @@ public class MapController : ControllerBase
             return BadRequest(new { error = "Duplicate team names are not allowed." });
         }
 
-        var placements = GetPlacements(gamemode, teamList);
+        var placements = GetPlacements(gameMode, teamList);
 
         var bingoItems = await LoadValidBingoItems();
         if (bingoItems == null)
@@ -76,8 +79,8 @@ public class MapController : ControllerBase
 
         var payload = new
         {
-            settings = new { grid_size = gridSize, gamemode, teams },
-            items = GenerateItems(gridSize.Value, bingoItems, teamList, difficulty)
+            settings = new { grid_size = gridSize, gamemode = gameMode, teams },
+            items = GenerateItems(gridSize, bingoItems, teamList, difficulty)
         };
 
         var jsonPayload = JsonSerializer.Serialize(payload);
@@ -272,9 +275,9 @@ public class MapController : ControllerBase
     }
 
 
-    private Dictionary<string, string> GetPlacements(string gamemode, string[] teams)
+    private Dictionary<string, string> GetPlacements(string gameMode, string[] teams)
     {
-        return gamemode switch
+        return gameMode switch
         {
             "1P" => new Dictionary<string, string>
         {
