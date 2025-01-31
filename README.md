@@ -11,11 +11,11 @@ This project is part of the [Bingo-Gamemode-Plugin](https://github.com/manueljon
 HTTP POST: Call the `create` endpoint to genereate a new bingo map.
 
 Allowed parameters:
-- `gridSize`: (optional)
+- `grid_size`: (optional)
 
   Specify the grid size of the bingo board. Default is 5 (for a 5x5 bingo board).
 
-- `gamemode`: (optional)
+- `game_mode`: (optional)
 
   Specify the gamemode of the bingo game. Default is "1P". Valid inputs: "1P", "2P", "3P", "4P".
 
@@ -29,7 +29,17 @@ Allowed parameters:
 
 Example request:
 
-```http://167.99.130.136/create/?gridSize=5&gamemode=3P&team_names=custom_team_name1,custom_team_name2,custom_team_name3&difficulty=easy```
+```http://167.99.130.136/create/```
+With RequestBody (JSON):
+
+```json
+{
+  "grid_size": 5,
+  "game_mode": "3P",
+  "team_names": "custom_team_name1,custom_team_name2,custom_team_name3",
+  "difficulty": "easy"
+}
+```
 
 ### Response
 
@@ -43,7 +53,7 @@ The response body will look like this:
     "mapRAW": {
         "settings": {
             "grid_size": 5,
-            "gamemode": "3P",
+            "game_mode": "3P",
             "teams": {
                 "team1": {
                     "name": "custom_team_name1",
@@ -87,8 +97,8 @@ The response body will look like this:
 `mapRAW`: Returns the generated bingo board as raw json.
   - `settings`:
     Contains the bingo board settings.
-      - `gridSize`: Specified grid size.
-      - `gamemode`: Specified game mode.
+      - `grid_size`: Specified grid size.
+      - `game_mode`: Specified game mode.
       - `teams`: Specifies the name (`name`) and the placement (`placement`) for each team.
 
         You may consider changing these placements depending on gamemode. Valid inputs are: "top", "bottom", "right", "left", "top-left", "top-right", "bottom-left", "bottom-left".
@@ -119,9 +129,10 @@ Should a team aquire all items of a vertical column, horizontal row or diagonal 
 
 HTTP POST: Call the `update` endpoint to genereate a new bingo map.
 
-Example request: 
+Example request:
+
 ```http://167.99.130.136/update/```
-With Body: raw (JSON) --> Use modified mapRAW data returned from `create` endpoint.
+With RequestBody (JSON): --> Use modified `mapRAW` data returned from `create` endpoint.
 
 ### Response
 
