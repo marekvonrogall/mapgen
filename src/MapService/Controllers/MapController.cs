@@ -66,11 +66,11 @@ public class MapController : ControllerBase
             return StatusCode(500, new { error = "Failed to load valid bingo items." });
         }
 
-        Dictionary<string, object> teams = new Dictionary<string, object>();
+        var teams = new List<object>();
 
         for (int i = 0; i < teamList.Length; i++)
         {
-            teams.Add($"team{i + 1}", new
+            teams.Add(new
             {
                 name = teamList[i],
                 placement = placements[teamList[i]]

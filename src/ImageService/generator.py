@@ -87,7 +87,7 @@ def generate_image():
         data = request.get_json()
 
         settings = data.get("settings", {})
-        teams = settings.get("teams", {})
+        teams = settings.get("teams", [])
         items = data.get("items", [])
         
         gamemode = settings.get("game_mode", "1P")
@@ -97,17 +97,17 @@ def generate_image():
         team_names = {}
         team_placements = {}
 
-        for team_key in default_team_names:
-            team = teams.get(team_key, {})
-            custom_name = team.get("name", team_key)
-            team_names[team_key] = custom_name
+        for i in range(len(teams)):
+            team = teams[i]
+            custom_name = team.get("name", default_team_names[i])
+            team_names[default_team_names[i]] = custom_name
             team_placements[custom_name] = team.get("placement", None)
 
         team_colors = {
-            team_names["team1"]: (100, 255, 100),
-            team_names["team2"]: (100, 255, 255),
-            team_names["team3"]: (255, 255, 100),
-            team_names["team4"]: (255, 100, 100)
+            team_names.get("team1", "team1"): (100, 255, 100),
+            team_names.get("team2", "team2"): (100, 255, 255),
+            team_names.get("team3", "team3"): (255, 255, 100),
+            team_names.get("team4", "team4"): (255, 100, 100)
         }
 
         # Image dimensions and colors
