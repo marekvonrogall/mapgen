@@ -22,10 +22,9 @@ def detectBingo(grid_size, items, draw, cell_size, outline_width, line_width, te
         column = item['column']
 
         if "completed" in item:
-            for completed_item in item["completed"]:
-                for team, value in completed_item.items():
-                    if value and team in grid:
-                        grid[team][row][column] = True
+            for team, value in item.get("completed", {}).items():
+                if value and team in grid:
+                    grid[team][row][column] = True
 
     def calculate_cell_coordinates(row, column):
         x = int(column * cell_size + outline_width + (line_width * column))
@@ -169,12 +168,7 @@ def generate_image():
             completed_teams = []
 
             if "completed" in item:
-                for completed_item in item["completed"]:
-                    for key, value in completed_item.items():
-                        if value:
-                            completed_teams.append(key)
-            else:
-                completed_teams = None
+                completed_teams = [team for team, value in item.get("completed", {}).items() if value]
 
             # Path to texture
             texture_folder = os.path.join(TEXTURES_DIR, texture_type)
