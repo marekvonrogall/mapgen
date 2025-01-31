@@ -29,7 +29,7 @@ Allowed parameters:
 
 Example request:
 
-```http://167.99.130.136/create/```
+```https://api.vrmarek.me/create/```
 With RequestBody (JSON):
 
 ```json
@@ -41,6 +41,11 @@ With RequestBody (JSON):
 }
 ```
 
+> [!IMPORTANT]  
+> The API endpoint 'api.vrmarek.me' is provided for demonstration purposes only and is not intended for use in production environments. You can try it out [here](https://vrmarek.me/#mapgen-demo).
+> If you wish to create your own Bingo game mode in Minecraft using this API, you can deploy the [following packages](https://github.com/marekvonrogall?tab=packages&repo_name=mapgen) on your own server.
+> Please be aware that 'api.vrmarek.me' may be renamed or discontinued in the future.
+
 ### Response
 
 Our example request will generate an easy bingo board with a gridSize of 5.
@@ -49,21 +54,21 @@ The response body will look like this:
 
 ```json
 {
-    "mapURL": "/public/5613f476-587d-4d59-b30c-803a0f2b96ff.png",
+    "mapURL": "/public/263158ea-3981-4001-ada1-4750e00ff799.png",
     "mapRAW": {
         "settings": {
             "grid_size": 5,
             "game_mode": "3P",
             "teams": [
-                "team1": {
+                {
                     "name": "custom_team_name1",
                     "placement": "bottom"
                 },
-                "team2": {
+                {
                     "name": "custom_team_name2",
                     "placement": "top-right"
                 },
-                "team3": {
+                {
                     "name": "custom_team_name3",
                     "placement": "top-left"
                 }
@@ -74,7 +79,7 @@ The response body will look like this:
                 "row": 0,
                 "column": 0,
                 "type": "block",
-                "name": "dark_oak_log",
+                "name": "yellow_wool",
                 "difficulty": "very easy",
                 "completed": {
                     "custom_team_name1": false,
@@ -92,7 +97,7 @@ The response body will look like this:
 
 `mapURL`: Returns the generated bingo board as image (128x128 pixels).
 
-<img src="http://167.99.130.136/public/5613f476-587d-4d59-b30c-803a0f2b96ff.png" width="250" height="250" alt="Bingo map">
+<img src="https://api.vrmarek.me/public/263158ea-3981-4001-ada1-4750e00ff799.png" width="250" height="250" alt="Bingo map">
 
 `mapRAW`: Returns the generated bingo board as raw json.
   - `settings`:
@@ -131,8 +136,13 @@ HTTP POST: Call the `update` endpoint to genereate a new bingo map.
 
 Example request:
 
-```http://167.99.130.136/update/```
+```https://api.vrmarek.me/update/```
 With RequestBody (JSON): --> Use modified `mapRAW` data returned from `create` endpoint.
+
+> [!IMPORTANT]  
+> The API endpoint 'api.vrmarek.me' is provided for demonstration purposes only and is not intended for use in production environments. You can try it out [here](https://vrmarek.me/#mapgen-demo).
+> If you wish to create your own Bingo game mode in Minecraft using this API, you can deploy the [following packages](https://github.com/marekvonrogall?tab=packages&repo_name=mapgen) on your own server.
+> Please be aware that 'api.vrmarek.me' may be renamed or discontinued in the future.
 
 ### Response
 
@@ -140,20 +150,20 @@ Map update response without bingo:
 ```json
 {
     "bingo": null,
-    "url": "/public/bfade128-5d9b-4353-a2a3-c59e9ca94e9b.png"
+    "url": "/public/ef0e72bc-bbe4-4f6d-8755-0c1f1c80b524.png"
 }
 ```
 
 Map update response with bingo:
 ```json
 {
-    "bingo": "custom_team_name3",
-    "url": "/public/612e0248-e4cf-496b-9b89-79940a3038ee.png"
+    "bingo": "custom_team_name1",
+    "url": "/public/1752abad-b8b6-4e51-93d8-2c229dd8ef62.png"
 }
 ```
 
 Map update response images (without and with bingo):
 <div style="display: flex;">
-  <img src="http://167.99.130.136/public/bfade128-5d9b-4353-a2a3-c59e9ca94e9b.png" width="250" height="250" alt="Bingo map">
-  <img src="http://167.99.130.136/public/612e0248-e4cf-496b-9b89-79940a3038ee.png" width="250" height="250" alt="Bingo map">
+  <img src="https://api.vrmarek.me/public/ef0e72bc-bbe4-4f6d-8755-0c1f1c80b524.png" width="250" height="250" alt="Bingo map">
+  <img src="https://api.vrmarek.me/public/1752abad-b8b6-4e51-93d8-2c229dd8ef62.png" width="250" height="250" alt="Bingo map">
 </div>
