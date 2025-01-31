@@ -90,7 +90,7 @@ def generate_image():
         teams = settings.get("teams", {})
         items = data.get("items", [])
         
-        gamemode = settings.get("gamemode", "1P")
+        gamemode = settings.get("game_mode", "1P")
         grid_size = settings.get("grid_size", 5)
 
         default_team_names = ["team1", "team2", "team3", "team4"]

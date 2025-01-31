@@ -79,7 +79,7 @@ public class MapController : ControllerBase
 
         var payload = new
         {
-            settings = new { grid_size = gridSize, gamemode = gameMode, teams },
+            settings = new { grid_size = gridSize, game_mode = gameMode, teams },
             items = GenerateItems(gridSize, bingoItems, teamList, difficulty)
         };
 
