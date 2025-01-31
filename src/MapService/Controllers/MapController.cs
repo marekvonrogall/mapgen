@@ -202,13 +202,10 @@ public class MapController : ControllerBase
     
                 selectedItems.Add(selectedItem.Name);
     
-                var completed = new List<Dictionary<string, bool>>
-                {
-                    new Dictionary<string, bool>()
-                };
+                var completed = new Dictionary<string, bool>();
                 foreach (var team in teams)
                 {
-                    completed[0][team] = false;
+                    completed[team] = false;
                 }
     
                 items.Add(new
