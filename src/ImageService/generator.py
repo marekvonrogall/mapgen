@@ -93,6 +93,9 @@ def generate_image():
         gamemode = settings.get("game_mode", "1P")
         grid_size = settings.get("grid_size", 5)
 
+        if grid_size < 1 or grid_size > 9:
+            return jsonify({"error": "Invalid grid size entered (grid_size in 'settings' section)."}), 404
+
         default_team_names = ["team1", "team2", "team3", "team4"]
         team_names = {}
         team_placements = {}

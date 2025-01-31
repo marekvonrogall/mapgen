@@ -33,6 +33,11 @@ public class MapController : ControllerBase
         string teamNames = request.TeamNames ?? "";
         string difficulty = request.Difficulty ?? "easy";
 
+        if (gridSize < 1 || gridSize > 9)
+        {
+            return BadRequest(new { error = "Invalid grid_size. grid_size must be in range of 1 and 9." });
+        }
+
         if (!new[] { "1P", "2P", "3P", "4P" }.Contains(gameMode))
         {
             return BadRequest(new { error = "Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P." });
