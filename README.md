@@ -54,7 +54,7 @@ The response body will look like this:
         "settings": {
             "grid_size": 5,
             "game_mode": "3P",
-            "teams": {
+            "teams": [
                 "team1": {
                     "name": "custom_team_name1",
                     "placement": "bottom"
@@ -67,7 +67,7 @@ The response body will look like this:
                     "name": "custom_team_name3",
                     "placement": "top-left"
                 }
-            }
+            ]
         },
         "items": [
             {
