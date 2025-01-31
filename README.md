@@ -66,13 +66,11 @@ The response body will look like this:
                 "type": "block",
                 "name": "dark_oak_log",
                 "difficulty": "very easy",
-                "completed": [
-                    {
-                        "custom_team_name1": false,
-                        "custom_team_name2": false,
-                        "custom_team_name3": false
-                    }
-                ]
+                "completed": {
+                    "custom_team_name1": false,
+                    "custom_team_name2": false,
+                    "custom_team_name3": false
+                }
             },
             {
                 // MORE ITEMS HERE DEPENDING ON GRID SIZE.
@@ -138,11 +136,7 @@ Map update response without bingo:
 Map update response with bingo:
 ```json
 {
-    "bingo": [
-        "custom_team_name3",
-        "diagonal",
-        "top-right to bottom-left"
-    ],
+    "bingo": "custom_team_name3",
     "url": "/public/612e0248-e4cf-496b-9b89-79940a3038ee.png"
 }
 ```
