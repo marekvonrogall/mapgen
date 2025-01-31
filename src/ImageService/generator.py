@@ -42,24 +42,24 @@ def detectBingo(grid_size, items, draw, cell_size, outline_width, line_width, te
                 start_x, start_y = calculate_cell_coordinates(i, 0)
                 end_x, end_y = calculate_cell_coordinates(i, grid_size - 1)
                 drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
-                return team_name, "row", i
+                return team_name
             if all(row[i] for row in team_grid):  # Column bingo
                 start_x, start_y = calculate_cell_coordinates(0, i)
                 end_x, end_y = calculate_cell_coordinates(grid_size - 1, i)
                 drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
-                return team, "column", i
+                return team_name
 
         # Check diagonals
         if all(team_grid[i][i] for i in range(grid_size)):  # Top-left to bottom-right
             start_x, start_y = calculate_cell_coordinates(0, 0)
             end_x, end_y = calculate_cell_coordinates(grid_size - 1, grid_size - 1)
             drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
-            return team_name, "diagonal", "top-left to bottom-right"
+            return team_name
         if all(team_grid[i][grid_size - i - 1] for i in range(grid_size)):  # Top-right to bottom-left
             start_x, start_y = calculate_cell_coordinates(0, grid_size - 1)
             end_x, end_y = calculate_cell_coordinates(grid_size - 1, 0)
             drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
-            return team_name, "diagonal", "top-right to bottom-left"
+            return team_name
 
     return None  # No bingo detected
 
