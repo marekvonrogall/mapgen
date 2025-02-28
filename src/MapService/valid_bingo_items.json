@@ -81,12 +81,12 @@
       "difficulty": "unobtainable"
     },
     {
-      "name": "azalea_leaves",
+      "name": "azalea",
       "difficulty": "medium"
     },
     {
       "name": "azalea_plant",
-      "difficulty": "medium"
+      "difficulty": "unobtainable"
     },
     {
       "name": "azalea_side",
@@ -1142,7 +1142,7 @@
     },
     {
       "name": "dark_oak_log_top",
-      "difficulty": "very easy"
+      "difficulty": "unobtainable"
     },
     {
       "name": "dark_oak_planks",
@@ -3690,7 +3690,7 @@
     },
     {
       "name": "target_side",
-      "difficulty": "easy"
+      "difficulty": "unobtainable"
     },
     {
       "name": "target",
@@ -4006,11 +4006,11 @@
     },
     {
       "name": "weeping_vines",
-      "difficulty": "unobtainable"
+      "difficulty": "medium"
     },
     {
       "name": "weeping_vines_plant",
-      "difficulty": "medium"
+      "difficulty": "unobtainable"
     },
     {
       "name": "wet_sponge",
