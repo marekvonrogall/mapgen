@@ -187,8 +187,8 @@ def generate_image():
                 texture_image = texture_image.convert("RGBA")
 
             # Calculate texture position on grid
-            cell_x = int(column * cell_size + outline_width + (line_width * column))
-            cell_y= int(row * cell_size + outline_width + (line_width * row))
+            cell_x = round(column * cell_size + outline_width + (line_width * column))
+            cell_y= round(row * cell_size + outline_width + (line_width * row))
 
             x0 = cell_x + padding
             y0 = cell_y + padding
@@ -198,7 +198,7 @@ def generate_image():
             # Might stretch texture, but ensures good styling
             x1 = x0 + int(cell_size - 2*padding)
             y1 = y0 + int(cell_size - 2*padding)
-            texture_image = texture_image.resize((x1 - x0, y1 - y0))
+            texture_image = texture_image.resize((x1 - x0, y1 - y0), resample=Image.Resampling.NEAREST)
             
             # Paste texture on map image
             image.paste(texture_image, (x0, y0), texture_image)
