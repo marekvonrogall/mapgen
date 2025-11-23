@@ -10,9 +10,9 @@ TEXTURES_DIR = "/app/textures"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def exists(value):
-    return value != None and value != False and value != "null"
+    return value is not None and value is not False and value != "null"
 
-def detectBingo(grid_size, items, draw, cell_size, outline_width, line_width, team_names, team_colors, padding):
+def detect_bingo(grid_size, items, draw, cell_size, outline_width, line_width, team_names, team_colors, padding):
     # Grid for each team
     grid = {team: [[False] * grid_size for _ in range(grid_size)] for team in team_names.values()}
 
@@ -32,7 +32,7 @@ def detectBingo(grid_size, items, draw, cell_size, outline_width, line_width, te
         return x, y
 
     # Check for bingo
-    for _, team_name in team_names.items():
+    for team_name in team_names.values():
         team_grid = grid[team_name]
         team_color = team_colors[team_name]
 
@@ -41,32 +41,32 @@ def detectBingo(grid_size, items, draw, cell_size, outline_width, line_width, te
             if all(team_grid[i]):  # Row bingo
                 start_x, start_y = calculate_cell_coordinates(i, 0)
                 end_x, end_y = calculate_cell_coordinates(i, grid_size - 1)
-                drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
+                draw_bingo_line(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
                 return team_name
             if all(row[i] for row in team_grid):  # Column bingo
                 start_x, start_y = calculate_cell_coordinates(0, i)
                 end_x, end_y = calculate_cell_coordinates(grid_size - 1, i)
-                drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
+                draw_bingo_line(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
                 return team_name
 
         # Check diagonals
         if all(team_grid[i][i] for i in range(grid_size)):  # Top-left to bottom-right
             start_x, start_y = calculate_cell_coordinates(0, 0)
             end_x, end_y = calculate_cell_coordinates(grid_size - 1, grid_size - 1)
-            drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
+            draw_bingo_line(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
             return team_name
         if all(team_grid[i][grid_size - i - 1] for i in range(grid_size)):  # Top-right to bottom-left
             start_x, start_y = calculate_cell_coordinates(0, grid_size - 1)
             end_x, end_y = calculate_cell_coordinates(grid_size - 1, 0)
-            drawBingoLine(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
+            draw_bingo_line(draw, start_x, start_y, end_x, end_y, cell_size, team_color, padding)
             return team_name
 
     return None  # No bingo detected
 
-def drawBingoLine(draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_size, color, padding):
+def draw_bingo_line(draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_size, color, padding):
     draw.line([(start_cell_x + (cell_size / 2), start_cell_y + (cell_size / 2)), (end_cell_x + (cell_size / 2), end_cell_y + (cell_size / 2))], fill=color, width=padding)
 
-def drawLine(draw, type, cell_x, cell_y, cell_size, color, padding): # Apply offset here aswell (gridsize 5 works fine, 3 is off)
+def draw_line(draw, type, cell_x, cell_y, cell_size, color, padding): # Apply offset here aswell (gridsize 5 works fine, 3 is off)
     match type:
         case "top-left":
             draw.line([(cell_x, cell_y+1), (cell_x + (cell_size/2) -1, cell_y +1)], fill=color, width=padding)
@@ -165,8 +165,7 @@ def generate_image():
         for item in items:
             row = item['row']
             column = item['column']
-            texture_type = item['type']
-            texture_name = item['name']
+            texture_name = item['sprite']
 
             completed_teams = []
 
@@ -174,13 +173,12 @@ def generate_image():
                 completed_teams = [team for team, value in item.get("completed", {}).items() if value]
 
             # Path to texture
-            texture_folder = os.path.join(TEXTURES_DIR, texture_type)
-            texture_path = os.path.join(texture_folder, f"{texture_name}.png")
-            
+            texture_path = os.path.join(TEXTURES_DIR, f"{texture_name}")
+
             # Check if texture exists
             if not os.path.exists(texture_path):
-                return jsonify({"error": f"Texture {texture_name}.png not found (Searching in {texture_path} for texture type {texture_type})."}), 404
-            
+                return jsonify({"error": f"Texture {texture_name} not found (Searching in {texture_path})"}), 404
+
             # Open texture
             texture_image = Image.open(texture_path)
             
@@ -212,8 +210,8 @@ def generate_image():
                     placement = team_placements.get(completed_team)
 
                     if not rectColor or not placement:
-                        return jsonify({"error": f"Invalid team key entered ({completed_team} in 'completed' section of {texture_type}/{texture_name} [row {row}, column {column}])."}), 404
-                    
+                        return jsonify({"error": f"Invalid team key entered ({completed_team} in 'completed' section of '{texture_name}' [row {row}, column {column}])."}), 404
+
                     match gamemode:
                         case "1P":
                             if placement == "full":
@@ -221,44 +219,44 @@ def generate_image():
                         case "2P":
                             match placement:
                                 case "top":
-                                    drawLine(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
-                                    drawLine(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "bottom":
-                                    drawLine(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
-                                    drawLine(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "left":
-                                    drawLine(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
-                                    drawLine(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "right":
-                                    drawLine(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
-                                    drawLine(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case _:
-                                    if placement != None:
+                                    if placement is not None:
                                         return jsonify({"error": f"Invalid placement key entered ({placement} in 'placements' section of 'settings')."}), 404
                         case "3P":
                             match placement:
                                 case "top":
-                                    drawLine(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
-                                    drawLine(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "bottom":
-                                    drawLine(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
-                                    drawLine(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "left":
-                                    drawLine(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
-                                    drawLine(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "top-left", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "bottom-left", cell_x, cell_y, cell_size, rectColor, padding)
                                 case "right":
-                                    drawLine(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
-                                    drawLine(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "top-right", cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, "bottom-right", cell_x, cell_y, cell_size, rectColor, padding)
                                 case _:
-                                    drawLine(draw, placement, cell_x, cell_y, cell_size, rectColor, padding)
+                                    draw_line(draw, placement, cell_x, cell_y, cell_size, rectColor, padding)
                         case "4P":
-                            drawLine(draw, placement, cell_x, cell_y, cell_size, rectColor, padding)
+                            draw_line(draw, placement, cell_x, cell_y, cell_size, rectColor, padding)
                         case _:
                             return jsonify({"error": f"Invalid gamemode key entered ({gamemode} in 'settings' section)."}), 404
         
         # Detect and draw bingo
-        bingo_result = detectBingo(grid_size, items, draw, cell_size, outline_width, line_width, team_names, team_colors, padding)
-        
+        bingo_result = detect_bingo(grid_size, items, draw, cell_size, outline_width, line_width, team_names, team_colors, padding)
+
         # Save image
         filename = f"{uuid.uuid4()}.png"
         filepath = os.path.join(OUTPUT_DIR, filename)

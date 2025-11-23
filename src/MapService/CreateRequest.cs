@@ -15,5 +15,8 @@ namespace MapService
 
         [JsonPropertyName("difficulty")]
         public string? Difficulty { get; set; }
+
+        [JsonPropertyName("max_per_group_or_material")]
+        public int? MaxPerGroupOrMaterial { get; set; }
     }
 }
