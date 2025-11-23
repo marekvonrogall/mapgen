@@ -1,0 +1,35 @@
+services:
+  # Map handler service
+  mapgen:
+    build:
+      context: ./src/MapService
+    networks:
+      - localnet
+
+  # Image generation service
+  imggen:
+    build:
+      context: ./src/ImageService
+    networks:
+      - localnet
+    volumes:
+      - imggen-public:/app/public
+
+  # NGINX API Gateway
+  nginx:
+    build:
+      context: ./src/nginx
+    networks:
+      - localnet
+    ports:
+      - "8080:80"
+    depends_on:
+      - mapgen
+      - imggen
+    volumes:
+      - imggen-public:/app/public
+
+volumes:
+  imggen-public:
+networks:
+  localnet:
