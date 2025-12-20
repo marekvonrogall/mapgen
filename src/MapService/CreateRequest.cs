@@ -18,5 +18,8 @@ namespace MapService
 
         [JsonPropertyName("max_per_group_or_material")]
         public int? MaxPerGroupOrMaterial { get; set; }
+        
+        [JsonPropertyName("placement_mode")]
+        public string? PlacementMode { get; set; }
     }
 }

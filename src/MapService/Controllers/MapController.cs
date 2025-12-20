@@ -24,6 +24,8 @@ public class MapController : ControllerBase
             message
         });
     }
+    
+    private static readonly List<string> DifficultyOrder = new() { "very easy", "easy", "medium", "hard", "very hard" };
 
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRequest request)
@@ -31,8 +33,9 @@ public class MapController : ControllerBase
         int gridSize = request.GridSize ?? 5;
         string gameMode = request.GameMode ?? "1P";
         string teamNames = request.TeamNames ?? "";
-        string difficulty = request.Difficulty ?? "medium";
-        int maxPerGroupOrMaterial = request.MaxPerGroupOrMaterial ?? 2;
+        string difficultyInput = request.Difficulty ?? "easy,medium,hard";
+        int maxPerGroupOrMaterial = request.MaxPerGroupOrMaterial ?? 1;
+        string placementMode = request.PlacementMode ?? "circles";
 
         if (gridSize < 1 || gridSize > 9)
         {
@@ -42,6 +45,11 @@ public class MapController : ControllerBase
         if (!new[] { "1P", "2P", "3P", "4P" }.Contains(gameMode))
         {
             return BadRequest(new { error = "Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P." });
+        }
+
+        if (!new[] { "random", "circles", "flipped" }.Contains(placementMode))
+        {
+            return BadRequest(new { error = "Invalid placement mode. Accepted values are 'random', 'circles' and 'flipped'." });
         }
 
         if (string.IsNullOrWhiteSpace(teamNames))
@@ -64,10 +72,24 @@ public class MapController : ControllerBase
             return BadRequest(new { error = "Duplicate team names are not allowed." });
         }
 
-        var validDifficulties = new[] { "very easy", "easy", "medium", "hard", "very hard" };
-        if (!validDifficulties.Contains(difficulty))
+        var validDifficulties = DifficultyOrder;
+        var difficultyList = difficultyInput
+            .Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(d => d.ToLower())
+            .Distinct()
+            .ToList();
+        
+        if (difficultyList.Contains("all"))
         {
-            return BadRequest(new { error = $"Invalid difficulty '{request.Difficulty}'. Valid values are: {string.Join(", ", validDifficulties)}." });
+            difficultyList = validDifficulties.ToList();
+        }
+
+        if (!difficultyList.All(d => validDifficulties.Contains(d)))
+        {
+            return BadRequest(new
+            {
+                error = $"Invalid difficulty value(s). Valid values are: {string.Join(", ", validDifficulties)} or 'all'."
+            });
         }
 
         var placements = GetPlacements(gameMode, teamList);
@@ -80,19 +102,19 @@ public class MapController : ControllerBase
 
         var teams = new List<object>();
 
-        for (int i = 0; i < teamList.Length; i++)
+        foreach (var team in teamList)
         {
             teams.Add(new
             {
-                name = teamList[i],
-                placement = placements[teamList[i]]
+                name = team,
+                placement = placements[team]
             });
         }
 
         var payload = new
         {
             settings = new { grid_size = gridSize, game_mode = gameMode, teams },
-            items = GenerateItems(gridSize, bingoItems, teamList, difficulty, maxPerGroupOrMaterial)
+            items = GenerateItems(gridSize, bingoItems, teamList, difficultyList, maxPerGroupOrMaterial, placementMode)
         };
 
         var jsonPayload = JsonSerializer.Serialize(payload);
@@ -128,67 +150,103 @@ public class MapController : ControllerBase
         }
     }
 
-    private List<object> GenerateItems(int gridSize, List<BingoItem> bingoItems, string[] teams, string inputDifficulty, int maxPerGroupOrMaterial)
+    private List<object> GenerateItems(int gridSize, List<BingoItem> bingoItems, string[] teams, List<string> allowedDifficulties, int maxPerGroupOrMaterial, string placementMode)
     {
         var random = new Random();
         var items = new List<object>();
         var selectedItems = new HashSet<string>();
 
-        var difficulties = new List<string> { "very easy", "easy", "medium", "hard", "very hard" };
-        int inputIndex = difficulties.IndexOf(inputDifficulty.ToLower());
-        if (inputIndex == -1) throw new ArgumentException("Invalid difficulty provided.");
+        placementMode = placementMode?.ToLowerInvariant() ?? "random";
+        if (!new[] { "random", "circles", "flipped" }.Contains(placementMode))
+            throw new ArgumentException("placement must be 'random', 'circles' or 'flipped'.");
+    
+        var allowedIndexes = allowedDifficulties
+            .Select(d => DifficultyOrder.IndexOf(d))
+            .Where(i => i >= 0)
+            .Distinct()
+            .OrderBy(i => i)
+            .ToList();
+    
+        if (allowedIndexes.Count == 0)
+            throw new ArgumentException("No valid difficulties provided.");
 
-        int maxCenterIndex = inputDifficulty.ToLower() switch
-        {
-            "very easy" => difficulties.IndexOf("easy"),
-            "easy" => difficulties.IndexOf("medium"),
-            "medium" => difficulties.IndexOf("hard"),
-            "hard" => difficulties.IndexOf("very hard"),
-            "very hard" => difficulties.IndexOf("very hard"),
-            _ => throw new ArgumentException("Invalid difficulty provided.")
-        };
-
-        int center = gridSize / 2;
-        int maxDistance = center;
-
-        // groups & materials
-        var allGroups = bingoItems.SelectMany(b => b.Groups).Distinct().ToList();
-        var allMaterials = bingoItems.Select(b => b.Material).Where(m => !string.IsNullOrEmpty(m)).Distinct().ToList();
-
+        int minIndex = allowedIndexes.Min();
+        int maxIndex = allowedIndexes.Max();
+    
+        int maxDistance = gridSize / 2;
         var groupCounts = new Dictionary<string, int>();
         var materialCounts = new Dictionary<string, int>();
-
+    
+        // ring-to-difficulty mapping for circles/flipped
+        Dictionary<int, List<int>> ringDifficultyMap = new();
+        if (placementMode == "circles" || placementMode == "flipped")
+        {
+            for (int ring = 0; ring <= maxDistance; ring++)
+            {
+                bool isCenter = ring == maxDistance;
+                if (isCenter)
+                {
+                    int centerIndex = placementMode == "circles"
+                        ? Math.Min(maxIndex + 1, DifficultyOrder.Count - 1) // hardest in center
+                        : Math.Max(minIndex - 1, 0);                        // easiest in center
+                    ringDifficultyMap[ring] = new List<int> { centerIndex };
+                }
+                else
+                {
+                    double fractionStart = (double)ring / maxDistance;
+                    double fractionEnd = (double)(ring + 1) / maxDistance;
+    
+                    int startIdx, endIdx;
+                    if (placementMode == "circles")
+                    {
+                        startIdx = (int)Math.Floor(fractionStart * (allowedIndexes.Count - 1));
+                        endIdx = (int)Math.Ceiling(fractionEnd * (allowedIndexes.Count - 1));
+                    }
+                    else // flipped
+                    {
+                        startIdx = allowedIndexes.Count - 1 - (int)Math.Ceiling(fractionEnd * (allowedIndexes.Count - 1));
+                        endIdx = allowedIndexes.Count - 1 - (int)Math.Floor(fractionStart * (allowedIndexes.Count - 1));
+                    }
+    
+                    startIdx = Math.Clamp(startIdx, 0, allowedIndexes.Count - 1);
+                    endIdx = Math.Clamp(endIdx, 0, allowedIndexes.Count - 1);
+    
+                    ringDifficultyMap[ring] = allowedIndexes
+                        .Skip(Math.Min(startIdx, endIdx))
+                        .Take(Math.Abs(endIdx - startIdx) + 1)
+                        .ToList();
+                }
+            }
+        }
+    
+        // grid generation
         for (int row = 0; row < gridSize; row++)
         {
             for (int column = 0; column < gridSize; column++)
             {
-                int ringDistance = Math.Max(Math.Abs(row - center), Math.Abs(column - center));
-                double ringFactor = 1.0 - ((double)ringDistance / maxDistance);
-                int difficultyOffset = (int)Math.Round(ringFactor * (maxCenterIndex - inputIndex));
-                int chosenIndex = inputIndex + difficultyOffset;
+                string difficulty;
+    
+                if (placementMode == "random")
+                {
+                    int randomIndex = allowedIndexes[random.Next(allowedIndexes.Count)];
+                    difficulty = DifficultyOrder[randomIndex];
+                }
+                else
+                {
+                    int ring = maxDistance - Math.Max(Math.Abs(row - maxDistance), Math.Abs(column - maxDistance));
+                    var possibleIndexes = ringDifficultyMap[ring];
+                    int chosenIndex = possibleIndexes[random.Next(possibleIndexes.Count)];
+                    difficulty = DifficultyOrder[chosenIndex];
+                }
 
-                // difficulty index
-                chosenIndex = Math.Min(chosenIndex, maxCenterIndex);
-                string difficulty = difficulties[chosenIndex];
-
-                // filter items by difficulty, counts, and uniqueness
+                // item selection
                 var itemList = bingoItems
                     .Where(item => item.Difficulty == difficulty && !selectedItems.Contains(item.Name))
                     .Where(item =>
                     {
-                        // Check group counts
-                        bool groupOk = true;
-                        foreach (var g in item.Groups)
-                        {
-                            if (groupCounts.GetValueOrDefault(g, 0) >= maxPerGroupOrMaterial)
-                                groupOk = false;
-                        }
-
-                        // Check material counts
-                        bool materialOk = true;
-                        if (!string.IsNullOrEmpty(item.Material) && materialCounts.GetValueOrDefault(item.Material, 0) >= maxPerGroupOrMaterial)
-                            materialOk = false;
-
+                        // Check group & material counts
+                        bool groupOk = maxPerGroupOrMaterial == 0 || item.Groups.All(g => groupCounts.GetValueOrDefault(g, 0) < maxPerGroupOrMaterial);
+                        bool materialOk = maxPerGroupOrMaterial == 0 || string.IsNullOrEmpty(item.Material) || materialCounts.GetValueOrDefault(item.Material, 0) < maxPerGroupOrMaterial;
                         return groupOk && materialOk;
                     })
                     .ToList();
@@ -212,7 +270,7 @@ public class MapController : ControllerBase
                 if (!string.IsNullOrEmpty(selectedItem.Material))
                     materialCounts[selectedItem.Material] = materialCounts.GetValueOrDefault(selectedItem.Material, 0) + 1;
 
-                var completed = teams.ToDictionary(team => team, team => false);
+                var completed = teams.ToDictionary(team => team, _ => false);
 
                 items.Add(new
                 {
@@ -230,56 +288,7 @@ public class MapController : ControllerBase
         return items;
     }
     
-    private Dictionary<string, double> GetDifficultyChances(string inputDifficulty)
-    {
-        return inputDifficulty.ToLower() switch
-        {
-            "very easy" => new Dictionary<string, double>
-            {
-                { "very easy", 0.9 },
-                { "easy", 0.1 },
-                { "medium", 0.0 },
-                { "hard", 0.0 },
-                { "very hard", 0.0 }
-            },
-            "easy" => new Dictionary<string, double>
-            {
-                { "very easy", 0.6 },
-                { "easy", 0.3 },
-                { "medium", 0.1 },
-                { "hard", 0.0 },
-                { "very hard", 0.0 }
-            },
-            "medium" => new Dictionary<string, double>
-            {
-                { "very easy", 0.4 },
-                { "easy", 0.3 },
-                { "medium", 0.2 },
-                { "hard", 0.1 },
-                { "very hard", 0.0 }
-            },
-            "hard" => new Dictionary<string, double>
-            {
-                { "very easy", 0.1 },
-                { "easy", 0.2 },
-                { "medium", 0.3 },
-                { "hard", 0.3 },
-                { "very hard", 0.1 }
-            },
-            "very hard" => new Dictionary<string, double>
-            {
-                { "very easy", 0.0 },
-                { "easy", 0.1 },
-                { "medium", 0.2 },
-                { "hard", 0.4 },
-                { "very hard", 0.3 }
-            },
-            _ => throw new ArgumentException("Invalid difficulty provided.")
-        };
-    }
-
-
-    private Dictionary<string, string> GetPlacements(string gameMode, string[] teams)
+    private Dictionary<string, string>? GetPlacements(string gameMode, string[] teams)
     {
         return gameMode switch
         {
