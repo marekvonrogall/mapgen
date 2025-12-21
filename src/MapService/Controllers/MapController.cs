@@ -26,71 +26,69 @@ public class MapController : ControllerBase
     }
     
     private static readonly List<string> DifficultyOrder = new() { "very easy", "easy", "medium", "hard", "very hard" };
+    private static readonly string[] ValidGameModes = { "1P", "2P", "3P", "4P" };
+    private static readonly string[] ValidPlacementModes = { "random", "circles", "flipped" };
 
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRequest request)
     {
+        var errors = new List<string>();
+        
+        // Grid Size
         int gridSize = request.GridSize ?? 5;
-        string gameMode = request.GameMode ?? "1P";
-        string teamNames = request.TeamNames ?? "";
-        string difficultyInput = request.Difficulty ?? "easy,medium,hard";
-        int maxPerGroupOrMaterial = request.MaxPerGroupOrMaterial ?? 1;
-        string placementMode = request.PlacementMode ?? "circles";
-
         if (gridSize < 1 || gridSize > 9)
-        {
-            return BadRequest(new { error = "Invalid grid_size. grid_size must be in range of 1 and 9." });
-        }
+            errors.Add($"Invalid grid size {gridSize}. The grid size must be in the range of 1 and 9.");
 
-        if (!new[] { "1P", "2P", "3P", "4P" }.Contains(gameMode))
-        {
-            return BadRequest(new { error = "Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P." });
-        }
+        // Game Mode
+        string gameMode = request.GameMode ?? "1P";
+        bool validGameMode = ValidGameModes.Contains(gameMode, StringComparer.OrdinalIgnoreCase);
+        if (!validGameMode)
+            errors.Add("Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P.");
 
-        if (!new[] { "random", "circles", "flipped" }.Contains(placementMode))
-        {
-            return BadRequest(new { error = "Invalid placement mode. Accepted values are 'random', 'circles' and 'flipped'." });
-        }
+        int teamCount = 0;
+        if (validGameMode && int.TryParse(gameMode[..1], out int firstDigit))
+            teamCount = firstDigit;
 
-        if (string.IsNullOrWhiteSpace(teamNames))
-        {
-            return BadRequest(new { error = "Teams must be provided." });
-        }
-
-        string[] teamList = teamNames.Split(",");
-        if ((gameMode == "1P" && teamList.Length != 1) ||
-            (gameMode == "2P" && teamList.Length != 2) ||
-            (gameMode == "3P" && teamList.Length != 3) ||
-            (gameMode == "4P" && teamList.Length != 4))
-        {
-            return BadRequest(new { error = $"Invalid number of teams for game mode {gameMode}." });
-        }
+        // Team Names
+        string[] teamList;
+        if (string.IsNullOrWhiteSpace(request.TeamNames))
+            teamList = Enumerable.Range(1, teamCount).Select(i => $"team_{i}").ToArray();
+        else
+            teamList = request.TeamNames
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(t => t.Trim())
+                .ToArray();
         
         var uniqueTeams = teamList.Distinct().ToList();
-        if (uniqueTeams.Count != teamList.Length)
-        {
-            return BadRequest(new { error = "Duplicate team names are not allowed." });
-        }
+        if (teamList.Length != uniqueTeams.Count)
+            errors.Add("Duplicate team names are not allowed.");
+        if (teamList.Length != teamCount)
+            errors.Add($"Expected {teamCount} team names for game mode {gameMode}, got {teamList.Length}.");
 
-        var validDifficulties = DifficultyOrder;
+        // Placement Mode
+        string placementMode = string.IsNullOrWhiteSpace(request.PlacementMode) ? "circles" : request.PlacementMode;
+        if (!ValidPlacementModes.Contains(placementMode))
+            errors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circles & flipped.");
+        
+        // Difficulty
+        string difficultyInput = string.IsNullOrWhiteSpace(request.Difficulty) ? "easy,medium,hard" : request.Difficulty;
         var difficultyList = difficultyInput
             .Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Select(d => d.ToLower())
             .Distinct()
             .ToList();
-        
         if (difficultyList.Contains("all"))
-        {
-            difficultyList = validDifficulties.ToList();
-        }
+            difficultyList = DifficultyOrder.ToList();
+        if (!difficultyList.All(d => DifficultyOrder.Contains(d)))
+            errors.Add($"Invalid difficulty value(s). Valid values are: {string.Join(", ", DifficultyOrder)} or all.");
 
-        if (!difficultyList.All(d => validDifficulties.Contains(d)))
-        {
-            return BadRequest(new
-            {
-                error = $"Invalid difficulty value(s). Valid values are: {string.Join(", ", validDifficulties)} or 'all'."
-            });
-        }
+        // Max Items Per Group / Material
+        int maxPerGroupOrMaterial = request.MaxPerGroupOrMaterial ?? 1;
+        if (maxPerGroupOrMaterial < 0)
+            errors.Add("Max items per group or material cannot be negative. Disable group/material check by setting it to 0.");
+        
+        if (errors.Any())
+            return BadRequest(new { errors });
 
         var placements = GetPlacements(gameMode, teamList);
 
@@ -157,8 +155,8 @@ public class MapController : ControllerBase
         var selectedItems = new HashSet<string>();
 
         placementMode = placementMode?.ToLowerInvariant() ?? "random";
-        if (!new[] { "random", "circles", "flipped" }.Contains(placementMode))
-            throw new ArgumentException("placement must be 'random', 'circles' or 'flipped'.");
+        if (!ValidPlacementModes.Contains(placementMode))
+            throw new ArgumentException("Placement mode must be 'random', 'circles' or 'flipped'.");
     
         var allowedIndexes = allowedDifficulties
             .Select(d => DifficultyOrder.IndexOf(d))

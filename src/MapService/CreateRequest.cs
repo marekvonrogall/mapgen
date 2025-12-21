@@ -12,14 +12,14 @@ namespace MapService
 
         [JsonPropertyName("team_names")]
         public string? TeamNames { get; set; }
+        
+        [JsonPropertyName("placement_mode")]
+        public string? PlacementMode { get; set; }
 
         [JsonPropertyName("difficulty")]
         public string? Difficulty { get; set; }
 
         [JsonPropertyName("max_per_group_or_material")]
         public int? MaxPerGroupOrMaterial { get; set; }
-        
-        [JsonPropertyName("placement_mode")]
-        public string? PlacementMode { get; set; }
     }
 }
