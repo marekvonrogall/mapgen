@@ -92,8 +92,8 @@ public class MapController : ControllerBase
 
         var placements = GetPlacements(gameMode, teamList);
 
-        var bingoItems = await LoadValidBingoItems();
-        if (bingoItems == null)
+        var bingoItems = LoadValidBingoItems();
+        if (bingoItems.Count == 0)
         {
             return StatusCode(500, new { error = "Failed to load valid bingo items." });
         }
@@ -135,22 +135,21 @@ public class MapController : ControllerBase
         return Content(JsonSerializer.Serialize(new { mapURL, mapRAW = payload }), "application/json");
     }
 
-    private async Task<List<BingoItem>> LoadValidBingoItems()
+    private static readonly Lazy<List<BingoItem>> _cachedItems =
+    new(() =>
     {
-        try
-        {
-            var json = await System.IO.File.ReadAllTextAsync("minecraft_1.21.10_items.json");
-            return JsonSerializer.Deserialize<List<BingoItem>>(json);
-        }
-        catch
-        {
-            return null;
-        }
+        var json = System.IO.File.ReadAllText("items.json");
+        return JsonSerializer.Deserialize<List<BingoItem>>(json) ?? new List<BingoItem>();
+    });
+
+    private List<BingoItem> LoadValidBingoItems()
+    {
+        return _cachedItems.Value;
     }
 
     private List<object> GenerateItems(int gridSize, List<BingoItem> bingoItems, string[] teams, List<string> allowedDifficulties, int maxPerGroupOrMaterial, string placementMode)
     {
-        var random = new Random();
+        var random = Random.Shared;
         var items = new List<object>();
         var selectedItems = new HashSet<string>();
 
@@ -286,33 +285,33 @@ public class MapController : ControllerBase
         return items;
     }
     
-    private Dictionary<string, string>? GetPlacements(string gameMode, string[] teams)
+    private Dictionary<string, string> GetPlacements(string gameMode, string[] teams)
     {
         return gameMode switch
         {
             "1P" => new Dictionary<string, string>
-        {
-            { teams[0], "full" }
-        },
-        "2P" => new Dictionary<string, string>
-        {
-            { teams[0], "top" },
-            { teams[1], "bottom" }
-        },
-        "3P" => new Dictionary<string, string>
-        {
-            { teams[0], "bottom" },
-            { teams[1], "top-right" },
-            { teams[2], "top-left" }
-        },
-        "4P" => new Dictionary<string, string>
-        {
-            { teams[0], "top-right" },
-            { teams[1], "top-left" },
-            { teams[2], "bottom-right" },
-            { teams[3], "bottom-left" }
-        },
-        _ => null
+            {
+                { teams[0], "full" }
+            },
+            "2P" => new Dictionary<string, string>
+            {
+                { teams[0], "top" },
+                { teams[1], "bottom" }
+            },
+            "3P" => new Dictionary<string, string>
+            {
+                { teams[0], "bottom" },
+                { teams[1], "top-right" },
+                { teams[2], "top-left" }
+            },
+            "4P" => new Dictionary<string, string>
+            {
+                { teams[0], "top-right" },
+                { teams[1], "top-left" },
+                { teams[2], "bottom-right" },
+                { teams[3], "bottom-left" }
+            },
+            _ => throw new InvalidOperationException($"Invalid game mode {gameMode} provided!")
         };
     }
 
