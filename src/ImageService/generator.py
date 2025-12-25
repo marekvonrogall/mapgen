@@ -1,5 +1,5 @@
-from flask import Flask, jsonify, request
-from PIL import Image, ImageDraw
+from flask import Flask, jsonify, request, abort, make_response
+from PIL import Image, ImageDraw, ImageColor
 import os
 import uuid
 
@@ -20,7 +20,7 @@ DEFAULT_TEAM_COLORS = [
 
 
 def detect_bingo(
-    grid_size, items, draw, cell_width, border_width, line_width, team_info, padding
+    grid_size, items, draw, grid_params, team_info
 ):
     # Grid for each team
     grid = {
@@ -41,8 +41,8 @@ def detect_bingo(
                     grid[team][row][column] = True
 
     def calculate_cell_coordinates(row, column):
-        x = int(column * cell_width + border_width + (line_width * column))
-        y = int(row * cell_width + border_width + (line_width * row))
+        x = int(column * grid_params["cell_width"] + grid_params["border_width"] + (grid_params["line_width"] * column))
+        y = int(row * grid_params["cell_width"] + grid_params["border_width"] + (grid_params["line_width"] * row))
         return x, y
 
     # Check for bingo
@@ -57,7 +57,7 @@ def detect_bingo(
                 end_x, end_y = calculate_cell_coordinates(i, grid_size - 1)
                 if grid_size > 1:
                     draw_bingo_line(
-                        draw, start_x, start_y, end_x, end_y, cell_width, team_color, padding
+                        draw, start_x, start_y, end_x, end_y, grid_params["cell_width"], team_color, grid_params["padding"]
                     )
                 return team_name
 
@@ -65,7 +65,7 @@ def detect_bingo(
                 start_x, start_y = calculate_cell_coordinates(0, i)
                 end_x, end_y = calculate_cell_coordinates(grid_size - 1, i)
                 draw_bingo_line(
-                    draw, start_x, start_y, end_x, end_y, cell_width, team_color, padding
+                    draw, start_x, start_y, end_x, end_y, grid_params["cell_width"], team_color, grid_params["padding"]
                 )
                 return team_name
 
@@ -74,7 +74,7 @@ def detect_bingo(
             start_x, start_y = calculate_cell_coordinates(0, 0)
             end_x, end_y = calculate_cell_coordinates(grid_size - 1, grid_size - 1)
             draw_bingo_line(
-                draw, start_x, start_y, end_x, end_y, cell_width, team_color, padding
+                draw, start_x, start_y, end_x, end_y, grid_params["cell_width"], team_color, grid_params["padding"]
             )
             return team_name
 
@@ -82,7 +82,7 @@ def detect_bingo(
             start_x, start_y = calculate_cell_coordinates(0, grid_size - 1)
             end_x, end_y = calculate_cell_coordinates(grid_size - 1, 0)
             draw_bingo_line(
-                draw, start_x, start_y, end_x, end_y, cell_width, team_color, padding
+                draw, start_x, start_y, end_x, end_y, grid_params["cell_wdith"], team_color, grid_params["padding"]
             )
             return team_name
 
@@ -188,103 +188,149 @@ def draw_line(
                 continue
 
 
-def compute_grid_params(
-    grid_size: int,
-    pixel_perfect: bool = True,
-    constraints: dict = None,
-):
-    if constraints is None:
-        constraints = {}
+def compute_grid_params(grid_size: int, constraints: dict) -> dict[str, int]:
+    errors = []
 
-    min_padding = constraints.get("min_padding", 1)
-    min_line_width = constraints.get("min_line_width", 1)
-    min_border_width = constraints.get("min_border_width", 1)
+    min_padding = constraints.get("min_padding", 0)
+    max_padding = constraints.get("max_padding", None)
+    min_line_width = constraints.get("min_line_width", 0)
+    max_line_width = constraints.get("max_line_width", None)
+    min_border_width = constraints.get("min_border_width", 0)
+    max_border_width = constraints.get("max_border_width", None)
+    pixel_perfect = constraints.get("pixel_perfect", True)
+    fill_entire_board = constraints.get("fill_entire_board", True)
+
+    int_keys = [
+        "min_padding", "max_padding",
+        "min_line_width", "max_line_width",
+        "min_border_width", "max_border_width"
+    ]
+    bool_keys = ["pixel_perfect", "fill_entire_board"]
+    min_max_pairs = [
+        ("min_padding", "max_padding"),
+        ("min_line_width", "max_line_width"),
+        ("min_border_width", "max_border_width")
+    ]
+
+    for key in int_keys:
+        value = constraints.get(key, None)
+        if value is not None and not isinstance(value, int):
+            errors.append(f"Constraints: '{key}': Expected integer, got {type(value).__name__}")
+        elif isinstance(value, int) and value < 0:
+            errors.append(f"Constraints: '{key}': Must be >= 0, got {value}")
+
+    for key in bool_keys:
+        value = constraints.get(key, None)
+        if value is not None and not isinstance(value, bool):
+            errors.append(f"Constraints: '{key}': Expected boolean, got {type(value).__name__}")
+
+    for min_key, max_key in min_max_pairs:
+        min_value = constraints.get(min_key, 0)
+        max_value = constraints.get(max_key, None)
+        if isinstance(min_value, int) and isinstance(max_value, int):
+            if max_value is not None and min_value > max_value:
+                errors.append(
+                    f"Constraints: '{min_key}': Cannot be greater than '{max_key}' ({min_value} > {max_value})"
+                )
+
+    if errors:
+        abort(make_response(jsonify({"errors": errors}), 400))
 
     def is_pixel_perfect(asset_width: int) -> bool:
-        return (
-                asset_width % BASE_ASSET_WIDTH == 0 or BASE_ASSET_WIDTH % asset_width == 0
+        return asset_width % BASE_ASSET_WIDTH == 0 or BASE_ASSET_WIDTH % asset_width == 0
+
+    def evaluate() -> tuple[bool, dict[str, int]]:
+        asset_width = cell_width - padding * 2
+
+        if asset_width <= 0:
+            return False, {}
+
+        if pixel_perfect and not is_pixel_perfect(asset_width):
+            return False, {}
+
+        score = (
+            asset_width * 1000
+            - (padding - min_padding) * 20
+            - (line_width - min_line_width) * 10
+            - (border_width - min_border_width) * 10
         )
+
+        return True, {
+            "cell_width": cell_width,
+            "asset_width": asset_width,
+            "padding": padding,
+            "line_width": line_width,
+            "border_width": border_width,
+            "score": score,
+        }
+
+    if max_line_width is None:
+        max_line_width = IMG_SIZE
+    if max_border_width is None:
+        max_border_width = IMG_SIZE
+    if max_padding is None:
+        max_padding = IMG_SIZE // 2
 
     best = None
 
-    if grid_size == 1:
-        max_line_width = min_line_width + 1
-        max_border_width = (IMG_SIZE - 1) // 2
-
-    else:
-        max_line_width = max(
-            min_line_width,
-            (IMG_SIZE - 2 * min_border_width - grid_size)
-            // (grid_size - 1)
-        )
-
-        max_border_width = max(
-            min_border_width,
-            (IMG_SIZE - (grid_size - 1) * min_line_width - grid_size)
-            // 2
-        )
-
-    for border_width in range(min_border_width, max_border_width):
-        for line_width in range(min_line_width, max_line_width):
+    for border_width in range(min_border_width, max_border_width + 1):
+        if max_border_width == 0:
+            border_width = 0
+        for line_width in range(min_line_width, max_line_width + 1):
+            if max_line_width == 0:
+                line_width = 0
             total_lines = line_width * (grid_size - 1)
             total_borders = border_width * 2
             remaining = IMG_SIZE - total_lines - total_borders
 
-            if remaining <= 0 or remaining % grid_size != 0:
+            if remaining <= 0:
                 continue
 
-            cell_width = remaining // grid_size
+            cell_width_candidates = []
 
-            for padding in range(min_padding, cell_width // 2 + 1):
-                asset_width = cell_width - 2 * padding
-                if asset_width <= 0:
+            if fill_entire_board:
+                if remaining % grid_size != 0:
                     continue
+                cw = remaining // grid_size
+                cell_width_candidates.append(cw)
+            else:
+                cell_width_candidates = list(range(1, remaining // grid_size + 1))
 
-                if pixel_perfect and not is_pixel_perfect(asset_width):
-                    continue
+            for cell_width in cell_width_candidates:
+                mp = min(max_padding, cell_width // 2)
 
-                # - Prefer larger assets
-                # - Penalize thick padding (if above min)
-                # - Penalize thick line and border width (if above min)
-                score = (
-                    asset_width * 1000
-                    - (padding - min_padding) * 20
-                    - (line_width - min_line_width) * 10
-                    - (border_width - min_border_width) * 10
-                )
+                for padding in range(min_padding, mp + 1):
+                    if mp == 0:
+                        padding = 0
 
-                candidate = {
-                    "cell_width": cell_width,
-                    "asset_width": asset_width,
-                    "padding": padding,
-                    "line_width": line_width,
-                    "border_width": border_width,
-                    "score": score,
-                }
+                    valid, candidate = evaluate()
+                    if not valid:
+                        continue
 
-                if best is None or candidate["score"] > best["score"]:
-                    best = candidate
+                    if best is None or candidate["score"] > best["score"]:
+                        best = candidate
 
     if best is None:
-        return jsonify(
+        abort(make_response(jsonify(
             {
-                "error": f"No valid grid configuration found under given constraints.)"
+                "error": "No valid grid configuration found under given constraints."
             }
-        ), 400
+        ), 400))
 
     best.pop("score")
     return best
 
+
 pre_computed_grid_params = {
-    1: compute_grid_params(1, True, {"min_padding": 6, "min_line_width": 3, "min_border_width": 3}),
-    2: compute_grid_params(2, True, {"min_padding": 3, "min_line_width": 7, "min_border_width": 9}),
-    3: compute_grid_params(3, True, {"min_padding": 1, "min_line_width": 3, "min_border_width": 3}),
-    4: compute_grid_params(4, True, {"min_padding": 1, "min_line_width": 1, "min_border_width": 3}),
-    5: compute_grid_params(5, True, {"min_padding": 1, "min_line_width": 1, "min_border_width": 3}),
-    6: compute_grid_params(6, True, {"min_padding": 1, "min_line_width": 1, "min_border_width": 1}),
-    7: compute_grid_params(7, False, {"min_padding": 1, "min_line_width": 1, "min_border_width": 1}),
-    8: compute_grid_params(8, False, {"min_padding": 1, "min_line_width": 1, "min_border_width": 1}),
-    9: compute_grid_params(9, False, {"min_padding": 1, "min_line_width": 1, "min_border_width": 1}),
+    1: compute_grid_params(1, {"min_padding": 8, "min_line_width": 0, "min_border_width": 8, "pixel_perfect": True}),
+    2: compute_grid_params(2, {"min_padding": 3, "min_line_width": 7, "min_border_width": 9, "pixel_perfect": True}),
+    3: compute_grid_params(3, {"min_padding": 1, "min_line_width": 3, "min_border_width": 3, "pixel_perfect": True}),
+    4: compute_grid_params(4, {"min_padding": 1, "min_line_width": 1, "min_border_width": 3, "pixel_perfect": True}),
+    5: compute_grid_params(5, {"min_padding": 1, "min_line_width": 1, "min_border_width": 3, "pixel_perfect": True}),
+    6: compute_grid_params(6, {"min_padding": 1, "min_line_width": 1, "min_border_width": 1, "pixel_perfect": True}),
+    7: compute_grid_params(7, {"min_padding": 1, "min_line_width": 1, "min_border_width": 1, "pixel_perfect": False}),
+    8: compute_grid_params(8, {"min_padding": 1, "min_line_width": 1, "min_border_width": 1, "pixel_perfect": False}),
+    9: compute_grid_params(9, {"min_padding": 1, "min_line_width": 1, "min_border_width": 1, "pixel_perfect": False}),
 }
 
 @app.route("/generate", methods=["POST"])
@@ -299,8 +345,9 @@ def generate_image():
             settings = data.get("mapRAW", {}).get("settings", {})
             items = data.get("mapRAW", {}).get("items", [])
 
-        teams = settings.get("teams", [])
         grid_size = settings.get("grid_size", 5)
+        teams = settings.get("teams", [])
+        constraints = settings.get("constraints", {})
 
         if grid_size < 1 or grid_size > 9:
             return jsonify(
@@ -310,11 +357,18 @@ def generate_image():
             ), 400
 
         team_info = {}
+        invalid_colors = []
 
         for i, team in enumerate(teams):
             team_name = team.get("name", DEFAULT_TEAM_NAMES[i])
             team_placement = team.get("placement", None)
-            team_color = team.get("color", DEFAULT_TEAM_COLORS[i])
+            team_color = str(team.get("color", None))
+            if not team_color:
+                team_color = DEFAULT_TEAM_COLORS[i]
+            try:
+                ImageColor.getrgb(team_color)
+            except (ValueError, TypeError):
+                invalid_colors.append(team_color)
 
             team_info[team_name] = {
                 "name": team_name,
@@ -323,16 +377,44 @@ def generate_image():
             }
 
         # Colors
-        bg_color = (214, 190, 150)  # Light Beige
-        line_color = (153, 135, 108)  # Dark Beige
-        outline_color = (153, 135, 108)  # Dark Beige
+        bg_color = settings.get("bg_color", None) or settings.get("background_color", None)
+        fg_color = settings.get("fg_color", None) or settings.get("foreground_color", None)
+        line_color = settings.get("line_color", None) or fg_color
+        border_color = settings.get("border_color", None) or fg_color
+
+        if not bg_color:
+            bg_color = (214, 190, 150) # Light Beige
+        if not fg_color:
+            fg_color = (153, 135, 108) # Dark Beige
+        if not line_color:
+            line_color = fg_color
+        if not border_color:
+            border_color = fg_color
+
+        colors = [bg_color, fg_color, line_color, border_color]
+
+        for color in colors:
+            try:
+                ImageColor.getrgb(color)
+            except (ValueError, TypeError):
+                invalid_colors.append(color)
+
+        if invalid_colors:
+            return jsonify(
+                {
+                    "error": f"Invalid colors provided: {", ".join(invalid_colors)}"
+                }
+            ), 400
 
         # Dimensions
-        grid_params = pre_computed_grid_params.get(grid_size, None)
-        if not grid_params:
+        grid_params = None
+        if not constraints:
+            grid_params = pre_computed_grid_params.get(grid_size, None)
+
+        if constraints or not grid_params:
             grid_params = compute_grid_params(
             grid_size=grid_size,
-            pixel_perfect=True,
+            constraints=constraints,
         )
 
         # Create the base image
@@ -359,11 +441,12 @@ def generate_image():
                 draw.polygon([(0,y),(IMG_SIZE-1,y),(IMG_SIZE-1,y+grid_params["line_width"]-1),(0,y+grid_params["line_width"]-1)], fill=line_color)
 
         # Border
-        draw.rectangle(
-            (0, 0, IMG_SIZE - 1, IMG_SIZE - 1),
-            outline=outline_color,
-            width=grid_params["border_width"],
-        )
+        if grid_params["border_width"] > 0:
+            draw.rectangle(
+                (0, 0, IMG_SIZE - 1, IMG_SIZE - 1),
+                outline=border_color,
+                width=grid_params["border_width"],
+            )
 
         # Add images from textures
         for item in items:
@@ -434,52 +517,50 @@ def generate_image():
                         ), 400
 
                     types: list[str] = []
-                    match placement:
-                        case "top":
-                            types.append("top-left")
-                            types.append("top-right")
-                        case "bottom":
-                            types.append("bottom-left")
-                            types.append("bottom-right")
-                        case "left":
-                            types.append("top-left")
-                            types.append("bottom-left")
-                        case "right":
-                            types.append("top-right")
-                            types.append("bottom-right")
-                        case "full":
-                            draw.rectangle(
-                                (cell_x,
-                                    cell_y,
-                                    cell_x + grid_params["cell_width"] - 1,
-                                    cell_y + grid_params["cell_width"] - 1,
-                                ),
-                                outline=rectColor,
-                                width=grid_params["padding"],
-                            )
-                        case _:
-                            types.append(placement)
+                    if grid_params["padding"] > 0:
+                        match placement:
+                            case "top":
+                                types.append("top-left")
+                                types.append("top-right")
+                            case "bottom":
+                                types.append("bottom-left")
+                                types.append("bottom-right")
+                            case "left":
+                                types.append("top-left")
+                                types.append("bottom-left")
+                            case "right":
+                                types.append("top-right")
+                                types.append("bottom-right")
+                            case "full":
+                                draw.rectangle(
+                                    (cell_x,
+                                        cell_y,
+                                        cell_x + grid_params["cell_width"] - 1,
+                                        cell_y + grid_params["cell_width"] - 1,
+                                    ),
+                                    outline=rectColor,
+                                    width=grid_params["padding"],
+                                )
+                            case _:
+                                types.append(placement)
 
-                    draw_line(
-                        draw,
-                        types,
-                        cell_x,
-                        cell_y,
-                        grid_params["cell_width"],
-                        rectColor,
-                        grid_params["padding"],
-                    )
+                        draw_line(
+                            draw,
+                            types,
+                            cell_x,
+                            cell_y,
+                            grid_params["cell_width"],
+                            rectColor,
+                            grid_params["padding"],
+                        )
 
         # Detect and draw bingo
         bingo_result = detect_bingo(
             grid_size,
             items,
             draw,
-            grid_params["cell_width"],
-            grid_params["border_width"],
-            grid_params["line_width"],
+            grid_params,
             team_info,
-            grid_params["padding"],
         )
 
         # Save image
