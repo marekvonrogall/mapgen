@@ -12,10 +12,10 @@ IMG_SIZE = 128
 BASE_ASSET_WIDTH = 32
 DEFAULT_TEAM_NAMES = ["team1", "team2", "team3", "team4"]
 DEFAULT_TEAM_COLORS = [
-    (100, 255, 100),
-    (100, 255, 255),
-    (255, 255, 100),
-    (255, 100, 100),
+    "#64FF64",
+    "#64FFFF",
+    "#FFFF64",
+    "#FF6464",
 ]
 
 
@@ -362,9 +362,7 @@ def generate_image():
         for i, team in enumerate(teams):
             team_name = team.get("name", DEFAULT_TEAM_NAMES[i])
             team_placement = team.get("placement", None)
-            team_color = str(team.get("color", None))
-            if not team_color:
-                team_color = DEFAULT_TEAM_COLORS[i]
+            team_color = str(team.get("color") or DEFAULT_TEAM_COLORS[i])
             try:
                 ImageColor.getrgb(team_color)
             except (ValueError, TypeError):
@@ -377,19 +375,10 @@ def generate_image():
             }
 
         # Colors
-        bg_color = settings.get("bg_color", None) or settings.get("background_color", None)
-        fg_color = settings.get("fg_color", None) or settings.get("foreground_color", None)
-        line_color = settings.get("line_color", None) or fg_color
-        border_color = settings.get("border_color", None) or fg_color
-
-        if not bg_color:
-            bg_color = (214, 190, 150) # Light Beige
-        if not fg_color:
-            fg_color = (153, 135, 108) # Dark Beige
-        if not line_color:
-            line_color = fg_color
-        if not border_color:
-            border_color = fg_color
+        bg_color = str(settings.get("bg_color", None) or settings.get("background_color", None) or "#D6BE96") # Light Beige
+        fg_color = str(settings.get("fg_color", None) or settings.get("foreground_color", None) or "#99876C") # Dark Beige
+        line_color = str(settings.get("line_color", None) or fg_color)
+        border_color = str(settings.get("border_color", None) or fg_color)
 
         colors = [bg_color, fg_color, line_color, border_color]
 
