@@ -82,7 +82,7 @@ def detect_bingo(
             start_x, start_y = calculate_cell_coordinates(0, grid_size - 1)
             end_x, end_y = calculate_cell_coordinates(grid_size - 1, 0)
             draw_bingo_line(
-                draw, start_x, start_y, end_x, end_y, grid_params["cell_wdith"], team_color, grid_params["padding"]
+                draw, start_x, start_y, end_x, end_y, grid_params["cell_width"], team_color, grid_params["padding"]
             )
             return team_name
 
