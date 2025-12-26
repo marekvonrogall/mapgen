@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, abort, make_response
+from flask import Flask, jsonify, request
 from PIL import Image, ImageDraw, ImageColor
 import os
 import uuid
@@ -198,14 +198,14 @@ def compute_grid_params(grid_size: int, constraints: dict) -> dict[str, int]:
     min_border_width = constraints.get("min_border_width", 0)
     max_border_width = constraints.get("max_border_width", None)
     pixel_perfect = constraints.get("pixel_perfect", True)
-    fill_entire_board = constraints.get("fill_entire_board", True)
+    fill_board = constraints.get("fill_board", True)
 
     int_keys = [
         "min_padding", "max_padding",
         "min_line_width", "max_line_width",
         "min_border_width", "max_border_width"
     ]
-    bool_keys = ["pixel_perfect", "fill_entire_board"]
+    bool_keys = ["pixel_perfect", "fill_board", "center_board"]
     min_max_pairs = [
         ("min_padding", "max_padding"),
         ("min_line_width", "max_line_width"),
@@ -234,7 +234,7 @@ def compute_grid_params(grid_size: int, constraints: dict) -> dict[str, int]:
                 )
 
     if errors:
-        abort(make_response(jsonify({"errors": errors}), 400))
+        raise ValueError(errors)
 
     def is_pixel_perfect(asset_width: int) -> bool:
         return asset_width % BASE_ASSET_WIDTH == 0 or BASE_ASSET_WIDTH % asset_width == 0
@@ -288,7 +288,7 @@ def compute_grid_params(grid_size: int, constraints: dict) -> dict[str, int]:
 
             cell_width_candidates = []
 
-            if fill_entire_board:
+            if fill_board:
                 if remaining % grid_size != 0:
                     continue
                 cw = remaining // grid_size
@@ -311,11 +311,8 @@ def compute_grid_params(grid_size: int, constraints: dict) -> dict[str, int]:
                         best = candidate
 
     if best is None:
-        abort(make_response(jsonify(
-            {
-                "error": "No valid grid configuration found under given constraints."
-            }
-        ), 400))
+        msg = "No valid grid configuration found under given constraints."
+        raise ValueError(msg)
 
     best.pop("score")
     return best
@@ -350,11 +347,8 @@ def generate_image():
         constraints = settings.get("constraints", {})
 
         if grid_size < 1 or grid_size > 9:
-            return jsonify(
-                {
-                    "error": "Invalid grid size entered (grid_size in 'settings' section)."
-                }
-            ), 400
+            msg = "Invalid grid size entered (grid_size in 'settings' section)."
+            raise ValueError(msg)
 
         team_info = {}
         invalid_colors = []
@@ -375,10 +369,11 @@ def generate_image():
             }
 
         # Colors
-        bg_color = str(settings.get("bg_color", None) or settings.get("background_color", None) or "#D6BE96") # Light Beige
-        fg_color = str(settings.get("fg_color", None) or settings.get("foreground_color", None) or "#99876C") # Dark Beige
-        line_color = str(settings.get("line_color", None) or fg_color)
-        border_color = str(settings.get("border_color", None) or fg_color)
+        custom_colors = settings.get("colors", {})
+        bg_color = str(custom_colors.get("bg_color", None) or custom_colors.get("background_color", None) or "#D6BE96") # Light Beige
+        fg_color = str(custom_colors.get("fg_color", None) or custom_colors.get("foreground_color", None) or "#99876C") # Dark Beige
+        line_color = str(custom_colors.get("line_color", None) or fg_color)
+        border_color = str(custom_colors.get("border_color", None) or fg_color)
 
         colors = [bg_color, fg_color, line_color, border_color]
 
@@ -389,18 +384,23 @@ def generate_image():
                 invalid_colors.append(color)
 
         if invalid_colors:
-            return jsonify(
-                {
-                    "error": f"Invalid colors provided: {", ".join(invalid_colors)}"
-                }
-            ), 400
+            msg = f"Invalid colors provided: {", ".join(invalid_colors)}"
+            raise ValueError(msg)
 
         # Dimensions
-        grid_params = None
-        if not constraints:
-            grid_params = pre_computed_grid_params.get(grid_size, None)
+        allowed_keys = {"pixel_perfect", "fill_board", "center_board"}
+        use_pre_computed_params = (
+            not constraints
+            or (
+                set(constraints).issubset(allowed_keys)
+                and constraints.get("pixel_perfect", True) is True
+                and constraints.get("fill_board", True) is True
+            )
+        )
 
-        if constraints or not grid_params:
+        if use_pre_computed_params:
+            grid_params = pre_computed_grid_params.get(grid_size, None)
+        else:
             grid_params = compute_grid_params(
             grid_size=grid_size,
             constraints=constraints,
@@ -409,6 +409,8 @@ def generate_image():
         # Create the base image
         image = Image.new("RGBA", (IMG_SIZE, IMG_SIZE), bg_color)
         draw = ImageDraw.Draw(image)
+
+        used_width = (grid_params["cell_width"] * grid_size + grid_params["line_width"] * (grid_size - 1) + grid_params["border_width"] * 2)
 
         # Grid lines
         if grid_params["line_width"] > 0:
@@ -419,7 +421,7 @@ def generate_image():
                     + (i + 1) * grid_params["cell_width"]
                     + i * grid_params["line_width"]
                 )
-                draw.polygon([(x,0),(x+grid_params["line_width"]-1,0),(x+grid_params["line_width"]-1,IMG_SIZE-1),(x,IMG_SIZE-1)], fill=line_color)
+                draw.polygon([(x,0),(x+grid_params["line_width"]-1,0),(x+grid_params["line_width"]-1,used_width-1),(x,used_width-1)], fill=line_color)
 
                 # Horizontal lines
                 y = (
@@ -427,12 +429,12 @@ def generate_image():
                     + (i + 1) * grid_params["cell_width"]
                     + i * grid_params["line_width"]
                 )
-                draw.polygon([(0,y),(IMG_SIZE-1,y),(IMG_SIZE-1,y+grid_params["line_width"]-1),(0,y+grid_params["line_width"]-1)], fill=line_color)
+                draw.polygon([(0,y),(used_width-1,y),(used_width-1,y+grid_params["line_width"]-1),(0,y+grid_params["line_width"]-1)], fill=line_color)
 
         # Border
         if grid_params["border_width"] > 0:
             draw.rectangle(
-                (0, 0, IMG_SIZE - 1, IMG_SIZE - 1),
+                (0, 0, used_width - 1, used_width - 1),
                 outline=border_color,
                 width=grid_params["border_width"],
             )
@@ -457,11 +459,8 @@ def generate_image():
 
             # Check if texture exists
             if not os.path.exists(texture_path):
-                return jsonify(
-                    {
-                        "error": f"Invalid texture {texture_name} provided."
-                    }
-                ), 400
+                msg = f"Invalid texture {texture_name} provided."
+                raise ValueError(msg)
 
             # Open texture
             texture_image = Image.open(texture_path)
@@ -499,11 +498,8 @@ def generate_image():
                     placement = team_info[completed_team]["placement"]
 
                     if not rectColor or not placement:
-                        return jsonify(
-                            {
-                                "error": f"Invalid team key entered ({completed_team} in 'completed' section of '{texture_name}' [row {row}, column {column}])."
-                            }
-                        ), 400
+                        msg = f"Invalid team key entered ({completed_team} in 'completed' section of '{texture_name}' [row {row}, column {column}])."
+                        raise ValueError(msg)
 
                     types: list[str] = []
                     if grid_params["padding"] > 0:
@@ -552,6 +548,13 @@ def generate_image():
             team_info,
         )
 
+        center_board = constraints.get("center_board", True)
+        if center_board and used_width != IMG_SIZE:
+            offset = (IMG_SIZE - used_width) // 2
+            new_canvas = Image.new("RGBA", (IMG_SIZE, IMG_SIZE), bg_color)
+            new_canvas.paste(image, (offset, offset))
+            image = new_canvas
+
         # Save image
         filename = f"{uuid.uuid4()}.png"
         filepath = os.path.join(OUTPUT_DIR, filename)
@@ -561,7 +564,7 @@ def generate_image():
         return jsonify({"url": f"/public/{filename}", "bingo": bingo_result}), 201
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"imggen": str(e)}), 500
 
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+using System.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -27,23 +28,126 @@ public class MapController : ControllerBase
     
     private static readonly List<string> DifficultyOrder = new() { "very easy", "easy", "medium", "hard", "very hard" };
     private static readonly string[] ValidGameModes = { "1P", "2P", "3P", "4P" };
-    private static readonly string[] ValidPlacementModes = { "random", "circles", "flipped" };
+    private static readonly string[] ValidPlacementModes = { "random", "circular", "flipped" };
 
+    private Dictionary<string, object>? GetConstraints(Constraints? requestConstraints, List<string> errors)
+    {
+        var constraintsMap = new Dictionary<string, object?>
+        {
+            { "min_padding", requestConstraints?.MinPadding },
+            { "max_padding", requestConstraints?.MaxPadding },
+            { "min_line_width", requestConstraints?.MinLineWidth },
+            { "max_line_width", requestConstraints?.MaxLineWidth },
+            { "min_border_width", requestConstraints?.MinBorderWidth },
+            { "max_border_width", requestConstraints?.MaxBorderWidth },
+            { "pixel_perfect", requestConstraints?.PixelPerfect },
+            { "fill_board", requestConstraints?.FillBoard },
+            { "center_board", requestConstraints?.CenterBoard }
+        };
+
+        var minMaxMap = new Dictionary<string, string>()
+        {
+            { "min_padding", "max_padding" },
+            { "min_line_width", "max_line_width" },
+            { "min_border_width", "max_border_width" }
+        };
+
+        var returnConstraints = new Dictionary<string, object>();
+
+        foreach (var (name, value) in constraintsMap)
+        {
+            if (value == null)
+            {
+                continue;
+            }
+            
+            if (value is int intVal)
+            {
+                if (intVal < 0)
+                {
+                    errors.Add($"Constraints: '{name}': Must be >= 0, got {intVal}");
+                    continue;
+                }
+            }
+            
+            Console.WriteLine($"Added constraint: {name}, with value: {value}");
+            returnConstraints.Add(name, value);
+        }
+
+        foreach (var (min, max) in minMaxMap)
+        {
+            if (!returnConstraints.ContainsKey(min) || !returnConstraints.ContainsKey(max))
+                continue;
+            
+            if (returnConstraints[min] is int minValue && returnConstraints[max] is int maxValue)
+            {
+                if (minValue > maxValue)
+                {
+                    errors.Add($"Constraints: '{min}': Cannot be greater than '{max}' ({minValue} > {maxValue})");
+                }
+            }
+        }
+        
+        if (returnConstraints.Count > 0)
+        {
+            return returnConstraints;
+        }
+        
+        return null;
+    }
+
+    private Dictionary<string, string>? GetHexColors(Colors? requestColors, List<string> errors)
+    {
+        var colorMap = new Dictionary<string, string?>
+        {
+            { "background_color", requestColors?.BackgroundColor },
+            { "foreground_color", requestColors?.ForegroundColor },
+            { "line_color", requestColors?.LineColor },
+            { "border_color", requestColors?.BorderColor }
+        };
+
+        var returnColors = new Dictionary<string, string>();
+            
+        foreach (var (name, value) in colorMap)
+        {
+            if (value == null)
+            {
+                continue;
+            }
+            try
+            {
+                var color = ColorTranslator.FromHtml(value);
+                returnColors.Add(name, $"#{color.R:X2}{color.G:X2}{color.B:X2}");
+            }
+            catch
+            {
+                errors.Add($"Invalid color value '{value}' for color '{name}' provided.");
+            }
+        }
+
+        if (returnColors.Count > 0)
+        {
+            return returnColors;
+        }
+
+        return null;
+    }
+    
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRequest request)
     {
-        var errors = new List<string>();
+        var mapgenErrors = new List<string>();
         
         // Grid Size
         int gridSize = request.GridSize ?? 5;
         if (gridSize < 1 || gridSize > 9)
-            errors.Add($"Invalid grid size {gridSize}. The grid size must be in the range of 1 and 9.");
+            mapgenErrors.Add($"Invalid grid size {gridSize}. The grid size must be in the range of 1 and 9.");
 
         // Game Mode
         string gameMode = request.GameMode ?? "1P";
         bool validGameMode = ValidGameModes.Contains(gameMode, StringComparer.OrdinalIgnoreCase);
         if (!validGameMode)
-            errors.Add("Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P.");
+            mapgenErrors.Add("Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P.");
 
         int teamCount = 0;
         if (validGameMode && int.TryParse(gameMode[..1], out int firstDigit))
@@ -61,14 +165,14 @@ public class MapController : ControllerBase
         
         var uniqueTeams = teamList.Distinct().ToList();
         if (teamList.Length != uniqueTeams.Count)
-            errors.Add("Duplicate team names are not allowed.");
+            mapgenErrors.Add("Duplicate team names are not allowed.");
         if (teamList.Length != teamCount)
-            errors.Add($"Expected {teamCount} team names for game mode {gameMode}, got {teamList.Length}.");
+            mapgenErrors.Add($"Expected {teamCount} team names for game mode {gameMode}, got {teamList.Length}.");
 
         // Placement Mode
-        string placementMode = string.IsNullOrWhiteSpace(request.PlacementMode) ? "circles" : request.PlacementMode;
+        string placementMode = string.IsNullOrWhiteSpace(request.PlacementMode) ? "circular" : request.PlacementMode;
         if (!ValidPlacementModes.Contains(placementMode))
-            errors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circles & flipped.");
+            mapgenErrors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circular & flipped.");
         
         // Difficulty
         string difficultyInput = string.IsNullOrWhiteSpace(request.Difficulty) ? "easy,medium,hard" : request.Difficulty;
@@ -80,22 +184,31 @@ public class MapController : ControllerBase
         if (difficultyList.Contains("all"))
             difficultyList = DifficultyOrder.ToList();
         if (!difficultyList.All(d => DifficultyOrder.Contains(d)))
-            errors.Add($"Invalid difficulty value(s). Valid values are: {string.Join(", ", DifficultyOrder)} or all.");
+            mapgenErrors.Add($"Invalid difficulty value(s). Valid values are: {string.Join(", ", DifficultyOrder)} or all.");
 
         // Max Items Per Group / Material
-        int maxPerGroupOrMaterial = request.MaxPerGroupOrMaterial ?? 1;
-        if (maxPerGroupOrMaterial < 0)
-            errors.Add("Max items per group or material cannot be negative. Disable group/material check by setting it to 0.");
+        int maxItemsPerGroup = request.Constraints?.MaxItemsPerGroup ?? 1;
+        int maxItemsPerMaterial = request.Constraints?.MaxItemsPerMaterial ?? 1;
+
+        if (maxItemsPerGroup < 0 || maxItemsPerMaterial < 0)
+            mapgenErrors.Add("Max items per group/material cannot be negative. Disable group/material check by setting it to 0.");
         
-        if (errors.Any())
-            return BadRequest(new { errors });
+        // Constraints
+        var constraints = GetConstraints(request.Constraints, mapgenErrors);
+        Console.WriteLine(constraints);
+        
+        // Colors
+        var colors = GetHexColors(request.Colors, mapgenErrors);
+        
+        if (mapgenErrors.Any())
+            return BadRequest(new { errors = new { mapgen = mapgenErrors } });
 
         var placements = GetPlacements(gameMode, teamList);
 
         var bingoItems = LoadValidBingoItems();
         if (bingoItems.Count == 0)
         {
-            return StatusCode(500, new { error = "Failed to load valid bingo items." });
+            return StatusCode(500, new { errors = new { mapgen = "Failed to load valid bingo items!" }});
         }
 
         var teams = new List<object>();
@@ -111,28 +224,40 @@ public class MapController : ControllerBase
 
         var payload = new
         {
-            settings = new { grid_size = gridSize, game_mode = gameMode, teams },
-            items = GenerateItems(gridSize, bingoItems, teamList, difficultyList, maxPerGroupOrMaterial, placementMode)
+            settings = new { grid_size = gridSize, game_mode = gameMode, teams, constraints, colors },
+            items = GenerateItems(gridSize, bingoItems, teamList, difficultyList, maxItemsPerGroup, maxItemsPerMaterial, placementMode)
         };
 
-        var jsonPayload = JsonSerializer.Serialize(payload);
+        var options = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        };
+        var jsonPayload = JsonSerializer.Serialize(payload, options);
         var response = await _httpClient.PostAsync("http://imggen:5000/generate", new StringContent(jsonPayload, Encoding.UTF8, "application/json"));
 
         if (!response.IsSuccessStatusCode)
         {
-            var errorContent = await response.Content.ReadAsStringAsync();
-            return StatusCode((int)response.StatusCode, new 
-            { 
-                error = "Failed to generate image.", 
-                serviceError = errorContent, 
-                mapRAW = payload 
+            var imggenErrorContent = await response.Content.ReadFromJsonAsync<JsonElement>();
+            var imggenErrorMessage =
+                imggenErrorContent.TryGetProperty("imggen", out var errorProp)
+                    ? errorProp.GetString()
+                    : "Unknown imggen error";
+
+            return StatusCode((int)response.StatusCode, new
+            {   
+                errors = new
+                {
+                    mapgen = "Failed to generate image!",
+                    imggen = imggenErrorMessage
+                },
+                map_raw = payload
             });
         }
 
         var imggenResponse = await response.Content.ReadAsStringAsync();
-        var mapURL = JsonSerializer.Deserialize<JsonElement>(imggenResponse).GetProperty("url").GetString();
+        var mapUrl = JsonSerializer.Deserialize<JsonElement>(imggenResponse).GetProperty("url").GetString();
 
-        return Content(JsonSerializer.Serialize(new { mapURL, mapRAW = payload }), "application/json");
+        return Content(JsonSerializer.Serialize(new { map_url = mapUrl, map_raw = payload }, options),"application/json");
     }
 
     private static readonly Lazy<List<BingoItem>> _cachedItems =
@@ -147,7 +272,7 @@ public class MapController : ControllerBase
         return _cachedItems.Value;
     }
 
-    private List<object> GenerateItems(int gridSize, List<BingoItem> bingoItems, string[] teams, List<string> allowedDifficulties, int maxPerGroupOrMaterial, string placementMode)
+    private List<object> GenerateItems(int gridSize, List<BingoItem> bingoItems, string[] teams, List<string> allowedDifficulties, int maxPerGroup, int maxPerMaterial, string placementMode)
     {
         var random = Random.Shared;
         var items = new List<object>();
@@ -155,7 +280,7 @@ public class MapController : ControllerBase
 
         placementMode = placementMode?.ToLowerInvariant() ?? "random";
         if (!ValidPlacementModes.Contains(placementMode))
-            throw new ArgumentException("Placement mode must be 'random', 'circles' or 'flipped'.");
+            throw new ArgumentException("Placement mode must be 'random', 'circular' or 'flipped'.");
     
         var allowedIndexes = allowedDifficulties
             .Select(d => DifficultyOrder.IndexOf(d))
@@ -174,16 +299,16 @@ public class MapController : ControllerBase
         var groupCounts = new Dictionary<string, int>();
         var materialCounts = new Dictionary<string, int>();
     
-        // ring-to-difficulty mapping for circles/flipped
+        // ring-to-difficulty mapping for circular/flipped
         Dictionary<int, List<int>> ringDifficultyMap = new();
-        if (placementMode == "circles" || placementMode == "flipped")
+        if (placementMode == "circular" || placementMode == "flipped")
         {
             for (int ring = 0; ring <= maxDistance; ring++)
             {
                 bool isCenter = ring == maxDistance;
                 if (isCenter)
                 {
-                    int centerIndex = placementMode == "circles"
+                    int centerIndex = placementMode == "circular"
                         ? Math.Min(maxIndex + 1, DifficultyOrder.Count - 1) // hardest in center
                         : Math.Max(minIndex - 1, 0);                        // easiest in center
                     ringDifficultyMap[ring] = new List<int> { centerIndex };
@@ -194,7 +319,7 @@ public class MapController : ControllerBase
                     double fractionEnd = (double)(ring + 1) / maxDistance;
     
                     int startIdx, endIdx;
-                    if (placementMode == "circles")
+                    if (placementMode == "circular")
                     {
                         startIdx = (int)Math.Floor(fractionStart * (allowedIndexes.Count - 1));
                         endIdx = (int)Math.Ceiling(fractionEnd * (allowedIndexes.Count - 1));
@@ -242,8 +367,8 @@ public class MapController : ControllerBase
                     .Where(item =>
                     {
                         // Check group & material counts
-                        bool groupOk = maxPerGroupOrMaterial == 0 || item.Groups.All(g => groupCounts.GetValueOrDefault(g, 0) < maxPerGroupOrMaterial);
-                        bool materialOk = maxPerGroupOrMaterial == 0 || string.IsNullOrEmpty(item.Material) || materialCounts.GetValueOrDefault(item.Material, 0) < maxPerGroupOrMaterial;
+                        bool groupOk = maxPerGroup == 0 || item.Groups.All(g => groupCounts.GetValueOrDefault(g, 0) < maxPerGroup);
+                        bool materialOk = maxPerMaterial == 0 || string.IsNullOrEmpty(item.Material) || materialCounts.GetValueOrDefault(item.Material, 0) < maxPerMaterial;
                         return groupOk && materialOk;
                     })
                     .ToList();
