@@ -17,7 +17,7 @@ public class MapController : ControllerBase
     }
 
     [HttpGet("ping")]
-    public async Task<IActionResult> Ping()
+    public IActionResult Ping()
     {
         string message = "works! (mapgen)";
         return Ok(new
@@ -133,152 +133,230 @@ public class MapController : ControllerBase
         return null;
     }
     
+    private bool IsValidVersion(string version)
+    {
+        if (string.IsNullOrWhiteSpace(version))
+            return false;
+
+        var parts = version.Split('.');
+
+        // Version format: x.x or x.x.x
+        if (parts.Length < 2 || parts.Length > 3)
+            return false;
+
+        foreach (var part in parts)
+        {
+            if (!int.TryParse(part, out var number))
+                return false;
+
+            if (number < 0)
+                return false;
+        }
+
+        return true;
+    }
+
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRequest request)
     {
-        var mapgenErrors = new List<string>();
-        
-        // Grid Size
-        int gridSize = request.GridSize ?? 5;
-        if (gridSize < 1 || gridSize > 9)
-            mapgenErrors.Add($"Invalid grid size {gridSize}. The grid size must be in the range of 1 and 9.");
-
-        // Game Mode
-        string gameMode = request.GameMode ?? "1P";
-        bool validGameMode = ValidGameModes.Contains(gameMode, StringComparer.OrdinalIgnoreCase);
-        if (!validGameMode)
-            mapgenErrors.Add("Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P.");
-
-        int teamCount = 0;
-        if (validGameMode && int.TryParse(gameMode[..1], out int firstDigit))
-            teamCount = firstDigit;
-
-        // Team Names
-        string[] teamList;
-        if (string.IsNullOrWhiteSpace(request.TeamNames))
-            teamList = Enumerable.Range(1, teamCount).Select(i => $"team_{i}").ToArray();
-        else
-            teamList = request.TeamNames
-                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .Select(t => t.Trim())
-                .ToArray();
-        
-        var uniqueTeams = teamList.Distinct().ToList();
-        if (teamList.Length != uniqueTeams.Count)
-            mapgenErrors.Add("Duplicate team names are not allowed.");
-        if (teamList.Length != teamCount)
-            mapgenErrors.Add($"Expected {teamCount} team names for game mode {gameMode}, got {teamList.Length}.");
-
-        // Placement Mode
-        string placementMode = string.IsNullOrWhiteSpace(request.PlacementMode) ? "circular" : request.PlacementMode;
-        if (!ValidPlacementModes.Contains(placementMode))
-            mapgenErrors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circular & flipped.");
-        
-        // Difficulty
-        string difficultyInput = string.IsNullOrWhiteSpace(request.Difficulty) ? "easy,medium,hard" : request.Difficulty;
-        var difficultyList = difficultyInput
-            .Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Select(d => d.ToLower())
-            .Distinct()
-            .ToList();
-        if (difficultyList.Contains("all"))
-            difficultyList = DifficultyOrder.ToList();
-        if (!difficultyList.All(d => DifficultyOrder.Contains(d)))
-            mapgenErrors.Add($"Invalid difficulty value(s). Valid values are: {string.Join(", ", DifficultyOrder)} or all.");
-
-        // Max Items Per Group / Material
-        int maxItemsPerGroup = request.Constraints?.MaxItemsPerGroup ?? 1;
-        int maxItemsPerMaterial = request.Constraints?.MaxItemsPerMaterial ?? 1;
-
-        if (maxItemsPerGroup < 0 || maxItemsPerMaterial < 0)
-            mapgenErrors.Add("Max items per group/material cannot be negative. Disable group/material check by setting it to 0.");
-        
-        // Constraints
-        var constraints = GetConstraints(request.Constraints, mapgenErrors);
-        Console.WriteLine(constraints);
-        
-        // Colors
-        var colors = GetHexColors(request.Colors, mapgenErrors);
-        
-        if (mapgenErrors.Any())
-            return BadRequest(new { errors = new { mapgen = mapgenErrors } });
-
-        var placements = GetPlacements(gameMode, teamList);
-
-        var bingoItems = LoadValidBingoItems();
-        if (bingoItems.Count == 0)
+        try
         {
-            return StatusCode(500, new { errors = new { mapgen = "Failed to load valid bingo items!" }});
-        }
+            var mapgenErrors = new List<string>();
+            
+            // Grid Size
+            int gridSize = request.GridSize ?? 5;
+            if (gridSize < 1 || gridSize > 9)
+                mapgenErrors.Add($"Invalid grid size {gridSize}. The grid size must be in the range of 1 and 9.");
 
-        var teams = new List<object>();
+            // Game Mode
+            string gameMode = request.GameMode ?? "1P";
+            bool validGameMode = ValidGameModes.Contains(gameMode, StringComparer.OrdinalIgnoreCase);
+            if (!validGameMode)
+                mapgenErrors.Add("Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P.");
 
-        foreach (var team in teamList)
-        {
-            teams.Add(new
+            int teamCount = 0;
+            if (validGameMode && int.TryParse(gameMode[..1], out int firstDigit))
+                teamCount = firstDigit;
+
+            // Game Version
+            string gameVersion = request.GameVersion ?? GetLatestGameVersion();
+            if (!IsValidVersion(gameVersion))
+                mapgenErrors.Add($"Invalid game version '{gameVersion}' provided.");
+            else if (!VersionIsGreaterOrEqual(GetEarliestGameVersion(), gameVersion) || !VersionIsSmallerOrEqual(GetLatestGameVersion(), gameVersion))
+                mapgenErrors.Add($"Specified game version '{gameVersion}' is unsupported. Supported versions are {GetEarliestGameVersion()}-{GetLatestGameVersion()}");
+            
+            // Team Names
+            string[] teamList;
+            if (string.IsNullOrWhiteSpace(request.TeamNames))
+                teamList = Enumerable.Range(1, teamCount).Select(i => $"team_{i}").ToArray();
+            else
+                teamList = request.TeamNames
+                    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Select(t => t.Trim())
+                    .ToArray();
+
+            var uniqueTeams = teamList.Distinct().ToList();
+            if (teamList.Length != uniqueTeams.Count)
+                mapgenErrors.Add("Duplicate team names are not allowed.");
+            if (teamList.Length != teamCount)
+                mapgenErrors.Add($"Expected {teamCount} team names for game mode {gameMode}, got {teamList.Length}.");
+
+            // Placement Mode
+            string placementMode = string.IsNullOrWhiteSpace(request.PlacementMode) ? "circular" : request.PlacementMode.ToLowerInvariant();
+            if (!ValidPlacementModes.Contains(placementMode))
+                mapgenErrors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circular & flipped.");
+
+            // Difficulty
+            string difficultyInput = string.IsNullOrWhiteSpace(request.Difficulty) ? "easy,medium,hard" : request.Difficulty;
+            var difficultyList = difficultyInput
+                .Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(d => d.ToLower())
+                .Distinct()
+                .ToList();
+            if (difficultyList.Contains("all"))
+                difficultyList = DifficultyOrder.ToList();
+            if (!difficultyList.All(d => DifficultyOrder.Contains(d)))
+                mapgenErrors.Add($"Invalid difficulty value(s). Valid values are: {string.Join(", ", DifficultyOrder)} or all.");
+
+            // Max Items Per Group / Material
+            int maxItemsPerGroup = request.Constraints?.MaxItemsPerGroup ?? 1;
+            int maxItemsPerMaterial = request.Constraints?.MaxItemsPerMaterial ?? 1;
+
+            if (maxItemsPerGroup < 0 || maxItemsPerMaterial < 0)
+                mapgenErrors.Add("Max items per group/material cannot be negative. Disable group/material check by setting it to 0.");
+
+            // Constraints
+            var constraints = GetConstraints(request.Constraints, mapgenErrors);
+
+            // Colors
+            var colors = GetHexColors(request.Colors, mapgenErrors);
+
+            if (mapgenErrors.Any())
+                return BadRequest(new { errors = new { mapgen = mapgenErrors } });
+
+            var placements = GetPlacements(gameMode, teamList);
+
+            var bingoItems = GetBingoItems();
+            if (bingoItems.Count == 0)
+                return StatusCode(500, new { errors = new { mapgen = "Failed to load valid bingo items!" } });
+
+            var teams = new List<object>();
+
+            foreach (var team in teamList)
             {
-                name = team,
-                placement = placements[team]
-            });
-        }
-
-        var payload = new
-        {
-            settings = new { grid_size = gridSize, game_mode = gameMode, teams, constraints, colors },
-            items = GenerateItems(gridSize, bingoItems, teamList, difficultyList, maxItemsPerGroup, maxItemsPerMaterial, placementMode)
-        };
-
-        var options = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-        };
-        var jsonPayload = JsonSerializer.Serialize(payload, options);
-        var response = await _httpClient.PostAsync("http://imggen:5000/generate", new StringContent(jsonPayload, Encoding.UTF8, "application/json"));
-
-        if (!response.IsSuccessStatusCode)
-        {
-            var imggenErrorContent = await response.Content.ReadFromJsonAsync<JsonElement>();
-            var imggenErrorMessage =
-                imggenErrorContent.TryGetProperty("imggen", out var errorProp)
-                    ? errorProp.GetString()
-                    : "Unknown imggen error";
-
-            return StatusCode((int)response.StatusCode, new
-            {   
-                errors = new
+                teams.Add(new
                 {
-                    mapgen = "Failed to generate image!",
-                    imggen = imggenErrorMessage
-                },
-                map_raw = payload
-            });
+                    name = team,
+                    placement = placements[team]
+                });
+            }
+
+            var payload = new
+            {
+                settings = new { grid_size = gridSize, game_mode = gameMode, teams, constraints, colors },
+                items = GenerateItems(gameVersion, gridSize, bingoItems, teamList, difficultyList, maxItemsPerGroup, maxItemsPerMaterial, placementMode)
+            };
+
+            var options = new JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
+            var jsonPayload = JsonSerializer.Serialize(payload, options);
+            var response = await _httpClient.PostAsync("http://imggen:5000/generate",
+                new StringContent(jsonPayload, Encoding.UTF8, "application/json"));
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var imggenErrorContent = await response.Content.ReadFromJsonAsync<JsonElement>();
+                var imggenErrorMessage = imggenErrorContent.TryGetProperty("imggen", out var errorProp) ? errorProp.GetString() : "Unknown imggen error";
+
+                return StatusCode((int)response.StatusCode, new
+                {
+                    errors = new
+                    {
+                        mapgen = "Failed to generate image!",
+                        imggen = imggenErrorMessage
+                    },
+                    map_raw = payload
+                });
+            }
+
+            var imggenResponse = await response.Content.ReadAsStringAsync();
+            var mapUrl = JsonSerializer.Deserialize<JsonElement>(imggenResponse).GetProperty("url").GetString();
+
+            return Content(JsonSerializer.Serialize(new { map_url = mapUrl, map_raw = payload }, options), "application/json");
         }
-
-        var imggenResponse = await response.Content.ReadAsStringAsync();
-        var mapUrl = JsonSerializer.Deserialize<JsonElement>(imggenResponse).GetProperty("url").GetString();
-
-        return Content(JsonSerializer.Serialize(new { map_url = mapUrl, map_raw = payload }, options),"application/json");
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { errors = new { mapgen = ex.Message, stack = ex.StackTrace }});
+        }
     }
 
-    private static readonly Lazy<List<BingoItem>> _cachedItems =
-    new(() =>
+    private static readonly Lazy<BingoItemDto> CachedData = new(() =>
     {
         var json = System.IO.File.ReadAllText("items.json");
-        return JsonSerializer.Deserialize<List<BingoItem>>(json) ?? new List<BingoItem>();
+        return JsonSerializer.Deserialize<BingoItemDto>(json) ?? new BingoItemDto();
     });
 
-    private List<BingoItem> LoadValidBingoItems()
+    private List<BingoItem> GetBingoItems()
     {
-        return _cachedItems.Value;
+        return CachedData.Value.Items;
+    }
+    
+    private string GetEarliestGameVersion()
+    {
+        return CachedData.Value.EarliestGameVersion;
     }
 
-    private List<object> GenerateItems(int gridSize, List<BingoItem> bingoItems, string[] teams, List<string> allowedDifficulties, int maxPerGroup, int maxPerMaterial, string placementMode)
+    private string GetLatestGameVersion()
+    {
+        return CachedData.Value.LatestGameVersion;
+    }
+
+    private bool VersionIsSmallerOrEqual(string baseVersion, string inputVersion)
+    {
+        int[] baseParts = baseVersion.Split(".").Select(int.Parse).ToArray();
+        int[] inputParts = inputVersion.Split(".").Select(int.Parse).ToArray();
+
+        int maxLength = Math.Max(baseParts.Length, inputParts.Length);
+
+        for (int i = 0; i < maxLength; i++)
+        {
+            int basePart = i < baseParts.Length ? baseParts[i] : 0;
+            int inputPart = i < inputParts.Length ? inputParts[i] : 0;
+
+            if (inputPart < basePart) return true;
+            if (inputPart > basePart) return false;
+        }
+
+        return true;
+    }
+    
+    private bool VersionIsGreaterOrEqual(string baseVersion, string inputVersion)
+    {
+        int[] baseParts = baseVersion.Split(".").Select(int.Parse).ToArray();
+        int[] inputParts = inputVersion.Split(".").Select(int.Parse).ToArray();
+
+        int maxLength = Math.Max(baseParts.Length, inputParts.Length);
+
+        for (int i = 0; i < maxLength; i++)
+        {
+            int basePart = i < baseParts.Length ? baseParts[i] : 0;
+            int inputPart = i < inputParts.Length ? inputParts[i] : 0;
+
+            if (inputPart > basePart) return true;
+            if (inputPart < basePart) return false;
+        }
+
+        return true;
+    }
+    
+    private List<object> GenerateItems(string gameVersion, int gridSize, List<BingoItem> bingoItems, string[] teams, List<string> allowedDifficulties, int maxPerGroup, int maxPerMaterial, string placementMode)
     {
         var random = Random.Shared;
         var items = new List<object>();
         var selectedItems = new HashSet<string>();
 
-        placementMode = placementMode?.ToLowerInvariant() ?? "random";
         if (!ValidPlacementModes.Contains(placementMode))
             throw new ArgumentException("Placement mode must be 'random', 'circular' or 'flipped'.");
     
@@ -363,7 +441,8 @@ public class MapController : ControllerBase
 
                 // item selection
                 var itemList = bingoItems
-                    .Where(item => item.Difficulty == difficulty && !selectedItems.Contains(item.Name))
+                    .Where(item => VersionIsSmallerOrEqual(gameVersion, item.Version) && !selectedItems.Contains(item.Name))
+                    .Where(item => item.Difficulty == difficulty)
                     .Where(item =>
                     {
                         // Check group & material counts
@@ -438,35 +517,5 @@ public class MapController : ControllerBase
             },
             _ => throw new InvalidOperationException($"Invalid game mode {gameMode} provided!")
         };
-    }
-
-    private class BingoItem
-    {   [JsonPropertyName("id")]
-        public string Id { get; set; }
-
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
-
-        [JsonPropertyName("sprite")]
-        public string Sprite { get; set; }
-
-        [JsonPropertyName("group")]
-        public string GroupRaw { get; set; }
-
-        public List<string> Groups => ParseJsonArray(GroupRaw);
-
-        private List<string> ParseJsonArray(string raw)
-        {
-            if (string.IsNullOrWhiteSpace(raw)) return new List<string>();
-            raw = raw.Trim('[', ']', ' ');
-            return raw.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                      .Select(s => s.Trim('\'', '"', ' ')).ToList();
-        }
-
-        [JsonPropertyName("material")]
-        public string Material { get; set; }
-
-        [JsonPropertyName("difficulty")]
-        public string Difficulty { get; set; }
     }
 }

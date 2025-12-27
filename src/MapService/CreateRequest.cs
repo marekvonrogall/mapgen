@@ -9,6 +9,9 @@ namespace MapService
 
         [JsonPropertyName("game_mode")]
         public string? GameMode { get; set; }
+        
+        [JsonPropertyName("game_version")]
+        public string? GameVersion { get; set; }
 
         [JsonPropertyName("team_names")]
         public string? TeamNames { get; set; }
