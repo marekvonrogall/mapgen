@@ -2,14 +2,14 @@ services:
   # Map handler service
   mapgen:
     build:
-      context: ./src/MapService
+      context: src/mapgen
     networks:
       - localnet
 
   # Image generation service
   imggen:
     build:
-      context: ./src/ImageService
+      context: src/imggen
     networks:
       - localnet
     volumes:

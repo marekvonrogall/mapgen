@@ -2,11 +2,11 @@ services:
   # Map handler service
   mapgen:
     build:
-      context: ./src/MapService
+      context: src/mapgen
     image: ghcr.io/${IMAGE_NAME}/mapgen:latest
 
   # Image generation service
   imggen:
     build:
-      context: ./src/ImageService
+      context: src/imggen
     image: ghcr.io/${IMAGE_NAME}/imggen:latest
