@@ -6,6 +6,7 @@ namespace MapService.Classes
     public static class Constraints
     {
         public static readonly List<string> DifficultyOrder = new() { "very easy", "easy", "medium", "hard", "very hard" };
+        public static readonly List<string> DefaultDifficulties = new() { "easy", "medium", "hard" };
         public static readonly string[] ValidGameModes = { "1P", "2P", "3P", "4P" };
         public static readonly string[] ValidPlacementModes = { "random", "circular", "flipped" };
         public static ConstraintsDto? GetConstraints(ConstraintsDto? requestConstraints, List<string> errors)

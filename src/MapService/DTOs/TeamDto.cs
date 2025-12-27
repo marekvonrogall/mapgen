@@ -8,6 +8,9 @@ namespace MapService.DTOs
         public required string Name { get; set; }
 
         [JsonPropertyName("placement")]
-        public required string Placement { get; set; }
+        public string? Placement { get; set; }
+        
+        [JsonPropertyName("color")]
+        public string? Color { get; set; }
     }
 }
