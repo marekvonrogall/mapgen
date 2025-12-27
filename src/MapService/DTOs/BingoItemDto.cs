@@ -1,20 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace MapService
+namespace MapService.DTOs
 {
     public class BingoItemDto
-    {
-        [JsonPropertyName("earliest_version")]
-        public string EarliestGameVersion { get; set; } = "";
-
-        [JsonPropertyName("latest_version")]
-        public string LatestGameVersion { get; set; } = "";
-
-        [JsonPropertyName("items")]
-        public List<BingoItem> Items { get; set; } = new();
-    }
-
-    public class BingoItem
     {
         [JsonPropertyName("id")]
         public required string Id { get; set; }
