@@ -10,10 +10,12 @@ namespace MapService.Services
     public class MapGenerationService
     {
         private readonly HttpClient _httpClient;
+        private readonly string _imgGenUrl;
 
-        public MapGenerationService(HttpClient httpClient)
+        public MapGenerationService(HttpClient httpClient, EnvironmentVariables env)
         {
             _httpClient = httpClient;
+            _imgGenUrl = env.ImgGenUrl;
         }
 
         public async Task<(bool Success, UpdateResponseDto? Data, List<string>? Errors)> UpdateMapAsync(MapRawDto payload)
@@ -24,7 +26,7 @@ namespace MapService.Services
             };
             
             var response = await _httpClient.PostAsync(
-                "http://imggen:5000/generate",
+                $"{_imgGenUrl}/generate",
                 new StringContent(JsonSerializer.Serialize(payload, options), Encoding.UTF8, "application/json"));
 
             if (!response.IsSuccessStatusCode)

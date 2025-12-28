@@ -4,16 +4,19 @@ services:
     image: ghcr.io/marekvonrogall/mapgen/mapgen:latest
     environment:
       - MAPGEN_PORT=5001
+      - IMGGEN_URL=http://imggen:5000
     ports:
       - "5001:5001"
+    networks:
+      - bingo-net
 
   # Image generation service
   imggen:
     image: ghcr.io/marekvonrogall/mapgen/imggen:latest
     environment:
       - IMGGEN_PORT=5000
-    ports:
-      - "5000:5000"
+    networks:
+      - bingo-net
     volumes:
       - imggen-public:/app/public
 
@@ -23,6 +26,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    networks:
+      - bingo-net
     depends_on:
       - mapgen
       - imggen
@@ -33,3 +38,5 @@ services:
 
 volumes:
   imggen-public:
+networks:
+  bingo-net:

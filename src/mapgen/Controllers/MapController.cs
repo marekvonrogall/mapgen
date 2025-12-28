@@ -1,3 +1,4 @@
+using MapService.Classes;
 using Microsoft.AspNetCore.Mvc;
 using MapService.DTOs;
 using MapService.Services;
@@ -11,9 +12,9 @@ public class MapController : ControllerBase
     private readonly ValidationService _validationService = new();
     private readonly MapGenerationService _mapService;
     
-    public MapController(IHttpClientFactory httpClientFactory)
+    public MapController(IHttpClientFactory httpClientFactory, EnvironmentVariables env)
     {
-        _mapService = new MapGenerationService(httpClientFactory.CreateClient());
+        _mapService = new MapGenerationService(httpClientFactory.CreateClient(), env);
     }
 
     [HttpGet("ping")]
