@@ -21,7 +21,14 @@ namespace MapService.Classes
                 { "max_border_width", requestConstraints?.MaxBorderWidth },
                 { "pixel_perfect", requestConstraints?.PixelPerfect },
                 { "fill_board", requestConstraints?.FillBoard },
-                { "center_board", requestConstraints?.CenterBoard }
+                { "center_board", requestConstraints?.CenterBoard },
+                { "max_items_per_group", requestConstraints?.MaxItemsPerGroup },
+                { "max_items_per_material", requestConstraints?.MaxItemsPerMaterial },
+                { "max_items_per_category", requestConstraints?.MaxItemsPerCategory },
+                { "excluded_items", requestConstraints?.ExcludedItems },
+                { "excluded_groups", requestConstraints?.ExcludedGroups },
+                { "excluded_materials", requestConstraints?.ExcludedMaterials },
+                { "excluded_categories", requestConstraints?.ExcludedCategories }
             };
 
             var minMaxMap = new Dictionary<string, string>()

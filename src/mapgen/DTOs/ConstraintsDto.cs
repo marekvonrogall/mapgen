@@ -10,6 +10,9 @@ namespace MapService.DTOs
         [JsonPropertyName("max_items_per_material")]
         public int? MaxItemsPerMaterial { get; set; }
         
+        [JsonPropertyName("max_items_per_category")]
+        public int? MaxItemsPerCategory { get; set; }
+        
         [JsonPropertyName("excluded_items")]
         public List<string>? ExcludedItems { get; set; }
         
@@ -18,6 +21,9 @@ namespace MapService.DTOs
         
         [JsonPropertyName("excluded_materials")]
         public List<string>? ExcludedMaterials { get; set; }
+        
+        [JsonPropertyName("excluded_categories")]
+        public List<string>? ExcludedCategories { get; set; }
             
         [JsonPropertyName("min_padding")]
         public int? MinPadding { get; set; }

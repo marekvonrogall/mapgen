@@ -119,14 +119,7 @@ namespace MapService.Services
 
                 if (!difficultyList.All(d => Constraints.DifficultyOrder.Contains(d)))
                     mapgenErrors.Add($"Invalid difficulty value(s). Valid values are: {string.Join(", ", Constraints.DifficultyOrder)} or all.");
-
-                // Max Items Per Group / Material
-                int maxItemsPerGroup = settings?.Constraints?.MaxItemsPerGroup ?? 1;
-                int maxItemsPerMaterial = settings?.Constraints?.MaxItemsPerMaterial ?? 1;
-
-                if (maxItemsPerGroup < 0 || maxItemsPerMaterial < 0)
-                    mapgenErrors.Add("Max items per group/material cannot be negative. Disable group/material check by setting it to 0.");
-
+                
                 // Constraints
                 var constraints = Constraints.GetConstraints(settings?.Constraints, mapgenErrors);
 

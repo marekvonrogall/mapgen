@@ -12,6 +12,11 @@ namespace MapService.DTOs
 
         [JsonPropertyName("sprite")]
         public required string Sprite { get; set; }
+        
+        [JsonPropertyName("category")]
+        public required string CategoryRaw { get; set; }
+        
+        public List<string> Categories => ParseJsonArray(CategoryRaw);
 
         [JsonPropertyName("group")]
         public required string GroupRaw { get; set; }

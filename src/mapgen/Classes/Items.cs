@@ -29,6 +29,7 @@ namespace MapService.Classes
             int maxDistance = settings.GridSize / 2;
             var groupCounts = new Dictionary<string, int>();
             var materialCounts = new Dictionary<string, int>();
+            var categoryCounts = new Dictionary<string, int>();
 
             // ring-to-difficulty mapping for circular/flipped
             Dictionary<int, List<int>> ringDifficultyMap = new();
@@ -97,22 +98,26 @@ namespace MapService.Classes
                     var excludedItems = settings.Constraints!.ExcludedItems ?? new List<string>();
                     var excludedGroups = settings.Constraints!.ExcludedGroups ?? new List<string>();
                     var excludedMaterials = settings.Constraints!.ExcludedMaterials ?? new List<string>();
+                    var excludedCategories = settings.Constraints!.ExcludedCategories ?? new List<string>();
                     var maxItemsPerGroup = settings.Constraints!.MaxItemsPerGroup ?? 0;
                     var maxItemsPerMaterial = settings.Constraints!.MaxItemsPerMaterial ?? 0;
+                    var maxItemsPerCategory = settings.Constraints!.MaxItemsPerCategory ?? 0;
                     
                     // item selection
                     var itemList = bingoItems
                         .Where(item => GameVersion.VersionIsSmallerOrEqual(settings.GameVersion!, item.Version) && !selectedItems.Contains(item.Name))
                         .Where(item => item.Difficulty == difficulty)
                         .Where(item => !excludedItems.Contains(item.Name))
-                        .Where(item => !item.Groups.Any(g => excludedGroups.Contains(g)))
                         .Where(item => !excludedMaterials.Contains(item.Material))
+                        .Where(item => !item.Groups.Any(g => excludedGroups.Contains(g)))
+                        .Where(item => !item.Categories.Any(g => excludedCategories.Contains(g)))
                         .Where(item =>
                         {
                             // Check group & material counts
                             bool groupOk = maxItemsPerGroup == 0 || item.Groups.All(g => groupCounts.GetValueOrDefault(g, 0) < maxItemsPerGroup);
                             bool materialOk = maxItemsPerMaterial == 0 || string.IsNullOrEmpty(item.Material) || materialCounts.GetValueOrDefault(item.Material, 0) < maxItemsPerMaterial;
-                            return groupOk && materialOk;
+                            bool categoryOk = maxItemsPerCategory == 0 || item.Categories.All(g => categoryCounts.GetValueOrDefault(g, 0) < maxItemsPerCategory);
+                            return groupOk && materialOk && categoryOk;
                         })
                         .ToList();
                     

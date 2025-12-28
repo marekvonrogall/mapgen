@@ -4045,7 +4045,7 @@
         "hex": "#9b2d75"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "brain",
       "stack_size": 64,
       "rarity": "common",
@@ -4070,7 +4070,7 @@
         "hex": "#682c4e"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "brain",
       "stack_size": 64,
       "rarity": "common",
@@ -4095,7 +4095,7 @@
         "hex": "#d4589b"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "brain",
       "stack_size": 64,
       "rarity": "common",
@@ -4370,7 +4370,7 @@
         "hex": "#a31da3"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "bubble",
       "stack_size": 64,
       "rarity": "common",
@@ -4395,7 +4395,7 @@
         "hex": "#500c4f"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "bubble",
       "stack_size": 64,
       "rarity": "common",
@@ -4420,7 +4420,7 @@
         "hex": "#a31da3"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "bubble",
       "stack_size": 64,
       "rarity": "common",
@@ -13120,7 +13120,7 @@
         "hex": "#726864"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "brain",
       "stack_size": 64,
       "rarity": "common",
@@ -13145,7 +13145,7 @@
         "hex": "#403c3a"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "brain",
       "stack_size": 64,
       "rarity": "common",
@@ -13170,7 +13170,7 @@
         "hex": "#837975"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "brain",
       "stack_size": 64,
       "rarity": "common",
@@ -13195,7 +13195,7 @@
         "hex": "#837975"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "bubble",
       "stack_size": 64,
       "rarity": "common",
@@ -13220,7 +13220,7 @@
         "hex": "#3b3734"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "bubble",
       "stack_size": 64,
       "rarity": "common",
@@ -13245,7 +13245,7 @@
         "hex": "#96908a"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "bubble",
       "stack_size": 64,
       "rarity": "common",
@@ -13295,7 +13295,7 @@
         "hex": "#726864"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "fire",
       "stack_size": 64,
       "rarity": "common",
@@ -13320,7 +13320,7 @@
         "hex": "#413c3a"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "fire",
       "stack_size": 64,
       "rarity": "common",
@@ -13345,7 +13345,7 @@
         "hex": "#5b5857"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "fire",
       "stack_size": 64,
       "rarity": "common",
@@ -13370,7 +13370,7 @@
         "hex": "#96908a"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "horn",
       "stack_size": 64,
       "rarity": "common",
@@ -13395,7 +13395,7 @@
         "hex": "#3f3b39"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "horn",
       "stack_size": 64,
       "rarity": "common",
@@ -13420,7 +13420,7 @@
         "hex": "#837975"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "horn",
       "stack_size": 64,
       "rarity": "common",
@@ -13445,7 +13445,7 @@
         "hex": "#756b67"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "tube",
       "stack_size": 64,
       "rarity": "common",
@@ -13470,7 +13470,7 @@
         "hex": "#423e3c"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "tube",
       "stack_size": 64,
       "rarity": "common",
@@ -13495,7 +13495,7 @@
         "hex": "#97918b"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "tube",
       "stack_size": 64,
       "rarity": "common",
@@ -16095,7 +16095,7 @@
         "hex": "#9a202d"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "fire",
       "stack_size": 64,
       "rarity": "common",
@@ -16120,7 +16120,7 @@
         "hex": "#69161e"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "fire",
       "stack_size": 64,
       "rarity": "common",
@@ -16145,7 +16145,7 @@
         "hex": "#96202c"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "fire",
       "stack_size": 64,
       "rarity": "common",
@@ -18395,7 +18395,7 @@
         "hex": "#cfb140"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "horn",
       "stack_size": 64,
       "rarity": "common",
@@ -18420,7 +18420,7 @@
         "hex": "#56501a"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "horn",
       "stack_size": 64,
       "rarity": "common",
@@ -18445,7 +18445,7 @@
         "hex": "#cfb140"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "horn",
       "stack_size": 64,
       "rarity": "common",
@@ -32120,7 +32120,7 @@
         "hex": "#304ed9"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "tube",
       "stack_size": 64,
       "rarity": "common",
@@ -32145,7 +32145,7 @@
         "hex": "#132255"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "tube",
       "stack_size": 64,
       "rarity": "common",
@@ -32170,7 +32170,7 @@
         "hex": "#2f4dda"
       },
       "category": "['natural_blocks']",
-      "group": "['coral']",
+      "group": "['corals']",
       "material": "tube",
       "stack_size": 64,
       "rarity": "common",
