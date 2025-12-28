@@ -49,7 +49,6 @@ namespace MapService.Classes
                     }
                 }
 
-                Console.WriteLine($"Added constraint: {name}, with value: {value}");
                 returnConstraints.Add(name, value);
             }
 

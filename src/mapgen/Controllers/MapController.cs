@@ -10,9 +10,9 @@ namespace MapService.Controllers;
 [Route("[controller]")]
 public class MapController : ControllerBase
 {
+    private readonly ValidationService _validationService = new();
     private readonly MapGenerationService _mapService;
     
-    private readonly HttpClient _httpClient;
     public MapController(IHttpClientFactory httpClientFactory)
     {
         _mapService = new MapGenerationService(httpClientFactory.CreateClient());
@@ -30,11 +30,40 @@ public class MapController : ControllerBase
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateRequestDto request)
     {
-        var result = await _mapService.CreateMapAsync(request);
+        var mapgenErrors = new List<string>();
+        var validatedSettings = _validationService.ValidateRequest(request.Settings, mapgenErrors);
+        
+        if (mapgenErrors.Any())
+            return BadRequest(new { errors = mapgenErrors });
+        
+        var result = await _mapService.CreateMapAsync(validatedSettings);
 
         if (!result.Success)
             return BadRequest(new { errors = result.Errors } );
 
-        return Ok(result.Data as CreateResponseDto);
+        return Ok(result.Data);
+    }
+    
+    [HttpPost("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateRequestDto request)
+    {
+        var settings = request.MapRaw?.Settings ?? request.Settings;
+        var items =  request.MapRaw?.Items ?? request.Items;
+        
+        if (settings == null || items == null)
+            return BadRequest(new { errors = "Please provide Settings and Items!" });
+        
+        var mapgenErrors = new List<string>();
+        var validatedSettings = _validationService.ValidateRequest(settings, mapgenErrors);
+        
+        if (mapgenErrors.Any())
+            return BadRequest(new { errors = mapgenErrors });
+
+        var payload = new MapRawDto { Settings = validatedSettings, Items = items };
+        var result = await _mapService.UpdateMapAsync(payload);
+        if (!result.Success)
+            return BadRequest(new { errors = result.Errors } );
+        
+        return Ok(result.Data);
     }
 }

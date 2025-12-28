@@ -1,9 +1,13 @@
 @MapService_HostAddress = http://localhost:5001
 
-GET {{MapService_HostAddress}}/ping/
-Accept: application/json
-
-POST {{MapService_HostAddress}}/create/
+###
+GET {{MapService_HostAddress}}/Map/ping/
 Accept: application/json
 
 ###
+POST {{MapService_HostAddress}}/Map/create/
+Accept: application/json
+
+###
+POST {{MapService_HostAddress}}/Map/update/
+Accept: application/json
