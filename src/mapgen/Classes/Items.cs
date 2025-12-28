@@ -76,6 +76,19 @@ namespace MapService.Classes
             }
 
             // grid generation
+            var excludedItems = settings.Constraints!.ExcludedItems ?? new List<string>();
+            var excludedGroups = settings.Constraints!.ExcludedGroups ?? new List<string>();
+            var excludedMaterials = settings.Constraints!.ExcludedMaterials ?? new List<string>();
+            var excludedCategories = settings.Constraints!.ExcludedCategories ?? new List<string>();
+            var excludedItemsSet = new HashSet<string>(excludedItems.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
+            var excludedGroupsSet = new HashSet<string>(excludedGroups.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
+            var excludedMaterialsSet = new HashSet<string>(excludedMaterials.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
+            var excludedCategoriesSet = new HashSet<string>(excludedCategories.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
+            
+            var maxItemsPerGroup = settings.Constraints!.MaxItemsPerGroup ?? 0;
+            var maxItemsPerMaterial = settings.Constraints!.MaxItemsPerMaterial ?? 0;
+            var maxItemsPerCategory = settings.Constraints!.MaxItemsPerCategory ?? 0;
+            
             for (int row = 0; row < settings.GridSize; row++)
             {
                 for (int column = 0; column < settings.GridSize; column++)
@@ -94,29 +107,22 @@ namespace MapService.Classes
                         int chosenIndex = possibleIndexes[random.Next(possibleIndexes.Count)];
                         difficulty = Constraints.DifficultyOrder[chosenIndex];
                     }
-
-                    var excludedItems = settings.Constraints!.ExcludedItems ?? new List<string>();
-                    var excludedGroups = settings.Constraints!.ExcludedGroups ?? new List<string>();
-                    var excludedMaterials = settings.Constraints!.ExcludedMaterials ?? new List<string>();
-                    var excludedCategories = settings.Constraints!.ExcludedCategories ?? new List<string>();
-                    var maxItemsPerGroup = settings.Constraints!.MaxItemsPerGroup ?? 0;
-                    var maxItemsPerMaterial = settings.Constraints!.MaxItemsPerMaterial ?? 0;
-                    var maxItemsPerCategory = settings.Constraints!.MaxItemsPerCategory ?? 0;
                     
                     // item selection
                     var itemList = bingoItems
-                        .Where(item => GameVersion.VersionIsSmallerOrEqual(settings.GameVersion!, item.Version) && !selectedItems.Contains(item.Name))
+                        .Where(item => GameVersion.VersionIsSmallerOrEqual(settings.GameVersion!, item.Version))
+                        .Where(item => !selectedItems.Contains(item.Name))
                         .Where(item => item.Difficulty == difficulty)
-                        .Where(item => !excludedItems.Contains(item.Name))
-                        .Where(item => !excludedMaterials.Contains(item.Material))
-                        .Where(item => !item.Groups.Any(g => excludedGroups.Contains(g)))
-                        .Where(item => !item.Categories.Any(g => excludedCategories.Contains(g)))
+                        .Where(item => !excludedItemsSet.Contains(item.Id) && !excludedItemsSet.Contains(item.Name))
+                        .Where(item => !excludedMaterialsSet.Contains(item.Material))
+                        .Where(item => !item.Groups.Any(g => excludedGroupsSet.Contains(g)))
+                        .Where(item => !item.Categories.Any(c => excludedCategoriesSet.Contains(c)))
                         .Where(item =>
                         {
                             // Check group & material counts
                             bool groupOk = maxItemsPerGroup == 0 || item.Groups.All(g => groupCounts.GetValueOrDefault(g, 0) < maxItemsPerGroup);
                             bool materialOk = maxItemsPerMaterial == 0 || string.IsNullOrEmpty(item.Material) || materialCounts.GetValueOrDefault(item.Material, 0) < maxItemsPerMaterial;
-                            bool categoryOk = maxItemsPerCategory == 0 || item.Categories.All(g => categoryCounts.GetValueOrDefault(g, 0) < maxItemsPerCategory);
+                            bool categoryOk = maxItemsPerCategory == 0 || item.Categories.All(c => categoryCounts.GetValueOrDefault(c, 0) < maxItemsPerCategory);
                             return groupOk && materialOk && categoryOk;
                         })
                         .ToList();
@@ -127,9 +133,11 @@ namespace MapService.Classes
                     BingoItemDto selectedItem = itemList[random.Next(itemList.Count)];
                     selectedItems.Add(selectedItem.Name);
 
-                    // Update group / material counts
+                    // Update group / material / category counts
                     foreach (var g in selectedItem.Groups)
                         groupCounts[g] = groupCounts.GetValueOrDefault(g, 0) + 1;
+                    foreach (var c in selectedItem.Categories)
+                        categoryCounts[c] = categoryCounts.GetValueOrDefault(c, 0) + 1;
                     if (!string.IsNullOrEmpty(selectedItem.Material))
                         materialCounts[selectedItem.Material] = materialCounts.GetValueOrDefault(selectedItem.Material, 0) + 1;
 

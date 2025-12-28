@@ -1,3 +1,4 @@
+using System.Collections.Frozen;
 using System.Text.Json;
 using MapService.DTOs;
 
@@ -9,8 +10,29 @@ namespace MapService.Classes
         public static readonly List<string> DefaultDifficulties = new() { "easy", "medium", "hard" };
         public static readonly string[] ValidGameModes = { "1P", "2P", "3P", "4P" };
         public static readonly string[] ValidPlacementModes = { "random", "circular", "flipped" };
+        
+        private static void ValidateExclusionConstraint(List<string>? constraints, FrozenSet<string> allowedValues, string typeName, List<string> errors)
+        {
+            if (constraints == null) return;
+
+            var distinctConstraints = constraints.Distinct(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var item in distinctConstraints)
+            {
+                if (!allowedValues.Contains(item))
+                {
+                    errors.Add($"Constraints: {typeName}: Unknown value '{item}'");
+                }
+            }
+        }
+        
         public static ConstraintsDto? GetConstraints(ConstraintsDto? requestConstraints, List<string> errors)
         {
+            ValidateExclusionConstraint(requestConstraints?.ExcludedItems, JsonData.ItemIdsAndNames, "Excluded Items", errors);
+            ValidateExclusionConstraint(requestConstraints?.ExcludedGroups, JsonData.Groups, "Excluded Groups", errors);
+            ValidateExclusionConstraint(requestConstraints?.ExcludedMaterials, JsonData.Materials, "Excluded Materials", errors);
+            ValidateExclusionConstraint(requestConstraints?.ExcludedCategories, JsonData.Categories, "Excluded Categories", errors);
+            
             var constraintsMap = new Dictionary<string, object?>
             {
                 { "min_padding", requestConstraints?.MinPadding },
