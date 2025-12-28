@@ -3,6 +3,10 @@ services:
   mapgen:
     build:
       context: src/mapgen
+    environment:
+      - MAPGEN_PORT=5001
+    ports:
+      - "5001:5001"
     networks:
       - localnet
 
@@ -10,6 +14,10 @@ services:
   imggen:
     build:
       context: src/imggen
+    environment:
+      - IMGGEN_PORT=5000
+    ports:
+      - "5000:5000"
     networks:
       - localnet
     volumes:

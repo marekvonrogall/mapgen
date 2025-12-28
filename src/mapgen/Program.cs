@@ -3,9 +3,10 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var port = Environment.GetEnvironmentVariable("MAPGEN_PORT") ?? "5001";
 builder.WebHost.ConfigureKestrel((context, options) =>
 {
-    options.Listen(IPAddress.Any, 5001);
+    options.Listen(IPAddress.Any, int.Parse(port));
 });
 
 builder.Services.AddControllers()

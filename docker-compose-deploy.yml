@@ -2,10 +2,18 @@ services:
   # Map handler service
   mapgen:
     image: ghcr.io/marekvonrogall/mapgen/mapgen:latest
+    environment:
+      - MAPGEN_PORT=5001
+    ports:
+      - "5001:5001"
 
   # Image generation service
   imggen:
     image: ghcr.io/marekvonrogall/mapgen/imggen:latest
+    environment:
+      - IMGGEN_PORT=5000
+    ports:
+      - "5000:5000"
     volumes:
       - imggen-public:/app/public
 

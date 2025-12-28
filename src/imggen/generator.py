@@ -735,4 +735,5 @@ def generate_image():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5008)
+    port = int(os.environ.get("IMGGEN_PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
