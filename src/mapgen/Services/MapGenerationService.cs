@@ -47,27 +47,25 @@ namespace MapService.Services
 
         public async Task<(bool Success, CreateResponseDto? Data, List<string>? Errors)> CreateMapAsync(SettingsDto settings)
         {
-            Console.WriteLine(JsonSerializer.Serialize(settings));
             var bingoItems = JsonData.BingoItems();
 
+            var generatedItems = Items.GenerateItems(
+                settings,
+                bingoItems
+            );
+                
+            if (!generatedItems.Success)
+                return(generatedItems.Success, null, generatedItems.Errors!);
+                
             var payload = new MapRawDto
             {
                 Settings = settings,
-                Items = Items.GenerateItems(
-                    settings.GameVersion!,
-                    settings.GridSize,
-                    bingoItems,
-                    settings.Teams!.Select(t => t.Name).ToArray(),
-                    settings.Difficulties!,
-                    settings.Constraints!.MaxItemsPerGroup ?? 0,
-                    settings.Constraints!.MaxItemsPerMaterial ?? 0,
-                    settings.PlacementMode!
-                )
+                Items = generatedItems.Items!
             };
 
             var result = await UpdateMapAsync(payload);
             if (!result.Success)
-                return(false, null, result.Errors!);
+                return(result.Success, null, result.Errors!);
             
             var responseDto = new CreateResponseDto
             {
