@@ -31,6 +31,7 @@ namespace MapService.Classes
             var colorMap = new Dictionary<string, string?>
             {
                 { "background_color", requestColors.BackgroundColor },
+                { "outer_background_color", requestColors.OuterBackgroundColor },
                 { "foreground_color", requestColors.ForegroundColor },
                 { "line_color", requestColors.LineColor },
                 { "border_color", requestColors.BorderColor }

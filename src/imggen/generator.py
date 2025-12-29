@@ -516,6 +516,12 @@ def generate_image():
             or custom_colors.get("background_color", None)
             or "#D6BE96"
         )  # Light Beige
+        outer_bg_color = str(
+            custom_colors.get("outer_bg_color", None)
+            or custom_colors.get("outer_background_color", None)
+            or bg_color
+            or "#D6BE96"
+        )  # Light Beige
         fg_color = str(
             custom_colors.get("fg_color", None)
             or custom_colors.get("foreground_color", None)
@@ -727,7 +733,8 @@ def generate_image():
         center_board = constraints.get("center_board", True)
         if center_board and used_width != IMG_SIZE:
             offset = (IMG_SIZE - used_width) // 2
-            new_canvas = Image.new("RGBA", (IMG_SIZE, IMG_SIZE), bg_color)
+            image = image.crop((0, 0, used_width, used_width))
+            new_canvas = Image.new("RGBA", (IMG_SIZE, IMG_SIZE), outer_bg_color)
             new_canvas.paste(image, (offset, offset))
             image = new_canvas
 
