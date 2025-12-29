@@ -32,7 +32,11 @@ namespace MapService.Services
                     mapgenErrors.Add($"Specified game version '{gameVersion}' is unsupported. Supported versions are {JsonData.EarliestGameVersion()}-{JsonData.LatestGameVersion()}");
 
                 // Teams
-                var teams = settings?.Teams ?? new List<TeamDto>();
+                var teams = settings?.Teams 
+                            ?? Enumerable.Range(1, teamCount)
+                                .Select(i => new TeamDto { Name = $"team_{i}" })
+                                .ToList();
+
                 var normalizedTeams = new List<TeamDto>();
 
                 if (teams.Count != teamCount)

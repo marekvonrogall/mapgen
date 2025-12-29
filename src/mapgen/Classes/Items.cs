@@ -6,6 +6,7 @@ namespace MapService.Classes
     {
         public static (bool Success, List<ResponseItemDto>? Items, List<string>? Errors) GenerateItems(SettingsDto settings, List<BingoItemDto> bingoItems)
         {
+            var constraints = settings.Constraints ?? new ConstraintsDto();
             var random = Random.Shared;
             var items = new List<ResponseItemDto>();
             var selectedItems = new HashSet<string>();
@@ -76,18 +77,18 @@ namespace MapService.Classes
             }
 
             // grid generation
-            var excludedItems = settings.Constraints!.ExcludedItems ?? new List<string>();
-            var excludedGroups = settings.Constraints!.ExcludedGroups ?? new List<string>();
-            var excludedMaterials = settings.Constraints!.ExcludedMaterials ?? new List<string>();
-            var excludedCategories = settings.Constraints!.ExcludedCategories ?? new List<string>();
+            var excludedItems = constraints.ExcludedItems ?? new List<string>();
+            var excludedGroups = constraints.ExcludedGroups ?? new List<string>();
+            var excludedMaterials = constraints.ExcludedMaterials ?? new List<string>();
+            var excludedCategories = constraints.ExcludedCategories ?? new List<string>();
             var excludedItemsSet = new HashSet<string>(excludedItems.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
             var excludedGroupsSet = new HashSet<string>(excludedGroups.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
             var excludedMaterialsSet = new HashSet<string>(excludedMaterials.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
             var excludedCategoriesSet = new HashSet<string>(excludedCategories.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
             
-            var maxItemsPerGroup = settings.Constraints!.MaxItemsPerGroup ?? 0;
-            var maxItemsPerMaterial = settings.Constraints!.MaxItemsPerMaterial ?? 0;
-            var maxItemsPerCategory = settings.Constraints!.MaxItemsPerCategory ?? 0;
+            var maxItemsPerGroup = constraints.MaxItemsPerGroup ?? 0;
+            var maxItemsPerMaterial = constraints.MaxItemsPerMaterial ?? 0;
+            var maxItemsPerCategory = constraints.MaxItemsPerCategory ?? 0;
             
             for (int row = 0; row < settings.GridSize; row++)
             {
@@ -141,7 +142,7 @@ namespace MapService.Classes
                     if (!string.IsNullOrEmpty(selectedItem.Material))
                         materialCounts[selectedItem.Material] = materialCounts.GetValueOrDefault(selectedItem.Material, 0) + 1;
 
-                    var completed = settings.Teams?.ToDictionary(t => t.Name, _ => false);
+                    var completed = settings.Teams!.ToDictionary(t => t.Name, _ => false);
 
                     items.Add(new ResponseItemDto
                     {
