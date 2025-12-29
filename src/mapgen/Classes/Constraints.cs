@@ -60,7 +60,8 @@ namespace MapService.Classes
                 { "whitelisted_items", requestConstraints?.WhitelistedItems },
                 { "whitelisted_groups", requestConstraints?.WhitelistedGroups },
                 { "whitelisted_materials", requestConstraints?.WhitelistedMaterials },
-                { "whitelisted_categories", requestConstraints?.WhitelistedCategories }
+                { "whitelisted_categories", requestConstraints?.WhitelistedCategories },
+                { "must_pass_all_whitelists", requestConstraints?.MustPassAllWhitelists }
             };
 
             var minMaxMap = new Dictionary<string, string>()

@@ -99,6 +99,8 @@ namespace MapService.Classes
             var maxItemsPerMaterial = constraints.MaxItemsPerMaterial ?? 1;
             var maxItemsPerCategory = constraints.MaxItemsPerCategory ?? 0;
             
+            bool mustPassAllWhitelists = constraints.MustPassAllWhitelists ?? false;
+            
             for (int row = 0; row < settings.GridSize; row++)
             {
                 for (int column = 0; column < settings.GridSize; column++)
@@ -110,23 +112,26 @@ namespace MapService.Classes
                         .Where(item => !selectedItems.Contains(item.Name))
                         // Whitelist
                         .Where(item =>
-                            whitelistedItemsSet.Count == 0 ||
-                            whitelistedItemsSet.Contains(item.Id) ||
-                            whitelistedItemsSet.Contains(item.Name)
-                        )
-                        .Where(item =>
-                            whitelistedMaterialsSet.Count == 0 ||
-                            (!string.IsNullOrEmpty(item.Material) &&
-                             whitelistedMaterialsSet.Contains(item.Material))
-                        )
-                        .Where(item =>
-                            whitelistedGroupsSet.Count == 0 ||
-                            item.Groups.Any(g => whitelistedGroupsSet.Contains(g))
-                        )
-                        .Where(item =>
-                            whitelistedCategoriesSet.Count == 0 ||
-                            item.Categories.Any(c => whitelistedCategoriesSet.Contains(c))
-                        )
+                        {
+                            var checks = new List<bool>();
+
+                            if (whitelistedItemsSet.Count > 0)
+                                checks.Add(whitelistedItemsSet.Contains(item.Id) || whitelistedItemsSet.Contains(item.Name));
+
+                            if (whitelistedMaterialsSet.Count > 0 && !string.IsNullOrEmpty(item.Material))
+                                checks.Add(whitelistedMaterialsSet.Contains(item.Material));
+
+                            if (whitelistedGroupsSet.Count > 0)
+                                checks.Add(item.Groups.Any(g => whitelistedGroupsSet.Contains(g)));
+
+                            if (whitelistedCategoriesSet.Count > 0)
+                                checks.Add(item.Categories.Any(c => whitelistedCategoriesSet.Contains(c)));
+
+                            if (checks.Count == 0)
+                                return true;
+
+                            return mustPassAllWhitelists ? checks.All(x => x) : checks.Any(x => x);
+                        })
                         // Blacklist
                         .Where(item => !excludedItemsSet.Contains(item.Id) && !excludedItemsSet.Contains(item.Name))
                         .Where(item => !excludedMaterialsSet.Contains(item.Material))

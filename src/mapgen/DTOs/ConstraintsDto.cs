@@ -36,6 +36,9 @@ namespace MapService.DTOs
         
         [JsonPropertyName("whitelisted_categories")]
         public List<string>? WhitelistedCategories { get; set; }
+        
+        [JsonPropertyName("must_pass_all_whitelists")]
+        public bool? MustPassAllWhitelists { get; set; }
             
         [JsonPropertyName("min_padding")]
         public int? MinPadding { get; set; }
