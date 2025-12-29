@@ -737,7 +737,7 @@ def generate_image():
         image.save(filepath)
 
         # Return URL
-        return jsonify({"url": f"/public/{filename}", "bingo": bingo_result}), 201
+        return jsonify({"map_url": f"/public/{filename}", "bingo": bingo_result}), 201
 
     except Exception as e:
         return jsonify({"imggen": str(e)}), 500

@@ -71,7 +71,7 @@ namespace MapService.Services
             
             var responseDto = new CreateResponseDto
             {
-                MapUrl = result.Data!.Url,
+                MapUrl = result.Data!.MapUrl,
                 MapRaw = payload
             };
             

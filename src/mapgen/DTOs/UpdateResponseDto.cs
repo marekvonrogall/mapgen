@@ -4,8 +4,8 @@ namespace MapService.DTOs
 {
     public class UpdateResponseDto
     {
-        [JsonPropertyName("url")]
-        public required string Url { get; set; }
+        [JsonPropertyName("map_url")]
+        public required string MapUrl { get; set; }
         
         [JsonPropertyName("bingo")]
         public string? BingoStatus { get; set; }
