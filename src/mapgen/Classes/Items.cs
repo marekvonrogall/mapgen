@@ -95,8 +95,8 @@ namespace MapService.Classes
             var excludedMaterialsSet = new HashSet<string>(excludedMaterials.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
             var excludedCategoriesSet = new HashSet<string>(excludedCategories.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
             
-            var maxItemsPerGroup = constraints.MaxItemsPerGroup ?? 0;
-            var maxItemsPerMaterial = constraints.MaxItemsPerMaterial ?? 0;
+            var maxItemsPerGroup = constraints.MaxItemsPerGroup ?? 1;
+            var maxItemsPerMaterial = constraints.MaxItemsPerMaterial ?? 1;
             var maxItemsPerCategory = constraints.MaxItemsPerCategory ?? 0;
             
             for (int row = 0; row < settings.GridSize; row++)
