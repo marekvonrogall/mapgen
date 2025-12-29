@@ -11,7 +11,7 @@ namespace MapService.Classes
         public static readonly string[] ValidGameModes = { "1P", "2P", "3P", "4P" };
         public static readonly string[] ValidPlacementModes = { "random", "circular", "flipped" };
         
-        private static void ValidateExclusionConstraint(List<string>? constraints, FrozenSet<string> allowedValues, string typeName, List<string> errors)
+        private static void ValidateSetConstraint(List<string>? constraints, FrozenSet<string> allowedValues, string typeName, List<string> errors)
         {
             if (constraints == null) return;
 
@@ -28,10 +28,16 @@ namespace MapService.Classes
         
         public static ConstraintsDto? GetConstraints(ConstraintsDto? requestConstraints, List<string> errors)
         {
-            ValidateExclusionConstraint(requestConstraints?.ExcludedItems, JsonData.ItemIdsAndNames, "Excluded Items", errors);
-            ValidateExclusionConstraint(requestConstraints?.ExcludedGroups, JsonData.Groups, "Excluded Groups", errors);
-            ValidateExclusionConstraint(requestConstraints?.ExcludedMaterials, JsonData.Materials, "Excluded Materials", errors);
-            ValidateExclusionConstraint(requestConstraints?.ExcludedCategories, JsonData.Categories, "Excluded Categories", errors);
+            ValidateSetConstraint(requestConstraints?.BlacklistedItems, JsonData.ItemIdsAndNames, "Excluded Items", errors);
+            ValidateSetConstraint(requestConstraints?.BlacklistedGroups, JsonData.Groups, "Excluded Groups", errors);
+            ValidateSetConstraint(requestConstraints?.BlacklistedMaterials, JsonData.Materials, "Excluded Materials", errors);
+            ValidateSetConstraint(requestConstraints?.BlacklistedCategories, JsonData.Categories, "Excluded Categories", errors);
+            
+            ValidateSetConstraint(requestConstraints?.WhitelistedItems, JsonData.ItemIdsAndNames, "Whitelisted Items", errors);
+            ValidateSetConstraint(requestConstraints?.WhitelistedGroups, JsonData.Groups, "Whitelisted Groups", errors);
+            ValidateSetConstraint(requestConstraints?.WhitelistedMaterials, JsonData.Materials, "Whitelisted Materials", errors);
+            ValidateSetConstraint(requestConstraints?.WhitelistedCategories, JsonData.Categories, "Whitelisted Categories", errors);
+
             
             var constraintsMap = new Dictionary<string, object?>
             {
@@ -47,10 +53,14 @@ namespace MapService.Classes
                 { "max_items_per_group", requestConstraints?.MaxItemsPerGroup },
                 { "max_items_per_material", requestConstraints?.MaxItemsPerMaterial },
                 { "max_items_per_category", requestConstraints?.MaxItemsPerCategory },
-                { "excluded_items", requestConstraints?.ExcludedItems },
-                { "excluded_groups", requestConstraints?.ExcludedGroups },
-                { "excluded_materials", requestConstraints?.ExcludedMaterials },
-                { "excluded_categories", requestConstraints?.ExcludedCategories }
+                { "blacklisted_items", requestConstraints?.BlacklistedItems },
+                { "blacklisted_groups", requestConstraints?.BlacklistedGroups },
+                { "blacklisted_materials", requestConstraints?.BlacklistedMaterials },
+                { "blacklisted_categories", requestConstraints?.BlacklistedCategories },
+                { "whitelisted_items", requestConstraints?.WhitelistedItems },
+                { "whitelisted_groups", requestConstraints?.WhitelistedGroups },
+                { "whitelisted_materials", requestConstraints?.WhitelistedMaterials },
+                { "whitelisted_categories", requestConstraints?.WhitelistedCategories }
             };
 
             var minMaxMap = new Dictionary<string, string>()

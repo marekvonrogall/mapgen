@@ -13,17 +13,29 @@ namespace MapService.DTOs
         [JsonPropertyName("max_items_per_category")]
         public int? MaxItemsPerCategory { get; set; }
         
-        [JsonPropertyName("excluded_items")]
-        public List<string>? ExcludedItems { get; set; }
+        [JsonPropertyName("blacklisted_items")]
+        public List<string>? BlacklistedItems { get; set; }
         
-        [JsonPropertyName("excluded_groups")]
-        public List<string>? ExcludedGroups { get; set; }
+        [JsonPropertyName("blacklisted_groups")]
+        public List<string>? BlacklistedGroups { get; set; }
         
-        [JsonPropertyName("excluded_materials")]
-        public List<string>? ExcludedMaterials { get; set; }
+        [JsonPropertyName("blacklisted_materials")]
+        public List<string>? BlacklistedMaterials { get; set; }
         
-        [JsonPropertyName("excluded_categories")]
-        public List<string>? ExcludedCategories { get; set; }
+        [JsonPropertyName("blacklisted_categories")]
+        public List<string>? BlacklistedCategories { get; set; }
+        
+        [JsonPropertyName("whitelisted_items")]
+        public List<string>? WhitelistedItems { get; set; }
+        
+        [JsonPropertyName("whitelisted_groups")]
+        public List<string>? WhitelistedGroups { get; set; }
+        
+        [JsonPropertyName("whitelisted_materials")]
+        public List<string>? WhitelistedMaterials { get; set; }
+        
+        [JsonPropertyName("whitelisted_categories")]
+        public List<string>? WhitelistedCategories { get; set; }
             
         [JsonPropertyName("min_padding")]
         public int? MinPadding { get; set; }

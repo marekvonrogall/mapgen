@@ -77,10 +77,19 @@ namespace MapService.Classes
             }
 
             // grid generation
-            var excludedItems = constraints.ExcludedItems ?? new List<string>();
-            var excludedGroups = constraints.ExcludedGroups ?? new List<string>();
-            var excludedMaterials = constraints.ExcludedMaterials ?? new List<string>();
-            var excludedCategories = constraints.ExcludedCategories ?? new List<string>();
+            var whitelistedItems = constraints.WhitelistedItems ?? new List<string>();
+            var whitelistedGroups = constraints.WhitelistedGroups ?? new List<string>();
+            var whitelistedMaterials = constraints.WhitelistedMaterials ?? new List<string>();
+            var whitelistedCategories = constraints.WhitelistedCategories ?? new List<string>();
+            var whitelistedItemsSet = new HashSet<string>(whitelistedItems.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
+            var whitelistedGroupsSet = new HashSet<string>(whitelistedGroups.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
+            var whitelistedMaterialsSet = new HashSet<string>(whitelistedMaterials.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
+            var whitelistedCategoriesSet = new HashSet<string>(whitelistedCategories.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
+            
+            var excludedItems = constraints.BlacklistedItems ?? new List<string>();
+            var excludedGroups = constraints.BlacklistedGroups ?? new List<string>();
+            var excludedMaterials = constraints.BlacklistedMaterials ?? new List<string>();
+            var excludedCategories = constraints.BlacklistedCategories ?? new List<string>();
             var excludedItemsSet = new HashSet<string>(excludedItems.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
             var excludedGroupsSet = new HashSet<string>(excludedGroups.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
             var excludedMaterialsSet = new HashSet<string>(excludedMaterials.Distinct(StringComparer.OrdinalIgnoreCase), StringComparer.OrdinalIgnoreCase);
@@ -94,42 +103,78 @@ namespace MapService.Classes
             {
                 for (int column = 0; column < settings.GridSize; column++)
                 {
-                    string difficulty;
-
-                    if (settings.PlacementMode == "random")
-                    {
-                        int randomIndex = allowedIndexes[random.Next(allowedIndexes.Count)];
-                        difficulty = Constraints.DifficultyOrder[randomIndex];
-                    }
-                    else
-                    {
-                        int ring = maxDistance - Math.Max(Math.Abs(row - maxDistance), Math.Abs(column - maxDistance));
-                        var possibleIndexes = ringDifficultyMap[ring];
-                        int chosenIndex = possibleIndexes[random.Next(possibleIndexes.Count)];
-                        difficulty = Constraints.DifficultyOrder[chosenIndex];
-                    }
-                    
                     // item selection
-                    var itemList = bingoItems
+                    var baseCandidates = bingoItems
+                        // Item Version & Duplicates    
                         .Where(item => GameVersion.VersionIsSmallerOrEqual(settings.GameVersion!, item.Version))
                         .Where(item => !selectedItems.Contains(item.Name))
-                        .Where(item => item.Difficulty == difficulty)
+                        // Whitelist
+                        .Where(item =>
+                            whitelistedItemsSet.Count == 0 ||
+                            whitelistedItemsSet.Contains(item.Id) ||
+                            whitelistedItemsSet.Contains(item.Name)
+                        )
+                        .Where(item =>
+                            whitelistedMaterialsSet.Count == 0 ||
+                            (!string.IsNullOrEmpty(item.Material) &&
+                             whitelistedMaterialsSet.Contains(item.Material))
+                        )
+                        .Where(item =>
+                            whitelistedGroupsSet.Count == 0 ||
+                            item.Groups.Any(g => whitelistedGroupsSet.Contains(g))
+                        )
+                        .Where(item =>
+                            whitelistedCategoriesSet.Count == 0 ||
+                            item.Categories.Any(c => whitelistedCategoriesSet.Contains(c))
+                        )
+                        // Blacklist
                         .Where(item => !excludedItemsSet.Contains(item.Id) && !excludedItemsSet.Contains(item.Name))
                         .Where(item => !excludedMaterialsSet.Contains(item.Material))
                         .Where(item => !item.Groups.Any(g => excludedGroupsSet.Contains(g)))
                         .Where(item => !item.Categories.Any(c => excludedCategoriesSet.Contains(c)))
+                        // Group / Material / Category count
                         .Where(item =>
                         {
-                            // Check group & material counts
-                            bool groupOk = maxItemsPerGroup == 0 || item.Groups.All(g => groupCounts.GetValueOrDefault(g, 0) < maxItemsPerGroup);
-                            bool materialOk = maxItemsPerMaterial == 0 || string.IsNullOrEmpty(item.Material) || materialCounts.GetValueOrDefault(item.Material, 0) < maxItemsPerMaterial;
-                            bool categoryOk = maxItemsPerCategory == 0 || item.Categories.All(c => categoryCounts.GetValueOrDefault(c, 0) < maxItemsPerCategory);
+                            bool groupOk = maxItemsPerGroup == 0 || item.Groups.All(g =>
+                                groupCounts.GetValueOrDefault(g, 0) < maxItemsPerGroup);
+                            bool materialOk = maxItemsPerMaterial == 0 || string.IsNullOrEmpty(item.Material) ||
+                                              materialCounts.GetValueOrDefault(item.Material, 0) < maxItemsPerMaterial;
+                            bool categoryOk = maxItemsPerCategory == 0 || item.Categories.All(c =>
+                                categoryCounts.GetValueOrDefault(c, 0) < maxItemsPerCategory);
                             return groupOk && materialOk && categoryOk;
                         })
                         .ToList();
                     
-                    if (itemList.Count == 0)
+                    if (baseCandidates.Count == 0)
                         return (false, null, new List<string> { "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)" });
+                    
+                    // Difficulty
+                    var allowedDifficulties = baseCandidates
+                        .Select(i => i.Difficulty)
+                        .Distinct()
+                        .ToList();
+                    
+                    string difficulty;
+
+                    if (settings.PlacementMode == "random")
+                        difficulty = allowedDifficulties[random.Next(allowedDifficulties.Count)];
+                    else
+                    {
+                        int ring = maxDistance - Math.Max(Math.Abs(row - maxDistance), Math.Abs(column - maxDistance));
+                        var possibleIndexes = ringDifficultyMap[ring]
+                            .Where(i => allowedDifficulties.Contains(Constraints.DifficultyOrder[i]))
+                            .ToList();
+
+                        if (possibleIndexes.Count == 0)
+                            return (false, null, new List<string> { "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)" });
+                        
+                        int chosenIndex = possibleIndexes[random.Next(possibleIndexes.Count)];
+                        difficulty = Constraints.DifficultyOrder[chosenIndex];
+                    }
+                    
+                    var itemList = baseCandidates
+                        .Where(item => item.Difficulty == difficulty)
+                        .ToList();
                     
                     BingoItemDto selectedItem = itemList[random.Next(itemList.Count)];
                     selectedItems.Add(selectedItem.Name);
