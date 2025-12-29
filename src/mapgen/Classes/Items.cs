@@ -157,7 +157,19 @@ namespace MapService.Classes
                     string difficulty;
 
                     if (settings.PlacementMode == "random")
-                        difficulty = allowedDifficulties[random.Next(allowedDifficulties.Count)];
+                    {
+                        var allowedDifficultiesForCell = allowedDifficulties
+                            .Where(d => settings.Difficulties!.Contains(d))
+                            .ToList();
+                        
+                        if (allowedDifficultiesForCell.Count == 0)
+                            return (false, null,
+                                new List<string>
+                                {
+                                    "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)"
+                                });
+                        difficulty = allowedDifficultiesForCell[random.Next(allowedDifficultiesForCell.Count)];
+                    }
                     else
                     {
                         int ring = maxDistance - Math.Max(Math.Abs(row - maxDistance), Math.Abs(column - maxDistance));
@@ -166,12 +178,16 @@ namespace MapService.Classes
                             .ToList();
 
                         if (possibleIndexes.Count == 0)
-                            return (false, null, new List<string> { "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)" });
-                        
+                            return (false, null,
+                                new List<string>
+                                {
+                                    "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)"
+                                });
+
                         int chosenIndex = possibleIndexes[random.Next(possibleIndexes.Count)];
                         difficulty = Constraints.DifficultyOrder[chosenIndex];
                     }
-                    
+
                     var itemList = baseCandidates
                         .Where(item => item.Difficulty == difficulty)
                         .ToList();
