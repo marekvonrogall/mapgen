@@ -537,20 +537,29 @@ def generate_image():
             raise ValueError(msg)
 
         # Dimensions
-        allowed_keys = {"pixel_perfect", "fill_board", "center_board"}
-        use_pre_computed_params = not constraints or (
-            set(constraints).issubset(allowed_keys)
-            and constraints.get("pixel_perfect", True) is True
-            and constraints.get("fill_board", True) is True
+        recompute_keys = {
+            "min_padding",
+            "max_padding",
+            "min_line_width",
+            "max_line_width",
+            "min_border_width",
+            "max_border_width",
+            "pixel_perfect",
+            "fill_board",
+        }
+
+        should_recompute = (
+            constraints
+            and any(key in constraints for key in recompute_keys)
         )
 
-        if use_pre_computed_params:
-            grid_params = pre_computed_grid_params.get(grid_size, None)
-        else:
+        if should_recompute:
             grid_params = compute_grid_params(
                 grid_size=grid_size,
                 constraints=constraints,
             )
+        else:
+            grid_params = pre_computed_grid_params.get(grid_size, None)
 
         # Create the base image
         image = Image.new("RGBA", (IMG_SIZE, IMG_SIZE), bg_color)
