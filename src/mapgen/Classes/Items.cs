@@ -27,7 +27,7 @@ namespace MapService.Classes
             int minIndex = allowedIndexes.Min();
             int maxIndex = allowedIndexes.Max();
 
-            int maxDistance = settings.GridSize / 2;
+            int maxDistance = settings.GridSize!.Value / 2;
             var groupCounts = new Dictionary<string, int>();
             var materialCounts = new Dictionary<string, int>();
             var categoryCounts = new Dictionary<string, int>();

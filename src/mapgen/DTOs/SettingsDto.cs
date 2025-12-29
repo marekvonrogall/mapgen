@@ -5,10 +5,10 @@ namespace MapService.DTOs
     public class SettingsDto
     {
         [JsonPropertyName("grid_size")]
-        public required int GridSize { get; set; }
+        public int? GridSize { get; set; }
 
         [JsonPropertyName("game_mode")]
-        public required string GameMode { get; set; }
+        public string? GameMode { get; set; }
         
         [JsonPropertyName("game_version")]
         public string? GameVersion { get; set; }
