@@ -27,3 +27,5 @@ A demo of the bingo board generator is available under [vrmarek.me](https://vrma
 
 `mapgen` features over 30+ custom settings, giving you full control over your bingo board.<br/>
 Supports Minecraft 1.8.0 - 1.21.10. Meant to be played alone or together with up to 4 teams.
+
+<img alt="mapgen example boards" src="assets/mapgen_demo_256x256.gif" width="256"/>
