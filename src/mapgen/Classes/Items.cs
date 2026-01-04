@@ -100,6 +100,7 @@ namespace MapService.Classes
             var maxItemsPerCategory = constraints.MaxItemsPerCategory ?? 0;
             
             bool mustPassAllWhitelists = constraints.MustPassAllWhitelists ?? false;
+            bool mustPassAllBlacklists = constraints.MustPassAllBlacklists ?? false;
             
             for (int row = 0; row < settings.GridSize; row++)
             {
@@ -130,13 +131,34 @@ namespace MapService.Classes
                             if (checks.Count == 0)
                                 return true;
 
-                            return mustPassAllWhitelists ? checks.All(x => x) : checks.Any(x => x);
+                            return mustPassAllWhitelists
+                                ? checks.All(x => x)
+                                : checks.Any(x => x);
                         })
                         // Blacklist
-                        .Where(item => !excludedItemsSet.Contains(item.Id) && !excludedItemsSet.Contains(item.Name))
-                        .Where(item => !excludedMaterialsSet.Contains(item.Material))
-                        .Where(item => !item.Groups.Any(g => excludedGroupsSet.Contains(g)))
-                        .Where(item => !item.Categories.Any(c => excludedCategoriesSet.Contains(c)))
+                        .Where(item =>
+                        {
+                            var checks = new List<bool>();
+
+                            if (excludedItemsSet.Count > 0)
+                                checks.Add(excludedItemsSet.Contains(item.Id) || excludedItemsSet.Contains(item.Name));
+
+                            if (excludedMaterialsSet.Count > 0 && !string.IsNullOrEmpty(item.Material))
+                                checks.Add(excludedMaterialsSet.Contains(item.Material));
+
+                            if (excludedGroupsSet.Count > 0)
+                                checks.Add(item.Groups.Any(g => excludedGroupsSet.Contains(g)));
+
+                            if (excludedCategoriesSet.Count > 0)
+                                checks.Add(item.Categories.Any(c => excludedCategoriesSet.Contains(c)));
+
+                            if (checks.Count == 0)
+                                return true;
+
+                            return mustPassAllBlacklists
+                                ? !checks.All(x => x)
+                                : !checks.Any(x => x);
+                        })
                         // Group / Material / Category count
                         .Where(item =>
                         {

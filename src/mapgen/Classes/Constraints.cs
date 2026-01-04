@@ -57,6 +57,7 @@ namespace MapService.Classes
                 { "blacklisted_groups", requestConstraints?.BlacklistedGroups },
                 { "blacklisted_materials", requestConstraints?.BlacklistedMaterials },
                 { "blacklisted_categories", requestConstraints?.BlacklistedCategories },
+                { "must_pass_all_blacklists", requestConstraints?.MustPassAllBlacklists },
                 { "whitelisted_items", requestConstraints?.WhitelistedItems },
                 { "whitelisted_groups", requestConstraints?.WhitelistedGroups },
                 { "whitelisted_materials", requestConstraints?.WhitelistedMaterials },

@@ -25,6 +25,9 @@ namespace MapService.DTOs
         [JsonPropertyName("blacklisted_categories")]
         public List<string>? BlacklistedCategories { get; set; }
         
+        [JsonPropertyName("must_pass_all_blacklists")]
+        public bool? MustPassAllBlacklists { get; set; }
+        
         [JsonPropertyName("whitelisted_items")]
         public List<string>? WhitelistedItems { get; set; }
         
