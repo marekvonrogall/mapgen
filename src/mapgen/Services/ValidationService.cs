@@ -107,7 +107,7 @@ namespace MapService.Services
                     : settings.PlacementMode.ToLowerInvariant();
 
                 if (!Constraints.ValidPlacementModes.Contains(placementMode))
-                    mapgenErrors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circular & flipped.");
+                    mapgenErrors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circular, flipped & lines.");
 
                 // Difficulty
                 var difficultyList = (settings?.Difficulties ?? Constraints.DefaultDifficulties.ToList())
