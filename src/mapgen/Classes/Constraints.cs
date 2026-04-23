@@ -8,8 +8,9 @@ namespace MapService.Classes
     {
         public static readonly List<string> DifficultyOrder = new() { "very easy", "easy", "medium", "hard", "very hard" };
         public static readonly List<string> DefaultDifficulties = new() { "easy", "medium", "hard" };
-        public static readonly string[] ValidGameModes = { "1P", "2P", "3P", "4P" };
+        public static readonly string[] ValidGameModes = { "Bingo", "Lockout" };
         public static readonly string[] ValidPlacementModes = { "random", "circular", "flipped", "lines" };
+        public static readonly int MaxTeamCount = 4;
         
         private static void ValidateSetConstraint(List<string>? constraints, FrozenSet<string> allowedValues, string typeName, List<string> errors)
         {

@@ -37,10 +37,12 @@ namespace MapService.Services
                     var imggenErrorContent = await response.Content.ReadFromJsonAsync<JsonElement>();
                     if (imggenErrorContent.TryGetProperty("imggen", out var errorProp))
                         errorMessage = errorProp.GetString() ?? errorMessage;
+                        return (false, null, new List<string> { errorMessage });
                 }
-                catch {}
-
-                return (false, null, new List<string> { errorMessage });
+                catch (Exception ex)
+                {
+                    return (false, null, new List<string> { $"{errorMessage} ({ex.Message})" });
+                }
             }
             
             var updateResponse = await response.Content.ReadFromJsonAsync<UpdateResponseDto>();
