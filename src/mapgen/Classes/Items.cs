@@ -104,6 +104,7 @@ namespace MapService.Classes
             int minIndex = allowedIndexes.Min();
             int maxIndex = allowedIndexes.Max();
             int maxDistance = settings.GridSize!.Value / 2;
+            int difficultyOffset = settings.Constraints?.DifficultyOffset ?? 0;
             
             var groupCounts = new Dictionary<string, int>();
             var materialCounts = new Dictionary<string, int>();
@@ -119,8 +120,8 @@ namespace MapService.Classes
                     if (isCenter)
                     {
                         int centerIndex = settings.PlacementMode is "flipped"
-                            ? Math.Max(minIndex, 0) // easiest in center
-                            : Math.Min(maxIndex, Constraints.DifficultyOrder.Count - 1); // hardest in center
+                            ? Math.Max(minIndex - difficultyOffset, 0) // easiest in center
+                            : Math.Min(maxIndex + difficultyOffset, Constraints.DifficultyOrder.Count - 1); // hardest in center
                         ringDifficultyMap[r] = new List<int> { centerIndex };
                     }
                     else

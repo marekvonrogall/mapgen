@@ -4,6 +4,9 @@ namespace MapService.DTOs
 {
     public class UpdateRequestDto
     {
+        [JsonPropertyName("map_url")]
+        public string? MapUrl { get; set; }
+        
         [JsonPropertyName("map_raw")]
         public MapRawDto? MapRaw { get; set; }
         

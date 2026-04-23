@@ -107,6 +107,15 @@ namespace MapService.Classes
                     }
                 }
             }
+
+            if (requestConstraints?.DifficultyOffset != null)
+            {
+                var maxOffset = DifficultyOrder.Count;
+                var minOffset = DifficultyOrder.Count * -1;
+                if (requestConstraints.DifficultyOffset > maxOffset || requestConstraints.DifficultyOffset < minOffset)
+                    errors.Add($"constraints: 'difficulty_offset' must be in the range of {minOffset} and {maxOffset}");
+                else returnConstraints.Add("difficulty_offset", requestConstraints.DifficultyOffset);
+            }
             
             if (returnConstraints.Count > 0)
             {

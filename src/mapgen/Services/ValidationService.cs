@@ -141,7 +141,7 @@ namespace MapService.Services
 
                 // Placement Mode
                 string placementMode = string.IsNullOrWhiteSpace(settings?.PlacementMode)
-                    ? "circular"
+                    ? "lines"
                     : settings.PlacementMode.ToLowerInvariant();
 
                 if (!Constraints.ValidPlacementModes.Contains(placementMode))

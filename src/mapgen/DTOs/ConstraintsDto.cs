@@ -4,6 +4,9 @@ namespace MapService.DTOs
 {
     public class ConstraintsDto
     {
+        [JsonPropertyName("difficulty_offset")]
+        public int? DifficultyOffset { get; set; }
+        
         [JsonPropertyName("max_items_per_group")]
         public int? MaxItemsPerGroup { get; set; }
             
