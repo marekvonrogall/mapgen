@@ -8,6 +8,6 @@ namespace MapService.DTOs
         public required string MapUrl { get; set; }
         
         [JsonPropertyName("bingo")]
-        public string? BingoStatus { get; set; }
+        public List<string>? BingoStatus { get; set; }
     }
 }

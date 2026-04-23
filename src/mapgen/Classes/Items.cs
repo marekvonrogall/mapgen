@@ -119,9 +119,12 @@ namespace MapService.Classes
                     bool isCenter = r == maxDistance;
                     if (isCenter)
                     {
-                        int centerIndex = settings.PlacementMode is "flipped"
-                            ? Math.Max(minIndex - difficultyOffset, 0) // easiest in center
-                            : Math.Min(maxIndex + difficultyOffset, Constraints.DifficultyOrder.Count - 1); // hardest in center
+                        int centerIndex = Math.Clamp(
+                            settings.PlacementMode is "flipped"
+                                ? minIndex - difficultyOffset // easiest in center
+                                : maxIndex + difficultyOffset, // hardest in center,
+                            0, Constraints.DifficultyOrder.Count - 1
+                        );
                         ringDifficultyMap[r] = new List<int> { centerIndex };
                     }
                     else
