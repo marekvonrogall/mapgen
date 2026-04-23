@@ -1,6 +1,6 @@
 {
   "earliest_version": "1.8.0",
-  "latest_version": "1.21.10",
+  "latest_version": "26.1.2",
   "items": [
     {
       "id": "acacia_boat",
@@ -8919,7 +8919,7 @@
         ],
         "hex": "#dc724c"
       },
-      "category": "[]",
+      "category": "['combat']",
       "group": "[]",
       "material": "copper",
       "stack_size": 1,
@@ -22249,7 +22249,7 @@
       "material": "name",
       "stack_size": 64,
       "rarity": "common",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "version": "1.8.0"
     },
     {
@@ -34226,6 +34226,356 @@
       "rarity": "uncommon",
       "difficulty": "very hard",
       "version": "1.8.0"
+    },
+    {
+      "id": "copper_nautilus_armor",
+      "name": "Copper Nautilus Armor",
+      "sprite": "sprites/copper_nautilus_armor.png",
+      "color": {
+        "rgb": [
+          220.0,
+          114.0,
+          76.0
+        ],
+        "hsl": [
+          15.67,
+          67.91,
+          58.42
+        ],
+        "hex": "#dc724c"
+      },
+      "category": "['combat']",
+      "group": "[]",
+      "material": "copper",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "hard",
+      "version": "1.21.11"
+    },
+    {
+      "id": "copper_spear",
+      "name": "Copper Spear",
+      "sprite": "sprites/copper_spear.png",
+      "color": {
+        "rgb": [
+          95.0,
+          44.0,
+          27.0
+        ],
+        "hsl": [
+          14.33,
+          54.47,
+          24.12
+        ],
+        "hex": "#5f2c1b"
+      },
+      "category": "['combat']",
+      "group": "['spears']",
+      "material": "copper",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "easy",
+      "version": "1.21.11"
+    },
+    {
+      "id": "diamond_nautilus_armor",
+      "name": "Diamond Nautilus Armor",
+      "sprite": "sprites/diamond_nautilus_armor.png",
+      "color": {
+        "rgb": [
+          29.0,
+          197.0,
+          186.0
+        ],
+        "hsl": [
+          176.07,
+          73.96,
+          44.41
+        ],
+        "hex": "#1dc5ba"
+      },
+      "category": "['combat']",
+      "group": "[]",
+      "material": "diamond",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "very hard",
+      "version": "1.21.11"
+    },
+    {
+      "id": "diamond_spear",
+      "name": "Diamond Spear",
+      "sprite": "sprites/diamond_spear.png",
+      "color": {
+        "rgb": [
+          13.0,
+          59.0,
+          51.0
+        ],
+        "hsl": [
+          169.22,
+          63.85,
+          14.36
+        ],
+        "hex": "#0d3b33"
+      },
+      "category": "['combat']",
+      "group": "['spears']",
+      "material": "diamond",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "medium",
+      "version": "1.21.11"
+    },
+    {
+      "id": "golden_nautilus_armor",
+      "name": "Golden Nautilus Armor",
+      "sprite": "sprites/golden_nautilus_armor.png",
+      "color": {
+        "rgb": [
+          176.0,
+          99.0,
+          17.0
+        ],
+        "hsl": [
+          30.94,
+          82.38,
+          37.84
+        ],
+        "hex": "#b06311"
+      },
+      "category": "['combat']",
+      "group": "['piglin_loved']",
+      "material": "gold",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "very hard",
+      "version": "1.21.11"
+    },
+    {
+      "id": "golden_spear",
+      "name": "Golden Spear",
+      "sprite": "sprites/golden_spear.png",
+      "color": {
+        "rgb": [
+          93.0,
+          67.0,
+          19.0
+        ],
+        "hsl": [
+          39.18,
+          65.51,
+          22.19
+        ],
+        "hex": "#5d4313"
+      },
+      "category": "['combat']",
+      "group": "['piglin_loved', 'spears']",
+      "material": "gold",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "easy",
+      "version": "1.21.11"
+    },
+    {
+      "id": "iron_nautilus_armor",
+      "name": "Iron Nautilus Armor",
+      "sprite": "sprites/iron_nautilus_armor.png",
+      "color": {
+        "rgb": [
+          78.0,
+          78.0,
+          78.0
+        ],
+        "hsl": [
+          0.0,
+          0.0,
+          30.74
+        ],
+        "hex": "#4e4e4e"
+      },
+      "category": "['combat']",
+      "group": "[]",
+      "material": "iron",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "hard",
+      "version": "1.21.11"
+    },
+    {
+      "id": "iron_spear",
+      "name": "Iron Spear",
+      "sprite": "sprites/iron_spear.png",
+      "color": {
+        "rgb": [
+          66.0,
+          66.0,
+          66.0
+        ],
+        "hsl": [
+          0.0,
+          0.0,
+          26.27
+        ],
+        "hex": "#424242"
+      },
+      "category": "['combat']",
+      "group": "['spears']",
+      "material": "iron",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "easy",
+      "version": "1.21.11"
+    },
+    {
+      "id": "netherite_horse_armor",
+      "name": "Netherite Horse Armor",
+      "sprite": "sprites/netherite_horse_armor.png",
+      "color": {
+        "rgb": [
+          22.0,
+          17.0,
+          17.0
+        ],
+        "hsl": [
+          0.0,
+          15.0,
+          7.84
+        ],
+        "hex": "#161111"
+      },
+      "category": "['combat']",
+      "group": "[]",
+      "material": "netherite",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "very hard",
+      "version": "1.21.11"
+    },
+    {
+      "id": "netherite_nautilus_armor",
+      "name": "Netherite Nautilus Armor",
+      "sprite": "sprites/netherite_nautilus_armor.png",
+      "color": {
+        "rgb": [
+          22.0,
+          17.0,
+          17.0
+        ],
+        "hsl": [
+          0.0,
+          15.0,
+          7.84
+        ],
+        "hex": "#161111"
+      },
+      "category": "['combat']",
+      "group": "[]",
+      "material": "netherite",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "very hard",
+      "version": "1.21.11"
+    },
+    {
+      "id": "netherite_spear",
+      "name": "Netherite Spear",
+      "sprite": "sprites/netherite_spear.png",
+      "color": {
+        "rgb": [
+          59.0,
+          33.0,
+          43.0
+        ],
+        "hsl": [
+          335.99,
+          28.43,
+          18.21
+        ],
+        "hex": "#3b212b"
+      },
+      "category": "['combat']",
+      "group": "['spears']",
+      "material": "netherite",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "very hard",
+      "version": "1.21.11"
+    },
+    {
+      "id": "stone_spear",
+      "name": "Stone Spear",
+      "sprite": "sprites/stone_spear.png",
+      "color": {
+        "rgb": [
+          74.0,
+          74.0,
+          74.0
+        ],
+        "hsl": [
+          0.0,
+          0.0,
+          29.19
+        ],
+        "hex": "#4a4a4a"
+      },
+      "category": "['combat']",
+      "group": "['spears']",
+      "material": "stone",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "easy",
+      "version": "1.21.11"
+    },
+    {
+      "id": "wooden_spear",
+      "name": "Wooden Spear",
+      "sprite": "sprites/wooden_spear.png",
+      "color": {
+        "rgb": [
+          54.0,
+          39.0,
+          16.0
+        ],
+        "hsl": [
+          37.89,
+          54.29,
+          13.73
+        ],
+        "hex": "#362710"
+      },
+      "category": "['combat']",
+      "group": "['spears']",
+      "material": "wooden",
+      "stack_size": 1,
+      "rarity": "common",
+      "difficulty": "very easy",
+      "version": "1.21.11"
+    },
+    {
+      "id": "golden_dandelion",
+      "name": "Golden Dandelion",
+      "sprite": "sprites/golden_dandelion.png",
+      "color": {
+        "rgb": [
+          236.0,
+          203.0,
+          69.0
+        ],
+        "hsl": [
+          48.14,
+          81.46,
+          59.8
+        ],
+        "hex": "#eccb45"
+      },
+      "category": "['natural_blocks']",
+      "group": "['bee_food', 'rabbit_food', 'small_flowers']",
+      "material": "dandelion",
+      "stack_size": 64,
+      "rarity": "common",
+      "difficulty": "easy",
+      "version": "26.1.0"
     }
   ]
 }
