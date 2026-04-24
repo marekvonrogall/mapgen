@@ -1,9 +1,11 @@
 import os
 import uuid
-from typing import Any
 
 from flask import Flask, jsonify, request
 from PIL import Image, ImageColor, ImageDraw
+
+from game_modes.base import GameModeContext
+from game_modes.factory import create_game_mode
 
 app = Flask(__name__)
 
@@ -12,7 +14,6 @@ TEXTURES_DIR = "/app/textures"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 IMG_SIZE = 128
 BASE_ASSET_WIDTH = 32
-DEFAULT_TEAM_NAMES = ["team1", "team2", "team3", "team4"]
 DEFAULT_TEAM_COLORS = [
     "#64FF64",
     "#64FFFF",
@@ -21,332 +22,52 @@ DEFAULT_TEAM_COLORS = [
 ]
 
 
-def detect_bingo(grid_size, items, draw, grid_params, team_info) -> str | None:
-    # Grid for each team
-    grid = {
-        team: [[False] * grid_size for _ in range(grid_size)]
-        for team in team_info.keys()
-    }
+def parse_map_payload(data: dict) -> tuple[dict, list[dict]]:
+    settings = data["settings"]
+    items = data["items"]
+    return settings, items
 
-    # Check for item/block completion
-    for item in items:
-        if item["row"] + 1 > grid_size or item["column"] + 1 > grid_size:
-            continue
-        row = item["row"]
-        column = item["column"]
 
-        if "completed" in item:
-            for team, value in item.get("completed", {}).items():
-                if value and team in grid:
-                    grid[team][row][column] = True
+def normalize_team_colors(teams: list[dict]) -> dict[str, dict]:
+    normalized_teams: dict[str, dict] = {}
 
-    def calculate_cell_coordinates(row, column) -> tuple[int, int]:
-        x = int(
-            column * grid_params["cell_width"]
-            + grid_params["border_width"]
-            + (grid_params["line_width"] * column)
+    for index, team in enumerate(teams):
+        default_color = (
+            DEFAULT_TEAM_COLORS[index]
+            if index < len(DEFAULT_TEAM_COLORS)
+            else DEFAULT_TEAM_COLORS[index % len(DEFAULT_TEAM_COLORS)]
         )
-        y = int(
-            row * grid_params["cell_width"]
-            + grid_params["border_width"]
-            + (grid_params["line_width"] * row)
-        )
-        return x, y
 
-    # Check for bingo
-    for team_name in team_info.keys():
-        team_grid = grid[team_name]
-        team_color = team_info[team_name]["color"]
+        normalized_team = dict(team)
+        normalized_team["color"] = team.get("color") or default_color
+        normalized_teams[normalized_team["name"]] = normalized_team
 
-        # Check rows and columns
-        for i in range(grid_size):
-            if all(team_grid[i]):
-                # Row bingo
-                start_x, start_y = calculate_cell_coordinates(i, 0)
-                end_x, end_y = calculate_cell_coordinates(i, grid_size - 1)
-                if grid_size > 1:
-                    draw_bingo_line(
-                        draw,
-                        start_x,
-                        start_y,
-                        end_x,
-                        end_y,
-                        grid_params["cell_width"],
-                        team_color,
-                        grid_params["padding"],
-                    )
-                return team_name
-
-            if all(row[i] for row in team_grid):
-                # Column bingo
-                start_x, start_y = calculate_cell_coordinates(0, i)
-                end_x, end_y = calculate_cell_coordinates(grid_size - 1, i)
-                draw_bingo_line(
-                    draw,
-                    start_x,
-                    start_y,
-                    end_x,
-                    end_y,
-                    grid_params["cell_width"],
-                    team_color,
-                    grid_params["padding"],
-                )
-                return team_name
-
-        # Check diagonals
-        if all(team_grid[i][i] for i in range(grid_size)):
-            # Top-left to bottom-right
-            start_x, start_y = calculate_cell_coordinates(0, 0)
-            end_x, end_y = calculate_cell_coordinates(grid_size - 1, grid_size - 1)
-            draw_bingo_line(
-                draw,
-                start_x,
-                start_y,
-                end_x,
-                end_y,
-                grid_params["cell_width"],
-                team_color,
-                grid_params["padding"],
-            )
-            return team_name
-
-        if all(team_grid[i][grid_size - i - 1] for i in range(grid_size)):
-            # Top-right to bottom-left
-            start_x, start_y = calculate_cell_coordinates(0, grid_size - 1)
-            end_x, end_y = calculate_cell_coordinates(grid_size - 1, 0)
-            draw_bingo_line(
-                draw,
-                start_x,
-                start_y,
-                end_x,
-                end_y,
-                grid_params["cell_width"],
-                team_color,
-                grid_params["padding"],
-            )
-            return team_name
-    return None  # No bingo detected
+    return normalized_teams
 
 
-def is_bingo_still_possible(grid_size, owner_grid) -> bool:
-    def line_is_viable(cells) -> bool:
-        owners = set()
-        for row, column in cells:
-            owner = owner_grid[row][column]
-            if owner is not None:
-                owners.add(owner)
-                if len(owners) > 1:
-                    return False  # multiple teams
-        return True
+def build_color_palette(settings: dict) -> tuple[str, str, str, str, str]:
+    custom_colors = settings.get("colors", {})
 
-    # rows
-    for r in range(grid_size):
-        if line_is_viable([(r, c) for c in range(grid_size)]):
-            return True
-    # columns
-    for c in range(grid_size):
-        if line_is_viable([(r, c) for r in range(grid_size)]):
-            return True
-    # diagonals
-    if line_is_viable([(i, i) for i in range(grid_size)]):
-        return True
-    if line_is_viable([(i, grid_size - i - 1) for i in range(grid_size)]):
-        return True
-    return False
-
-
-def count_tiles(owner_grid) -> dict[str, int]:
-    counts: dict[str, int] = {}
-    for row in owner_grid:
-        for cell in row:
-            if cell is None:
-                continue
-            if cell in counts:
-                counts[cell] += 1
-            else:
-                counts[cell] = 1
-    return counts
-
-
-def teams_with_most_tiles(owner_grid) -> list[str] | None:
-    counts = count_tiles(owner_grid)
-
-    if not counts:
-        return None
-
-    max_count = max(counts.values())
-
-    winners = []
-    for team, count in counts.items():
-        if count == max_count:
-            winners.append(team)
-    return winners or None
-
-
-def team_with_majority(owner_grid) -> str | None:
-    counts = count_tiles(owner_grid)
-
-    total = 0
-    for count in counts.values():
-        total += count
-
-    for team, count in counts.items():
-        if count > total / 2:
-            return team
-    return None
-
-
-def detect_win_condition_lockout(
-    items: list[dict[str, Any]], grid_size: int
-) -> list[str] | None:
-    owner_grid = [[None for _ in range(grid_size)] for _ in range(grid_size)]
-
-    for item in items:
-        if item["row"] + 1 > grid_size or item["column"] + 1 > grid_size:
-            continue
-
-        row = item["row"]
-        col = item["column"]
-
-        if "completed" not in item:
-            continue
-
-        for team, completed in item["completed"].items():
-            if completed:
-                # use first team
-                if owner_grid[row][col] is None:
-                    owner_grid[row][col] = team
-                break
-
-    # board is full, return team(s) with most cells
-    if all(cell is not None for row in owner_grid for cell in row):
-        return teams_with_most_tiles(owner_grid)
-
-    # no bingo possible, check for majority (>50%)
-    if not is_bingo_still_possible(grid_size, owner_grid):
-        majority = team_with_majority(owner_grid)
-        if majority:
-            return [majority]
-    return None
-
-
-def draw_bingo_line(
-    draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_width, color, padding
-) -> None:
-    cx1 = start_cell_x + cell_width // 2
-    cy1 = start_cell_y + cell_width // 2
-    cx2 = end_cell_x + cell_width // 2
-    cy2 = end_cell_y + cell_width // 2
-
-    # main line
-    draw.line(
-        [(cx1, cy1), (cx2, cy2)],
-        fill=color,
-        width=padding,
+    bg_color = str(
+        custom_colors.get("bg_color", None)
+        or custom_colors.get("background_color", None)
+        or "#D6BE96"
     )
-
-    # round caps
-    r = padding // 2
-
-    draw.ellipse(
-        [cx1 - r, cy1 - r, cx1 + r, cy1 + r],
-        fill=color,
+    outer_bg_color = str(
+        custom_colors.get("outer_bg_color", None)
+        or custom_colors.get("outer_background_color", None)
+        or bg_color
+        or "#D6BE96"
     )
-    draw.ellipse(
-        [cx2 - r, cy2 - r, cx2 + r, cy2 + r],
-        fill=color,
+    fg_color = str(
+        custom_colors.get("fg_color", None)
+        or custom_colors.get("foreground_color", None)
+        or "#99876C"
     )
+    line_color = str(custom_colors.get("line_color", None) or fg_color)
+    border_color = str(custom_colors.get("border_color", None) or fg_color)
 
-
-def draw_line(draw, types, cell_x, cell_y, cell_width, color, padding) -> None:
-    for type in types:
-        match type:
-            case "top-left":
-                # Horizontal line
-                draw.polygon(
-                    [
-                        (cell_x, cell_y),
-                        (cell_x + (cell_width // 2) - 1, cell_y),
-                        (cell_x + (cell_width // 2) - 1, cell_y + padding - 1),
-                        (cell_x, cell_y + padding - 1),
-                    ],
-                    fill=color,
-                )
-                # Vertical line
-                draw.polygon(
-                    [
-                        (cell_x, cell_y),
-                        (cell_x + padding - 1, cell_y),
-                        (cell_x + padding - 1, cell_y + (cell_width // 2) - 1),
-                        (cell_x, cell_y + (cell_width // 2) - 1),
-                    ],
-                    fill=color,
-                )
-            case "top-right":
-                # Horizontal line
-                draw.polygon(
-                    [
-                        (cell_x + (cell_width // 2), cell_y),
-                        (cell_x + cell_width - 1, cell_y),
-                        (cell_x + cell_width - 1, cell_y + padding - 1),
-                        (cell_x + (cell_width // 2), cell_y + padding - 1),
-                    ],
-                    fill=color,
-                )
-                # Vertical line
-                draw.polygon(
-                    [
-                        (cell_x + cell_width - padding, cell_y),
-                        (cell_x + cell_width - 1, cell_y),
-                        (cell_x + cell_width - 1, cell_y + (cell_width // 2) - 1),
-                        (cell_x + cell_width - padding, cell_y + (cell_width // 2) - 1),
-                    ],
-                    fill=color,
-                )
-            case "bottom-left":
-                # Horizontal line
-                draw.polygon(
-                    [
-                        (cell_x, cell_y + cell_width - padding),
-                        (cell_x + (cell_width // 2) - 1, cell_y + cell_width - padding),
-                        (cell_x + (cell_width // 2) - 1, cell_y + cell_width - 1),
-                        (cell_x, cell_y + cell_width - 1),
-                    ],
-                    fill=color,
-                )
-                # Vertical line
-                draw.polygon(
-                    [
-                        (cell_x, cell_y + (cell_width // 2)),
-                        (cell_x + padding - 1, cell_y + (cell_width // 2)),
-                        (cell_x + padding - 1, cell_y + cell_width - 1),
-                        (cell_x, cell_y + cell_width - 1),
-                    ],
-                    fill=color,
-                )
-            case "bottom-right":
-                # Horizontal line
-                draw.polygon(
-                    [
-                        (cell_x + (cell_width // 2), cell_y + cell_width - padding),
-                        (cell_x + cell_width - 1, cell_y + cell_width - padding),
-                        (cell_x + cell_width - 1, cell_y + cell_width - 1),
-                        (cell_x + (cell_width // 2), cell_y + cell_width - 1),
-                    ],
-                    fill=color,
-                )
-                # Vertical line
-                draw.polygon(
-                    [
-                        (cell_x + cell_width - padding, cell_y + (cell_width // 2)),
-                        (cell_x + cell_width - 1, cell_y + (cell_width // 2)),
-                        (cell_x + cell_width - 1, cell_y + cell_width - 1),
-                        (cell_x + cell_width - padding, cell_y + cell_width - 1),
-                    ],
-                    fill=color,
-                )
-            case _:
-                continue
+    return bg_color, outer_bg_color, fg_color, line_color, border_color
 
 
 def compute_grid_params(grid_size: int, constraints: dict) -> dict[str, int]:
@@ -578,61 +299,48 @@ def generate_image():
     try:
         data = request.get_json()
 
-        settings = data.get("settings", {})
-        items = data.get("items", [])
+        settings, items = parse_map_payload(data)
 
-        if not settings and not items:
-            settings = data.get("map_raw", {}).get("settings", {})
-            items = data.get("map_raw", {}).get("items", [])
-
-        grid_size = settings.get("grid_size", 5)
-        game_mode = settings.get("game_mode", "bingo")
-        teams = settings.get("teams", [])
+        grid_size = settings["grid_size"]
+        game_mode_name = settings["game_mode"]
+        teams = normalize_team_colors(settings["teams"])
         constraints = settings.get("constraints", {})
 
-        if grid_size < 1 or grid_size > 9:
-            msg = "Invalid grid size entered (grid_size in 'settings' section)."
-            raise ValueError(msg)
+        game_mode = create_game_mode(game_mode_name)
 
-        team_info = {}
-        invalid_colors = []
-
-        for i, team in enumerate(teams):
-            team_name = team.get("name", DEFAULT_TEAM_NAMES[i])
-            team_placement = team.get("placement", None)
-            team_color = str(team.get("color") or DEFAULT_TEAM_COLORS[i])
-            try:
-                ImageColor.getrgb(team_color)
-            except (ValueError, TypeError):
-                invalid_colors.append(team_color)
-
-            team_info[team_name] = {
-                "name": team_name,
-                "placement": team_placement,
-                "color": team_color,
+        grid_params = None
+        if game_mode.uses_grid:
+            recompute_keys = {
+                "min_padding",
+                "max_padding",
+                "min_line_width",
+                "max_line_width",
+                "min_border_width",
+                "max_border_width",
+                "pixel_perfect",
+                "fill_board",
             }
 
-        # Colors
-        custom_colors = settings.get("colors", {})
-        bg_color = str(
-            custom_colors.get("bg_color", None)
-            or custom_colors.get("background_color", None)
-            or "#D6BE96"
-        )  # Light Beige
-        outer_bg_color = str(
-            custom_colors.get("outer_bg_color", None)
-            or custom_colors.get("outer_background_color", None)
-            or bg_color
-            or "#D6BE96"
-        )  # Light Beige
-        fg_color = str(
-            custom_colors.get("fg_color", None)
-            or custom_colors.get("foreground_color", None)
-            or "#99876C"
-        )  # Dark Beige
-        line_color = str(custom_colors.get("line_color", None) or fg_color)
-        border_color = str(custom_colors.get("border_color", None) or fg_color)
+            should_recompute = constraints and any(
+                key in constraints for key in recompute_keys
+            )
 
+            if should_recompute:
+                grid_params = compute_grid_params(
+                    grid_size=grid_size, constraints=constraints
+                )
+            else:
+                grid_params = pre_computed_grid_params.get(grid_size)
+                if grid_params is None:
+                    grid_params = compute_grid_params(
+                        grid_size=grid_size, constraints=constraints
+                    )
+
+        bg_color, outer_bg_color, fg_color, line_color, border_color = (
+            build_color_palette(settings)
+        )
+
+        invalid_colors = []
         colors = [bg_color, fg_color, line_color, border_color]
 
         for color in colors:
@@ -645,201 +353,34 @@ def generate_image():
             msg = f"Invalid colors provided: {', '.join(invalid_colors)}"
             raise ValueError(msg)
 
-        # Dimensions
-        recompute_keys = {
-            "min_padding",
-            "max_padding",
-            "min_line_width",
-            "max_line_width",
-            "min_border_width",
-            "max_border_width",
-            "pixel_perfect",
-            "fill_board",
-        }
-
-        should_recompute = constraints and any(
-            key in constraints for key in recompute_keys
-        )
-
-        if should_recompute:
-            grid_params = compute_grid_params(
-                grid_size=grid_size,
-                constraints=constraints,
-            )
-        else:
-            grid_params = pre_computed_grid_params.get(grid_size, None)
-
-        # Create the base image
         image = Image.new("RGBA", (IMG_SIZE, IMG_SIZE), bg_color)
         draw = ImageDraw.Draw(image)
 
-        used_width = (
-            grid_params["cell_width"] * grid_size
-            + grid_params["line_width"] * (grid_size - 1)
-            + grid_params["border_width"] * 2
+        context = GameModeContext(
+            items=items,
+            grid_size=grid_size,
+            grid_params=grid_params,
+            teams=teams,
+            textures_dir=TEXTURES_DIR,
+            image=image,
+            draw=draw,
+            line_color=line_color,
+            border_color=border_color,
         )
 
-        # Grid lines
-        if grid_params["line_width"] > 0:
-            for i in range(grid_size - 1):
-                # Vertical lines
-                x = (
-                    grid_params["border_width"]
-                    + (i + 1) * grid_params["cell_width"]
-                    + i * grid_params["line_width"]
-                )
-                draw.polygon(
-                    [
-                        (x, 0),
-                        (x + grid_params["line_width"] - 1, 0),
-                        (x + grid_params["line_width"] - 1, used_width - 1),
-                        (x, used_width - 1),
-                    ],
-                    fill=line_color,
-                )
-
-                # Horizontal lines
-                y = (
-                    grid_params["border_width"]
-                    + (i + 1) * grid_params["cell_width"]
-                    + i * grid_params["line_width"]
-                )
-                draw.polygon(
-                    [
-                        (0, y),
-                        (used_width - 1, y),
-                        (used_width - 1, y + grid_params["line_width"] - 1),
-                        (0, y + grid_params["line_width"] - 1),
-                    ],
-                    fill=line_color,
-                )
-
-        # Border
-        if grid_params["border_width"] > 0:
-            draw.rectangle(
-                (0, 0, used_width - 1, used_width - 1),
-                outline=border_color,
-                width=grid_params["border_width"],
-            )
-
-        # Add images from textures
-        for item in items:
-            if item["row"] + 1 > grid_size or item["column"] + 1 > grid_size:
-                continue
-            row = item["row"]
-            column = item["column"]
-            texture_name = item["sprite"]
-
-            completed_teams = []
-
-            if "completed" in item:
-                completed_teams = [
-                    team for team, value in item.get("completed", {}).items() if value
-                ]
-
-            # Path to texture
-            texture_path = os.path.join(TEXTURES_DIR, f"{texture_name}")
-
-            # Check if texture exists
-            if not os.path.exists(texture_path):
-                msg = f"Invalid texture {texture_name} provided."
-                raise ValueError(msg)
-
-            # Open texture
-            texture_image = Image.open(texture_path)
-
-            # Convert to RGBA
-            if texture_image.mode != "RGBA":
-                texture_image = texture_image.convert("RGBA")
-
-            # Calculate texture position on grid
-            cell_x = grid_params["border_width"] + column * (
-                grid_params["cell_width"] + grid_params["line_width"]
-            )
-            cell_y = grid_params["border_width"] + row * (
-                grid_params["cell_width"] + grid_params["line_width"]
-            )
-
-            x0 = cell_x + grid_params["padding"]
-            y0 = cell_y + grid_params["padding"]
-
-            # Might stretch texture, but ensures good styling
-            x1 = x0 + grid_params["asset_width"]
-            y1 = y0 + grid_params["asset_width"]
-
-            texture_image = texture_image.resize(
-                (x1 - x0, y1 - y0), resample=Image.Resampling.NEAREST
-            )
-
-            # Paste texture on map image
-            image.paste(texture_image, (x0, y0), texture_image)
-
-            # Item / Block completion
-            if completed_teams:
-                for completed_team in completed_teams:
-                    rectColor = team_info[completed_team]["color"]
-                    placement = team_info[completed_team]["placement"]
-
-                    if not rectColor or not placement:
-                        msg = f"Invalid team key entered ({completed_team} in 'completed' section of '{texture_name}' [row {row}, column {column}])."
-                        raise ValueError(msg)
-
-                    types: list[str] = []
-                    if grid_params["padding"] > 0:
-                        match placement:
-                            case "top":
-                                types.append("top-left")
-                                types.append("top-right")
-                            case "bottom":
-                                types.append("bottom-left")
-                                types.append("bottom-right")
-                            case "left":
-                                types.append("top-left")
-                                types.append("bottom-left")
-                            case "right":
-                                types.append("top-right")
-                                types.append("bottom-right")
-                            case "full":
-                                draw.rectangle(
-                                    (
-                                        cell_x,
-                                        cell_y,
-                                        cell_x + grid_params["cell_width"] - 1,
-                                        cell_y + grid_params["cell_width"] - 1,
-                                    ),
-                                    outline=rectColor,
-                                    width=grid_params["padding"],
-                                )
-                            case _:
-                                types.append(placement)
-
-                        draw_line(
-                            draw,
-                            types,
-                            cell_x,
-                            cell_y,
-                            grid_params["cell_width"],
-                            rectColor,
-                            grid_params["padding"],
-                        )
-
-        # Detect and draw bingo
-        bingo_result = detect_bingo(
-            grid_size,
-            items,
-            draw,
-            grid_params,
-            team_info,
-        )
-        bingo = [bingo_result] if bingo_result else None
-
-        if not bingo and game_mode == "lockout":
-            bingo = detect_win_condition_lockout(items, grid_size)
+        render_result = game_mode.render(context)
+        bingo = game_mode.check_win(context, render_result)
 
         center_board = constraints.get("center_board", True)
-        if center_board and used_width != IMG_SIZE:
-            offset = (IMG_SIZE - used_width) // 2
-            image = image.crop((0, 0, used_width, used_width))
+        if (
+            center_board
+            and render_result.used_width
+            and render_result.used_width != IMG_SIZE
+        ):
+            offset = (IMG_SIZE - render_result.used_width) // 2
+            image = image.crop(
+                (0, 0, render_result.used_width, render_result.used_width)
+            )
             new_canvas = Image.new("RGBA", (IMG_SIZE, IMG_SIZE), outer_bg_color)
             new_canvas.paste(image, (offset, offset))
             image = new_canvas
