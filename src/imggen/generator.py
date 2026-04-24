@@ -1,5 +1,6 @@
 import os
 import uuid
+from typing import Any
 
 from flask import Flask, jsonify, request
 from PIL import Image, ImageColor, ImageDraw
@@ -20,7 +21,7 @@ DEFAULT_TEAM_COLORS = [
 ]
 
 
-def detect_bingo(grid_size, items, draw, grid_params, team_info):
+def detect_bingo(grid_size, items, draw, grid_params, team_info) -> str | None:
     # Grid for each team
     grid = {
         team: [[False] * grid_size for _ in range(grid_size)]
@@ -39,7 +40,7 @@ def detect_bingo(grid_size, items, draw, grid_params, team_info):
                 if value and team in grid:
                     grid[team][row][column] = True
 
-    def calculate_cell_coordinates(row, column):
+    def calculate_cell_coordinates(row, column) -> tuple[int, int]:
         x = int(
             column * grid_params["cell_width"]
             + grid_params["border_width"]
@@ -124,13 +125,114 @@ def detect_bingo(grid_size, items, draw, grid_params, team_info):
                 grid_params["padding"],
             )
             return team_name
-
     return None  # No bingo detected
+
+
+def is_bingo_still_possible(grid_size, owner_grid) -> bool:
+    def line_is_viable(cells) -> bool:
+        owners = set()
+        for row, column in cells:
+            owner = owner_grid[row][column]
+            if owner is not None:
+                owners.add(owner)
+                if len(owners) > 1:
+                    return False  # multiple teams
+        return True
+
+    # rows
+    for r in range(grid_size):
+        if line_is_viable([(r, c) for c in range(grid_size)]):
+            return True
+    # columns
+    for c in range(grid_size):
+        if line_is_viable([(r, c) for r in range(grid_size)]):
+            return True
+    # diagonals
+    if line_is_viable([(i, i) for i in range(grid_size)]):
+        return True
+    if line_is_viable([(i, grid_size - i - 1) for i in range(grid_size)]):
+        return True
+    return False
+
+
+def count_tiles(owner_grid) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for row in owner_grid:
+        for cell in row:
+            if cell is None:
+                continue
+            if cell in counts:
+                counts[cell] += 1
+            else:
+                counts[cell] = 1
+    return counts
+
+
+def teams_with_most_tiles(owner_grid) -> list[str] | None:
+    counts = count_tiles(owner_grid)
+
+    if not counts:
+        return None
+
+    max_count = max(counts.values())
+
+    winners = []
+    for team, count in counts.items():
+        if count == max_count:
+            winners.append(team)
+    return winners or None
+
+
+def team_with_majority(owner_grid) -> str | None:
+    counts = count_tiles(owner_grid)
+
+    total = 0
+    for count in counts.values():
+        total += count
+
+    for team, count in counts.items():
+        if count > total / 2:
+            return team
+    return None
+
+
+def detect_win_condition_lockout(
+    items: list[dict[str, Any]], grid_size: int
+) -> list[str] | None:
+    owner_grid = [[None for _ in range(grid_size)] for _ in range(grid_size)]
+
+    for item in items:
+        if item["row"] + 1 > grid_size or item["column"] + 1 > grid_size:
+            continue
+
+        row = item["row"]
+        col = item["column"]
+
+        if "completed" not in item:
+            continue
+
+        for team, completed in item["completed"].items():
+            if completed:
+                # use first team
+                if owner_grid[row][col] is None:
+                    owner_grid[row][col] = team
+                break
+
+    # board is full, return team(s) with most cells
+    if all(cell is not None for row in owner_grid for cell in row):
+        return teams_with_most_tiles(owner_grid)
+
+    # no bingo possible, check for majority (>50%)
+    if not is_bingo_still_possible(grid_size, owner_grid):
+        majority = team_with_majority(owner_grid)
+        if majority:
+            return [majority]
+    return None
 
 
 def draw_bingo_line(
     draw, start_cell_x, start_cell_y, end_cell_x, end_cell_y, cell_width, color, padding
-):
+) -> None:
     cx1 = start_cell_x + cell_width // 2
     cy1 = start_cell_y + cell_width // 2
     cx2 = end_cell_x + cell_width // 2
@@ -156,7 +258,7 @@ def draw_bingo_line(
     )
 
 
-def draw_line(draw, types, cell_x, cell_y, cell_width, color, padding):
+def draw_line(draw, types, cell_x, cell_y, cell_width, color, padding) -> None:
     for type in types:
         match type:
             case "top-left":
@@ -484,6 +586,7 @@ def generate_image():
             items = data.get("map_raw", {}).get("items", [])
 
         grid_size = settings.get("grid_size", 5)
+        game_mode = settings.get("game_mode", "bingo")
         teams = settings.get("teams", [])
         constraints = settings.get("constraints", {})
 
@@ -554,9 +657,8 @@ def generate_image():
             "fill_board",
         }
 
-        should_recompute = (
-            constraints
-            and any(key in constraints for key in recompute_keys)
+        should_recompute = constraints and any(
+            key in constraints for key in recompute_keys
         )
 
         if should_recompute:
@@ -729,6 +831,10 @@ def generate_image():
             grid_params,
             team_info,
         )
+        bingo = [bingo_result] if bingo_result else None
+
+        if not bingo and game_mode == "lockout":
+            bingo = detect_win_condition_lockout(items, grid_size)
 
         center_board = constraints.get("center_board", True)
         if center_board and used_width != IMG_SIZE:
@@ -744,7 +850,7 @@ def generate_image():
         image.save(filepath)
 
         # Return URL
-        return jsonify({"map_url": f"/public/{filename}", "bingo": bingo_result}), 201
+        return jsonify({"map_url": f"/public/{filename}", "bingo": bingo}), 201
 
     except Exception as e:
         return jsonify({"imggen": str(e)}), 500

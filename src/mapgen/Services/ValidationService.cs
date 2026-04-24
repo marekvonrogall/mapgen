@@ -14,14 +14,10 @@ namespace MapService.Services
                     mapgenErrors.Add($"Invalid grid size {gridSize}. The grid size must be in the range of 1 and 9.");
 
                 // Game Mode
-                string gameMode = settings?.GameMode ?? "1P";
+                string gameMode = settings?.GameMode?.ToLower() ?? "bingo";
                 bool validGameMode = Constraints.ValidGameModes.Contains(gameMode, StringComparer.OrdinalIgnoreCase);
                 if (!validGameMode)
-                    mapgenErrors.Add("Invalid game mode. Accepted values are 1P, 2P, 3P, or 4P.");
-
-                int teamCount = 0;
-                if (validGameMode && int.TryParse(gameMode[..1], out int firstDigit))
-                    teamCount = firstDigit;
+                    mapgenErrors.Add("Invalid game mode. Accepted values are bingo & lockout.");
 
                 // Game Version
                 string gameVersion = settings?.GameVersion ?? JsonData.LatestGameVersion();
@@ -32,6 +28,11 @@ namespace MapService.Services
                     mapgenErrors.Add($"Specified game version '{gameVersion}' is unsupported. Supported versions are {JsonData.EarliestGameVersion()}-{JsonData.LatestGameVersion()}");
 
                 // Teams
+                int specifiedTeamCount = settings?.TeamCount ?? settings?.Teams?.Count ?? 1;
+                if (specifiedTeamCount > Constraints.MaxTeamCount || specifiedTeamCount < 1)
+                    mapgenErrors.Add("Invalid team count. Accepted team size ranges from 1 to 4.");
+                
+                var teamCount = settings?.Teams?.Count ?? specifiedTeamCount;
                 var teams = settings?.Teams 
                             ?? Enumerable.Range(1, teamCount)
                                 .Select(i => new TeamDto { Name = $"team_{i}" })
@@ -39,15 +40,35 @@ namespace MapService.Services
 
                 var normalizedTeams = new List<TeamDto>();
 
-                if (teams.Count != teamCount)
-                    mapgenErrors.Add($"Expected {teamCount} teams for game mode {gameMode}, got {teams.Count}.");
+                if (teams.Count != specifiedTeamCount)
+                    mapgenErrors.Add($"Expected {specifiedTeamCount} teams for specified team count of {specifiedTeamCount}, got {teams.Count}.");
                 
                 var nameSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                 var placementSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
                 var colorSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
+                var defaultPlacements = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                
                 // Assign default placements
-                var defaultPlacements = Placements.AssignDefaultPlacements(gameMode, teams);
+                try
+                {
+                    if (string.Equals(gameMode, "bingo", StringComparison.OrdinalIgnoreCase))
+                    {
+                        defaultPlacements = Placements.AssignDefaultPlacements(specifiedTeamCount, teams);
+                    }
+                    else if (string.Equals(gameMode, "lockout", StringComparison.OrdinalIgnoreCase))
+                    {
+                        defaultPlacements = teams
+                            .ToDictionary(t => t.Name, _ => "full", StringComparer.OrdinalIgnoreCase);
+                    }
+                    else
+                    {
+                        mapgenErrors.Add($"Couldn't determine default placements for game mode {gameMode}.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    mapgenErrors.Add(ex.Message);
+                }
 
                 foreach (var team in teams)
                 {
@@ -62,16 +83,25 @@ namespace MapService.Services
                         mapgenErrors.Add($"Duplicate team name '{team.Name}' is not allowed.");
 
                     // Validate Team Placement
-                    var placement = team.Placement ?? defaultPlacements.GetValueOrDefault(team.Name);
+                    var placement = defaultPlacements.GetValueOrDefault(team.Name);
+                    if (string.Equals(gameMode, "bingo", StringComparison.OrdinalIgnoreCase))
+                    {
+                        placement = team.Placement?.ToLower() ?? placement;
 
-                    if (string.IsNullOrWhiteSpace(placement))
-                        mapgenErrors.Add($"Missing placement for team '{team.Name}'.");
+                        if (string.IsNullOrWhiteSpace(placement))
+                            mapgenErrors.Add($"Missing placement for team '{team.Name}'.");
 
-                    else if (!Placements.ValidPlacements.Contains(placement))
-                        mapgenErrors.Add($"Invalid placement '{placement}' for team '{team.Name}'.");
+                        else if (!Placements.ValidPlacements.Contains(placement))
+                            mapgenErrors.Add($"Invalid placement '{placement}' for team '{team.Name}'.");
 
-                    else if (!placementSet.Add(placement))
-                        mapgenErrors.Add($"Duplicate placement '{placement}' is not allowed.");
+                        else if (!placementSet.Add(placement))
+                            mapgenErrors.Add($"Duplicate placement '{placement}' is not allowed.");
+                    }
+                    else if (string.Equals(gameMode, "lockout", StringComparison.OrdinalIgnoreCase))
+                    {   
+                        if (team.Placement is not (null or "full"))
+                            mapgenErrors.Add($"Invalid placement '{team.Placement}' for team '{team.Name}'. Game mode 'lockout' only supports team placement 'full'.");
+                    }
 
                     // Validate Team Color
                     string? hexColor = null;
@@ -86,28 +116,36 @@ namespace MapService.Services
                     normalizedTeams.Add(new TeamDto
                     {
                         Name = team.Name,
-                        Placement = placement,
+                        Placement = placement ?? "",
                         Color = hexColor
                     });
                 }
 
                 // Validate All Team Placements
                 var placementList = normalizedTeams.Select(t => t.Placement!).ToList();
-                bool validCombination =
-                    Placements.ValidPlacementCombinations.TryGetValue(gameMode, out var allowedSets) &&
-                    allowedSets.Any(set => set.All(p => placementList.Contains(p)) &&
-                                           placementList.All(p => set.Contains(p)));
+                if (string.Equals(gameMode, "bingo", StringComparison.OrdinalIgnoreCase))
+                {
+                    bool validCombination =
+                        Placements.ValidPlacementCombinations.TryGetValue(specifiedTeamCount, out var allowedSets) &&
+                        allowedSets.Any(set => set.All(placementList.Contains) &&
+                                               placementList.All(set.Contains));
 
-                if (!validCombination)
-                    mapgenErrors.Add($"Invalid placement combination for game mode {gameMode}.");
+                    if (!validCombination)
+                        mapgenErrors.Add($"Invalid placement combination for team count of {specifiedTeamCount}.");
+                }
+                else if (string.Equals(gameMode, "lockout", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (placementList.Any(p => p != "full"))
+                        mapgenErrors.Add("Game mode 'lockout' only supports team placement 'full'.");
+                }
 
                 // Placement Mode
                 string placementMode = string.IsNullOrWhiteSpace(settings?.PlacementMode)
-                    ? "circular"
+                    ? "lines"
                     : settings.PlacementMode.ToLowerInvariant();
 
                 if (!Constraints.ValidPlacementModes.Contains(placementMode))
-                    mapgenErrors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circular & flipped.");
+                    mapgenErrors.Add($"Invalid placement mode {placementMode}. Valid values are: random, circular, flipped & lines.");
 
                 // Difficulty
                 var difficultyList = (settings?.Difficulties ?? Constraints.DefaultDifficulties.ToList())
@@ -134,6 +172,7 @@ namespace MapService.Services
                 {
                     GridSize = gridSize,
                     GameMode = gameMode,
+                    TeamCount = specifiedTeamCount,
                     GameVersion = gameVersion,
                     PlacementMode = placementMode,
                     Difficulties = difficultyList,

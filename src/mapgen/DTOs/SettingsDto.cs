@@ -10,6 +10,9 @@ namespace MapService.DTOs
         [JsonPropertyName("game_mode")]
         public string? GameMode { get; set; }
         
+        [JsonPropertyName("team_count")]
+        public int? TeamCount { get; set; }
+        
         [JsonPropertyName("game_version")]
         public string? GameVersion { get; set; }
         

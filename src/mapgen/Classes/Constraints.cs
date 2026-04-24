@@ -8,8 +8,9 @@ namespace MapService.Classes
     {
         public static readonly List<string> DifficultyOrder = new() { "very easy", "easy", "medium", "hard", "very hard" };
         public static readonly List<string> DefaultDifficulties = new() { "easy", "medium", "hard" };
-        public static readonly string[] ValidGameModes = { "1P", "2P", "3P", "4P" };
-        public static readonly string[] ValidPlacementModes = { "random", "circular", "flipped" };
+        public static readonly string[] ValidGameModes = { "Bingo", "Lockout" };
+        public static readonly string[] ValidPlacementModes = { "random", "circular", "flipped", "lines" };
+        public static readonly int MaxTeamCount = 4;
         
         private static void ValidateSetConstraint(List<string>? constraints, FrozenSet<string> allowedValues, string typeName, List<string> errors)
         {
@@ -105,6 +106,15 @@ namespace MapService.Classes
                         errors.Add($"Constraints: '{min}': Cannot be greater than '{max}' ({minValue} > {maxValue})");
                     }
                 }
+            }
+
+            if (requestConstraints?.DifficultyOffset != null)
+            {
+                var maxOffset = DifficultyOrder.Count;
+                var minOffset = DifficultyOrder.Count * -1;
+                if (requestConstraints.DifficultyOffset > maxOffset || requestConstraints.DifficultyOffset < minOffset)
+                    errors.Add($"constraints: 'difficulty_offset' must be in the range of {minOffset} and {maxOffset}");
+                else returnConstraints.Add("difficulty_offset", requestConstraints.DifficultyOffset);
             }
             
             if (returnConstraints.Count > 0)

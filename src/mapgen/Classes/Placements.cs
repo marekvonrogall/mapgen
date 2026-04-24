@@ -8,24 +8,24 @@ namespace MapService.Classes
             "full", "top", "bottom", "left", "right", "top-left", "top-right", "bottom-left", "bottom-right"
         };
         
-        public static readonly Dictionary<string, List<string[]>> ValidPlacementCombinations = new()
+        public static readonly Dictionary<int, List<string[]>> ValidPlacementCombinations = new()
         {
-            ["1P"] = new List<string[]> { new[] { "full" } },
-            ["2P"] = new List<string[]> 
+            [1] = new List<string[]> { new[] { "full" } },
+            [2] = new List<string[]> 
             { 
                 new[] { "top", "bottom" }, 
                 new[] { "bottom", "top" }, 
                 new[] { "left", "right" }, 
                 new[] { "right", "left" } 
             },
-            ["3P"] = new List<string[]>
+            [3] = new List<string[]>
             {
                 new[] { "top", "bottom-left", "bottom-right" },
                 new[] { "bottom", "top-left", "top-right" },
                 new[] { "left", "top-right", "bottom-right" },
                 new[] { "right", "top-left", "bottom-left" }
             },
-            ["4P"] = new List<string[]>
+            [4] = new List<string[]>
             {
                 new[] { "top-left", "top-right", "bottom-left", "bottom-right" }
             }
@@ -123,7 +123,7 @@ namespace MapService.Classes
         }
 
 
-        public static Dictionary<string, string> AssignDefaultPlacements(string gameMode, List<TeamDto> teams)
+        public static Dictionary<string, string> AssignDefaultPlacements(int teamCount, List<TeamDto> teams)
         {
             var result = new Dictionary<string, string>();
             var assigned = new HashSet<string>(
@@ -138,30 +138,30 @@ namespace MapService.Classes
 
             var unassigned = teams.Where(t => string.IsNullOrWhiteSpace(t.Placement)).ToList();
 
-            switch (gameMode)
+            switch (teamCount)
             {
-                case "1P":
+                case 1:
                     AssignSequential(unassigned, result, assigned, "full");
                     break;
 
-                case "2P":
+                case 2:
                     Assign2P(unassigned, result, assigned);
                     break;
 
-                case "3P":
+                case 3:
                     Assign3P(unassigned, result, assigned);
                     break;
 
-                case "4P":
+                case 4:
                     AssignSequential(
                         unassigned,
                         result,
                         assigned,
-                        ValidPlacementCombinations["4P"][0]);
+                        ValidPlacementCombinations[4][0]);
                     break;
 
                 default:
-                    throw new InvalidOperationException($"Invalid game mode {gameMode}.");
+                    throw new InvalidOperationException($"Couldn't determine placement combination for team count of {teamCount}.");
             }
 
             return result;

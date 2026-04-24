@@ -4,6 +4,83 @@ namespace MapService.Classes
 {
     public static class Items
     {
+        private static (string? Difficulty, List<string>? Errors) GetRandomDifficulty(SettingsDto settings, Random random, List<string> availableDifficulties, List<string>? excludedDifficulties = null)
+        {
+            excludedDifficulties ??= new List<string>();
+            var allowedDifficultiesForCell = availableDifficulties
+                .Where(d => settings.Difficulties!.Contains(d)
+                            && !excludedDifficulties.Contains(d))
+                .ToList();
+
+            if (allowedDifficultiesForCell.Count == 0)
+                return (null,
+                [
+                    "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)"
+                ]);
+            return(allowedDifficultiesForCell[random.Next(allowedDifficultiesForCell.Count)], null);
+        }
+        
+        private static (string? Difficulty, List<string>? Errors) GetItemDifficulty(SettingsDto settings, Random random, List<int> randomColumnOrder, List<string> availableDifficulties, Dictionary<int, List<int>> ringDifficultyMap, int row, int column)
+        {
+            if (settings.PlacementMode == "random")
+            {
+                return GetRandomDifficulty(settings, random, availableDifficulties);
+            }
+            
+            string difficulty;
+            int maxDistance = settings.GridSize!.Value / 2;
+            int ring = maxDistance - Math.Max(Math.Abs(row - maxDistance), Math.Abs(column - maxDistance));
+            
+            var possibleIndexes = ringDifficultyMap[ring]
+                .Where(i => availableDifficulties.Contains(Constraints.DifficultyOrder[i]))
+                .ToList();
+            
+            bool isCenter = ring == maxDistance;
+            if (isCenter || settings.PlacementMode is "circular" or "flipped")
+            {
+                if (possibleIndexes.Count == 0)
+                    return (null,
+                    [
+                        "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)"
+                    ]);
+
+                int chosenIndex = possibleIndexes[random.Next(possibleIndexes.Count)];
+                difficulty = Constraints.DifficultyOrder[chosenIndex];
+            }
+            else if (settings.PlacementMode == "lines")
+            {
+                var highestDifficulty = settings.Difficulties!.Last();
+                var secondHighestDifficulty = settings.Difficulties!.Count >= 2
+                    ? settings.Difficulties![^2]
+                    : highestDifficulty; 
+
+                if (column == randomColumnOrder[row])
+                    difficulty = secondHighestDifficulty;
+                else
+                {
+                    var excludedDifficulties = new List<string>();
+                    if (settings.Difficulties.Count >= 3)
+                        excludedDifficulties.Add(secondHighestDifficulty);
+                    if (settings.Difficulties.Count >= 2)
+                        excludedDifficulties.Add(highestDifficulty);
+                    
+                    var (randomDifficulty, errors) = GetRandomDifficulty(settings, random, availableDifficulties, excludedDifficulties);
+                    if (errors is not null)
+                        return (null, errors);
+                    if (randomDifficulty is null)
+                        return (null, ["Couldn't determine difficulties!"]);
+                    
+                    difficulty = randomDifficulty;
+                }
+            }
+            else
+            {
+                return (null, ["Placement mode must be 'random', 'circular', 'flipped' or 'lines'."]);
+            }
+
+            return (difficulty, null);
+        }
+        
         public static (bool Success, List<ResponseItemDto>? Items, List<string>? Errors) GenerateItems(SettingsDto settings, List<BingoItemDto> bingoItems)
         {
             var constraints = settings.Constraints ?? new ConstraintsDto();
@@ -12,8 +89,8 @@ namespace MapService.Classes
             var selectedItems = new HashSet<string>();
 
             if (!Constraints.ValidPlacementModes.Contains(settings.PlacementMode))
-                return (false, null, new List<string> { "Placement mode must be 'random', 'circular' or 'flipped'." });
-
+                return (false, null, ["Placement mode must be 'random', 'circular', 'flipped' or 'lines'."]);
+            
             var allowedIndexes = settings.Difficulties!
                 .Select(d => Constraints.DifficultyOrder.IndexOf(d))
                 .Where(i => i >= 0)
@@ -22,53 +99,57 @@ namespace MapService.Classes
                 .ToList();
 
             if (allowedIndexes.Count == 0)
-                return (false, null, new List<string> { "No valid difficulties provided." });
-
+                return (false, null, ["No valid difficulties provided."]);
+            
             int minIndex = allowedIndexes.Min();
             int maxIndex = allowedIndexes.Max();
-
             int maxDistance = settings.GridSize!.Value / 2;
+            int difficultyOffset = settings.Constraints?.DifficultyOffset ?? 0;
+            
             var groupCounts = new Dictionary<string, int>();
             var materialCounts = new Dictionary<string, int>();
             var categoryCounts = new Dictionary<string, int>();
-
+            
             // ring-to-difficulty mapping for circular/flipped
             Dictionary<int, List<int>> ringDifficultyMap = new();
-            if (settings.PlacementMode == "circular" || settings.PlacementMode == "flipped")
+            if (settings.PlacementMode is "circular" or "flipped" or "lines")
             {
-                for (int ring = 0; ring <= maxDistance; ring++)
+                for (int r = 0; r <= maxDistance; r++)
                 {
-                    bool isCenter = ring == maxDistance;
+                    bool isCenter = r == maxDistance;
                     if (isCenter)
                     {
-                        int centerIndex = settings.PlacementMode == "circular"
-                            ? Math.Min(maxIndex + 1, Constraints.DifficultyOrder.Count - 1) // hardest in center
-                            : Math.Max(minIndex - 1, 0); // easiest in center
-                        ringDifficultyMap[ring] = new List<int> { centerIndex };
+                        int centerIndex = Math.Clamp(
+                            settings.PlacementMode is "flipped"
+                                ? minIndex - difficultyOffset // easiest in center
+                                : maxIndex + difficultyOffset, // hardest in center,
+                            0, Constraints.DifficultyOrder.Count - 1
+                        );
+                        ringDifficultyMap[r] = new List<int> { centerIndex };
                     }
                     else
                     {
-                        double fractionStart = (double)ring / maxDistance;
-                        double fractionEnd = (double)(ring + 1) / maxDistance;
+                        double fractionStart = (double)r / maxDistance;
+                        double fractionEnd = (double)(r + 1) / maxDistance;
 
                         int startIdx, endIdx;
-                        if (settings.PlacementMode == "circular")
-                        {
-                            startIdx = (int)Math.Floor(fractionStart * (allowedIndexes.Count - 1));
-                            endIdx = (int)Math.Ceiling(fractionEnd * (allowedIndexes.Count - 1));
-                        }
-                        else // flipped
+                        if (settings.PlacementMode is "flipped")
                         {
                             startIdx = allowedIndexes.Count - 1 -
                                        (int)Math.Ceiling(fractionEnd * (allowedIndexes.Count - 1));
                             endIdx = allowedIndexes.Count - 1 -
                                      (int)Math.Floor(fractionStart * (allowedIndexes.Count - 1));
                         }
+                        else // flipped
+                        {
+                            startIdx = (int)Math.Floor(fractionStart * (allowedIndexes.Count - 1));
+                            endIdx = (int)Math.Ceiling(fractionEnd * (allowedIndexes.Count - 1));
+                        }
 
                         startIdx = Math.Clamp(startIdx, 0, allowedIndexes.Count - 1);
                         endIdx = Math.Clamp(endIdx, 0, allowedIndexes.Count - 1);
 
-                        ringDifficultyMap[ring] = allowedIndexes
+                        ringDifficultyMap[r] = allowedIndexes
                             .Skip(Math.Min(startIdx, endIdx))
                             .Take(Math.Abs(endIdx - startIdx) + 1)
                             .ToList();
@@ -102,6 +183,10 @@ namespace MapService.Classes
             bool mustPassAllWhitelists = constraints.MustPassAllWhitelists ?? false;
             bool mustPassAllBlacklists = constraints.MustPassAllBlacklists ?? false;
             
+            var randomColumnOrder = Enumerable.Range(0, settings.GridSize.Value)
+                .OrderBy(_ => random.Next())
+                .ToList();
+            
             for (int row = 0; row < settings.GridSize; row++)
             {
                 for (int column = 0; column < settings.GridSize; column++)
@@ -109,6 +194,7 @@ namespace MapService.Classes
                     // item selection
                     var baseCandidates = bingoItems
                         // Item Version & Duplicates    
+                        .Where(item => item.Difficulty != "unobtainable")
                         .Where(item => GameVersion.VersionIsSmallerOrEqual(settings.GameVersion!, item.Version))
                         .Where(item => !selectedItems.Contains(item.Name))
                         // Whitelist
@@ -173,47 +259,24 @@ namespace MapService.Classes
                         .ToList();
                     
                     if (baseCandidates.Count == 0)
-                        return (false, null, new List<string> { "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)" });
+                        return (false, null,
+                        [
+                            "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)"
+                        ]);
                     
                     // Difficulty
-                    var allowedDifficulties = baseCandidates
+                    var availableDifficulties = baseCandidates
                         .Select(i => i.Difficulty)
                         .Distinct()
+                        .OrderBy(d => Constraints.DifficultyOrder.IndexOf(d))
                         .ToList();
                     
-                    string difficulty;
-
-                    if (settings.PlacementMode == "random")
-                    {
-                        var allowedDifficultiesForCell = allowedDifficulties
-                            .Where(d => settings.Difficulties!.Contains(d))
-                            .ToList();
-                        
-                        if (allowedDifficultiesForCell.Count == 0)
-                            return (false, null,
-                                new List<string>
-                                {
-                                    "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)"
-                                });
-                        difficulty = allowedDifficultiesForCell[random.Next(allowedDifficultiesForCell.Count)];
-                    }
-                    else
-                    {
-                        int ring = maxDistance - Math.Max(Math.Abs(row - maxDistance), Math.Abs(column - maxDistance));
-                        var possibleIndexes = ringDifficultyMap[ring]
-                            .Where(i => allowedDifficulties.Contains(Constraints.DifficultyOrder[i]))
-                            .ToList();
-
-                        if (possibleIndexes.Count == 0)
-                            return (false, null,
-                                new List<string>
-                                {
-                                    "Cannot create bingo board with current constraints! (Less items that meet the requirements than cells on the bingo board)"
-                                });
-
-                        int chosenIndex = possibleIndexes[random.Next(possibleIndexes.Count)];
-                        difficulty = Constraints.DifficultyOrder[chosenIndex];
-                    }
+                    (string? difficulty, List<string>? errors) = GetItemDifficulty(settings, random, randomColumnOrder, availableDifficulties, ringDifficultyMap, row, column);
+                    
+                    if (errors is not null)
+                        return (false, null, errors);
+                    if (difficulty is null)
+                        return (false, null, ["Couldn't determine difficulties!"]);
 
                     var itemList = baseCandidates
                         .Where(item => item.Difficulty == difficulty)
@@ -240,7 +303,7 @@ namespace MapService.Classes
                         Name = selectedItem.Name,
                         Sprite = selectedItem.Sprite,
                         Difficulty = selectedItem.Difficulty,
-                        CompletedStatus = completed!
+                        CompletedStatus = completed
                     });
                 }
             }
