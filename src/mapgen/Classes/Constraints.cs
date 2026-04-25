@@ -4,11 +4,16 @@ using MapService.DTOs;
 
 namespace MapService.Classes
 {
+    public class ConstraintEntry
+    {
+        public object? Value { get; init; }
+        public List<string> AllowedModes { get; init; } = new();
+    }
     public static class Constraints
     {
         public static readonly List<string> DifficultyOrder = new() { "very easy", "easy", "medium", "hard", "very hard" };
         public static readonly List<string> DefaultDifficulties = new() { "easy", "medium", "hard" };
-        public static readonly string[] ValidGameModes = { "Bingo", "Lockout" };
+        public static readonly string[] ValidGameModes = { "Bingo", "Lockout", "Race" };
         public static readonly string[] ValidPlacementModes = { "random", "circular", "flipped", "lines" };
         public static readonly int MaxTeamCount = 4;
         
@@ -27,7 +32,7 @@ namespace MapService.Classes
             }
         }
         
-        public static ConstraintsDto? GetConstraints(ConstraintsDto? requestConstraints, List<string> errors)
+        public static ConstraintsDto? GetConstraints(ConstraintsDto? requestConstraints, string gameMode, List<string> errors)
         {
             ValidateSetConstraint(requestConstraints?.BlacklistedItems, JsonData.ItemIdsAndNames, "Excluded Items", errors);
             ValidateSetConstraint(requestConstraints?.BlacklistedGroups, JsonData.Groups, "Excluded Groups", errors);
@@ -38,32 +43,136 @@ namespace MapService.Classes
             ValidateSetConstraint(requestConstraints?.WhitelistedGroups, JsonData.Groups, "Whitelisted Groups", errors);
             ValidateSetConstraint(requestConstraints?.WhitelistedMaterials, JsonData.Materials, "Whitelisted Materials", errors);
             ValidateSetConstraint(requestConstraints?.WhitelistedCategories, JsonData.Categories, "Whitelisted Categories", errors);
-
             
-            var constraintsMap = new Dictionary<string, object?>
+            var constraintsMap = new Dictionary<string, ConstraintEntry>
             {
-                { "min_padding", requestConstraints?.MinPadding },
-                { "max_padding", requestConstraints?.MaxPadding },
-                { "min_line_width", requestConstraints?.MinLineWidth },
-                { "max_line_width", requestConstraints?.MaxLineWidth },
-                { "min_border_width", requestConstraints?.MinBorderWidth },
-                { "max_border_width", requestConstraints?.MaxBorderWidth },
-                { "pixel_perfect", requestConstraints?.PixelPerfect },
-                { "fill_board", requestConstraints?.FillBoard },
-                { "center_board", requestConstraints?.CenterBoard },
-                { "max_items_per_group", requestConstraints?.MaxItemsPerGroup },
-                { "max_items_per_material", requestConstraints?.MaxItemsPerMaterial },
-                { "max_items_per_category", requestConstraints?.MaxItemsPerCategory },
-                { "blacklisted_items", requestConstraints?.BlacklistedItems },
-                { "blacklisted_groups", requestConstraints?.BlacklistedGroups },
-                { "blacklisted_materials", requestConstraints?.BlacklistedMaterials },
-                { "blacklisted_categories", requestConstraints?.BlacklistedCategories },
-                { "must_pass_all_blacklists", requestConstraints?.MustPassAllBlacklists },
-                { "whitelisted_items", requestConstraints?.WhitelistedItems },
-                { "whitelisted_groups", requestConstraints?.WhitelistedGroups },
-                { "whitelisted_materials", requestConstraints?.WhitelistedMaterials },
-                { "whitelisted_categories", requestConstraints?.WhitelistedCategories },
-                { "must_pass_all_whitelists", requestConstraints?.MustPassAllWhitelists }
+                {
+                    "race_skips",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.RaceSkips, AllowedModes = new List<string> { "Race" } }
+                },
+                {
+                    "min_padding",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MinPadding, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "max_padding",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MaxPadding, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "min_line_width",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MinLineWidth, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "max_line_width",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MaxLineWidth, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "min_border_width",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MinBorderWidth, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "max_border_width",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MaxBorderWidth, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "pixel_perfect",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.PixelPerfect, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "fill_board",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.FillBoard, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "center_board",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.CenterBoard, AllowedModes = new List<string> { "Bingo", "Lockout" } }
+                },
+                {
+                    "max_items_per_group",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MaxItemsPerGroup, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" } }
+                },
+                {
+                    "max_items_per_material",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MaxItemsPerMaterial, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" } }
+                },
+                {
+                    "max_items_per_category",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.MaxItemsPerCategory, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" } }
+                },
+                {
+                    "blacklisted_items",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.BlacklistedItems, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" } }
+                },
+                {
+                    "blacklisted_groups",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.BlacklistedGroups, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" } }
+                },
+                {
+                    "blacklisted_materials",
+                    new ConstraintEntry
+                    {
+                        Value = requestConstraints?.BlacklistedMaterials, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" }
+                    }
+                },
+                {
+                    "blacklisted_categories",
+                    new ConstraintEntry
+                    {
+                        Value = requestConstraints?.BlacklistedCategories, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" }
+                    }
+                },
+                {
+                    "must_pass_all_blacklists",
+                    new ConstraintEntry
+                    {
+                        Value = requestConstraints?.MustPassAllBlacklists, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" }
+                    }
+                },
+                {
+                    "whitelisted_items",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.WhitelistedItems, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" } }
+                },
+                {
+                    "whitelisted_groups",
+                    new ConstraintEntry
+                        { Value = requestConstraints?.WhitelistedGroups, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" } }
+                },
+                {
+                    "whitelisted_materials",
+                    new ConstraintEntry
+                    {
+                        Value = requestConstraints?.WhitelistedMaterials, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" }
+                    }
+                },
+                {
+                    "whitelisted_categories",
+                    new ConstraintEntry
+                    {
+                        Value = requestConstraints?.WhitelistedCategories, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" }
+                    }
+                },
+                {
+                    "must_pass_all_whitelists",
+                    new ConstraintEntry
+                    {
+                        Value = requestConstraints?.MustPassAllWhitelists, AllowedModes = new List<string> { "Bingo", "Lockout", "Race" }
+                    }
+                }
             };
 
             var minMaxMap = new Dictionary<string, string>()
@@ -75,20 +184,23 @@ namespace MapService.Classes
 
             var returnConstraints = new Dictionary<string, object>();
 
-            foreach (var (name, value) in constraintsMap)
+            foreach (var (name, entry) in constraintsMap)
             {
+                var value = entry.Value;
+
                 if (value == null)
+                    continue;
+
+                if (!entry.AllowedModes.Contains(gameMode, StringComparer.OrdinalIgnoreCase))
                 {
+                    errors.Add($"Constraints: '{name}' is not supported for game mode '{gameMode}'");
                     continue;
                 }
 
-                if (value is int intVal)
+                if (value is int intVal && intVal < 0)
                 {
-                    if (intVal < 0)
-                    {
-                        errors.Add($"Constraints: '{name}': Must be >= 0, got {intVal}");
-                        continue;
-                    }
+                    errors.Add($"Constraints: '{name}': Must be >= 0, got {intVal}");
+                    continue;
                 }
 
                 returnConstraints.Add(name, value);

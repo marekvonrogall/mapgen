@@ -17,7 +17,7 @@ namespace MapService.Services
                 string gameMode = settings?.GameMode?.ToLower() ?? "bingo";
                 bool validGameMode = Constraints.ValidGameModes.Contains(gameMode, StringComparer.OrdinalIgnoreCase);
                 if (!validGameMode)
-                    mapgenErrors.Add("Invalid game mode. Accepted values are bingo & lockout.");
+                    mapgenErrors.Add("Invalid game mode. Accepted values are bingo, lockout & race.");
 
                 // Game Version
                 string gameVersion = settings?.GameVersion ?? JsonData.LatestGameVersion();
@@ -51,7 +51,7 @@ namespace MapService.Services
                 // Assign default placements
                 try
                 {
-                    if (string.Equals(gameMode, "bingo", StringComparison.OrdinalIgnoreCase))
+                    if (gameMode is "bingo" or "race")
                     {
                         defaultPlacements = Placements.AssignDefaultPlacements(specifiedTeamCount, teams);
                     }
@@ -84,7 +84,7 @@ namespace MapService.Services
 
                     // Validate Team Placement
                     var placement = defaultPlacements.GetValueOrDefault(team.Name);
-                    if (string.Equals(gameMode, "bingo", StringComparison.OrdinalIgnoreCase))
+                    if (gameMode is "bingo" or "race")
                     {
                         placement = team.Placement?.ToLower() ?? placement;
 
@@ -123,7 +123,7 @@ namespace MapService.Services
 
                 // Validate All Team Placements
                 var placementList = normalizedTeams.Select(t => t.Placement!).ToList();
-                if (string.Equals(gameMode, "bingo", StringComparison.OrdinalIgnoreCase))
+                if (gameMode is "bingo" or "race")
                 {
                     bool validCombination =
                         Placements.ValidPlacementCombinations.TryGetValue(specifiedTeamCount, out var allowedSets) &&
@@ -163,7 +163,7 @@ namespace MapService.Services
                     mapgenErrors.Add($"Invalid difficulty value(s). Valid values are: {string.Join(", ", Constraints.DifficultyOrder)} or all.");
                 
                 // Constraints
-                var constraints = Constraints.GetConstraints(settings?.Constraints, mapgenErrors);
+                var constraints = Constraints.GetConstraints(settings?.Constraints, gameMode, mapgenErrors);
 
                 // Colors
                 var colors = Colors.GetHexColors(settings?.Colors, mapgenErrors);

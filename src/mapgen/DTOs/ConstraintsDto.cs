@@ -4,6 +4,9 @@ namespace MapService.DTOs
 {
     public class ConstraintsDto
     {
+        [JsonPropertyName("race_skips")]
+        public int? RaceSkips { get; set; }
+        
         [JsonPropertyName("difficulty_offset")]
         public int? DifficultyOffset { get; set; }
         
