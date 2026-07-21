@@ -6,7 +6,7 @@ With full control over the board layout, difficulty, team configuration, colors,
 This project is part of the [Bingo-Gamemode-Plugin](https://github.com/manueljonasgreub/Bingo-Gamemode-Plugin) by [@manueljonasgreub](https://www.github.com/manueljonasgreub) and [@marekvonrogall](https://www.github.com/marekvonrogall).<br/>
 Special thanks to [@cubicmetre](https://github.com/cubicmetre) - this project uses a modified version of their 1.21.10 [items.json](https://github.com/cubicmetre/mis-builder/blob/23407007701d5c108ef44a024166e257f9dc54da/items.json) file.
 
-A demo of the bingo board generator is available under [vrmarek.me](https://vrmarek.me/#mapgen-demo). 
+A demo of the bingo board generator is available under [vrmarek.me](https://str.vrmarek.me/#mapgen-demo). 
 
 > [!IMPORTANT]  
 > The demo api is provided for demonstration purposes only and is not intended for use in production environments.
