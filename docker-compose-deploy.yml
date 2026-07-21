@@ -20,6 +20,7 @@ services:
 
 volumes:
   imggen-public:
+    external: true
 networks:
   bingo-net:
     external: true
