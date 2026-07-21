@@ -5,8 +5,6 @@ services:
     environment:
       - MAPGEN_PORT=5001
       - IMGGEN_URL=http://imggen:5000
-    ports:
-      - "5001:5001"
     networks:
       - bingo-net
 
@@ -20,23 +18,8 @@ services:
     volumes:
       - imggen-public:/app/public
 
-  # NGINX API Gateway
-  nginx:
-    image: nginx:alpine-slim
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - bingo-net
-    depends_on:
-      - mapgen
-      - imggen
-    volumes:
-      - imggen-public:/app/public
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - /etc/letsencrypt:/etc/letsencrypt:ro
-
 volumes:
   imggen-public:
 networks:
   bingo-net:
+    external: true
